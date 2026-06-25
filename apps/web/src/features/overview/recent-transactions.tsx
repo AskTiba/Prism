@@ -7,6 +7,11 @@ function formatCurrency(amount: number): string {
   return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return `${d.getDate()} ${d.toLocaleDateString('en-US', { month: 'short' })} ${d.getFullYear()}`;
+}
+
 export function RecentTransactions() {
   const { data } = trpc.transactions.list.useQuery({ pageSize: 5 });
   const transactions = data?.items ?? [];
@@ -24,13 +29,26 @@ export function RecentTransactions() {
       </div>
       <ul className="divide-y divide-grey-100">
         {transactions.map((tx) => (
-          <li key={tx.id} className="flex items-center justify-between py-3">
-            <span className="min-w-0 truncate text-sm font-medium">{tx.name}</span>
-            <span
-              className={`text-sm font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
-            >
-              {formatCurrency(tx.amount)}
-            </span>
+          <li key={tx.id} className="flex items-center gap-3 py-3">
+            {tx.avatar ? (
+              <img src={tx.avatar} alt="" className="h-8 w-8 rounded-full object-cover" />
+            ) : (
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
+                {tx.name.charAt(0)}
+              </span>
+            )}
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium">{tx.name}</p>
+              <p className="text-xs text-grey-500">{tx.category}</p>
+            </div>
+            <div className="text-right">
+              <p
+                className={`text-sm font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
+              >
+                {formatCurrency(tx.amount)}
+              </p>
+              <p className="text-xs text-grey-500">{formatDate(tx.date)}</p>
+            </div>
           </li>
         ))}
       </ul>
