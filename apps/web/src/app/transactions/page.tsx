@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { trpc } from '@/lib/trpc'
-import { CATEGORIES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared'
+import { useState } from 'react';
+import { trpc } from '@/lib/trpc';
+import { CATEGORIES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
 
 function formatCurrency(amount: number): string {
-  const prefix = amount < 0 ? '' : '+'
-  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  const prefix = amount < 0 ? '' : '+';
+  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 export default function TransactionsPage() {
-  const [search, setSearch] = useState('')
-  const [category, setCategory] = useState('')
-  const [sort, setSort] = useState('latest')
-  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
+  const [sort, setSort] = useState('latest');
+  const [page, setPage] = useState(1);
 
   const { data } = trpc.transactions.list.useQuery({
     search: search || undefined,
@@ -21,10 +21,10 @@ export default function TransactionsPage() {
     sort: sort as any,
     page,
     pageSize: PAGE_SIZE,
-  })
+  });
 
-  const transactions = data?.items ?? []
-  const totalPages = data?.totalPages ?? 1
+  const transactions = data?.items ?? [];
+  const totalPages = data?.totalPages ?? 1;
 
   return (
     <div className="space-y-6">
@@ -35,31 +35,44 @@ export default function TransactionsPage() {
           type="search"
           placeholder="Search transactions"
           value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-2 text-sm"
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
           aria-label="Search transactions"
         />
 
         <select
           value={category}
-          onChange={(e) => { setCategory(e.target.value); setPage(1) }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-2 text-sm"
+          onChange={(e) => {
+            setCategory(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
           aria-label="Category filter"
         >
           <option value="">All Categories</option>
           {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
           ))}
         </select>
 
         <select
           value={sort}
-          onChange={(e) => { setSort(e.target.value); setPage(1) }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-2 text-sm"
+          onChange={(e) => {
+            setSort(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
           aria-label="Sort by"
         >
           {SORT_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
           ))}
         </select>
       </div>
@@ -80,9 +93,15 @@ export default function TransactionsPage() {
                 <td className="px-5 py-3 font-medium">{tx.name}</td>
                 <td className="px-5 py-3 text-grey-500">{tx.category}</td>
                 <td className="px-5 py-3 text-grey-500">
-                  {new Date(tx.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  {new Date(tx.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
                 </td>
-                <td className={`px-5 py-3 text-right font-bold ${tx.amount < 0 ? '' : 'text-green'}`}>
+                <td
+                  className={`px-5 py-3 text-right font-bold ${tx.amount < 0 ? '' : 'text-green'}`}
+                >
                   {formatCurrency(tx.amount)}
                 </td>
               </tr>
@@ -92,24 +111,26 @@ export default function TransactionsPage() {
       </div>
 
       <div className="flex items-center justify-between text-sm text-grey-500">
-        <span>Page {page} of {totalPages}</span>
+        <span>
+          Page {page} of {totalPages}
+        </span>
         <div className="flex gap-2">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
-            className="rounded-lg border border-grey-300 px-4 py-2 disabled:opacity-50"
+            className="rounded-lg border border-grey-300 px-4 py-3.5 disabled:opacity-50"
           >
             Prev
           </button>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page >= totalPages}
-            className="rounded-lg border border-grey-300 px-4 py-2 disabled:opacity-50"
+            className="rounded-lg border border-grey-300 px-4 py-3.5 disabled:opacity-50"
           >
             Next
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

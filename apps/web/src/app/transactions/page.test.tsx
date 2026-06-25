@@ -1,12 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import TransactionsPage from './page'
-import '@testing-library/jest-dom/vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import TransactionsPage from './page';
+import '@testing-library/jest-dom/vitest';
 
 const mockUseQuery = vi.hoisted(() => ({
   list: vi.fn(),
-}))
+}));
 
 vi.mock('@/lib/trpc', () => ({
   trpc: {
@@ -14,10 +14,10 @@ vi.mock('@/lib/trpc', () => ({
       list: { useQuery: () => mockUseQuery.list() },
     },
   },
-}))
+}));
 
 beforeEach(() => {
-  vi.clearAllMocks()
+  vi.clearAllMocks();
 
   mockUseQuery.list.mockReturnValue({
     data: {
@@ -35,29 +35,48 @@ beforeEach(() => {
       pageSize: 10,
       totalPages: 3,
     },
-  })
-})
+  });
+});
 
 describe('TransactionsPage', () => {
   it('renders transactions list', () => {
-    render(<TransactionsPage />)
-    expect(screen.getByText('Transaction 1')).toBeInTheDocument()
-    expect(screen.getByText('Transaction 10')).toBeInTheDocument()
-  })
+    render(<TransactionsPage />);
+    expect(screen.getByText('Transaction 1')).toBeInTheDocument();
+    expect(screen.getByText('Transaction 10')).toBeInTheDocument();
+  });
 
   it('shows search input', () => {
-    render(<TransactionsPage />)
-    expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument()
-  })
+    render(<TransactionsPage />);
+    expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
+  });
 
   it('shows pagination info', () => {
-    render(<TransactionsPage />)
-    expect(screen.getByText(/page 1 of 3/i)).toBeInTheDocument()
-  })
+    render(<TransactionsPage />);
+    expect(screen.getByText(/page 1 of 3/i)).toBeInTheDocument();
+  });
 
   it('shows category filter', async () => {
-    render(<TransactionsPage />)
-    const filter = screen.getByRole('combobox', { name: /category/i })
-    expect(filter).toBeInTheDocument()
-  })
-})
+    render(<TransactionsPage />);
+    const filter = screen.getByRole('combobox', { name: /category/i });
+    expect(filter).toBeInTheDocument();
+  });
+});
+
+describe('TransactionsPage touch targets', () => {
+  it('has filter inputs with py-3 or greater', () => {
+    render(<TransactionsPage />);
+    const search = screen.getByPlaceholderText('Search transactions');
+    const filters = screen.getAllByRole('combobox');
+    for (const el of [search, ...filters]) {
+      expect(el.className).toMatch(/py-[3-9]|py-1[0-9]/);
+    }
+  });
+
+  it('has pagination buttons with py-3 or greater', () => {
+    render(<TransactionsPage />);
+    const buttons = screen.getAllByRole('button');
+    for (const btn of buttons) {
+      expect(btn.className).toMatch(/py-[3-9]|py-1[0-9]/);
+    }
+  });
+});
