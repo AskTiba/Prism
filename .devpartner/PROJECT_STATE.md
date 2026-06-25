@@ -1,6 +1,6 @@
 # Project State
 
-> Last updated: 2026-06-25 by Emily (Senior Dev Partner)
+> Last updated: 2026-06-25 21:00 by Emily (Senior Dev Partner)
 > This file is the source of truth for project continuity across sessions.
 
 ## 1. Project Snapshot
@@ -9,45 +9,47 @@
 |---|---|
 | Project name | Personal Finance App |
 | Primary stack | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript |
-| Repo / branch | local, no remote yet |
-| Current milestone | Project bootstrap — skill files and state files created |
+| Repo / branch | main (local, no remote) |
+| Current milestone | Scaffold: root config committed — apps/web next |
 | Overall status | Green |
 
 ## 2. What Currently Works
 
 | Feature | Verified by | Notes |
 |---|---|---|
-| Skill hub structure (`~/dev/skill5.0/`) | Manual review | Universal AI skill directory with README, MANIFEST, source SKILLs, templates |
-| Project AGENTS.md | Written | opencode project instructions referencing both skills |
-| Project GEMINI.md | Written | Self-contained Gemini instructions with inlined protocol |
-| opencode.jsonc | Written | Config with skill/agent setup |
-| `.devpartner/*.md` files | Written | Bootstrap state files with initial architecture decision |
-| `.opencode/skills/` | Copy from source | Both skills registered for opencode discovery |
+| Root workspace config | `package.json`, `turbo.json`, `.gitignore`, `.prettierrc` | Monorepo foundation committed |
+| AI tooling files | `AGENTS.md`, `GEMINI.md`, `opencode.jsonc`, `.opencode/skills/`, `.devpartner/` | All AI integration files committed |
+| Skill hub structure (`~/dev/skill5.0/`) | Manual review | Universal AI skill directory — updated with mandatory work loop |
 
 > Anything not yet verified belongs in section 3 as "implemented, unverified" —
 > not here.
 
 ## 3. In Progress
 
-**Current feature/task:** Project scaffold — initialize Turborepo monorepo
+**Current feature/task:** apps/web scaffold — Next.js App Router + Tailwind CSS
 
 **Unit decomposition:**
 
-- [ ] Unit 1 — Turborepo init with Next.js + Prisma + shared packages
-- [ ] Unit 2 — Prisma schema matching data.json structure + seed script
-- [ ] Unit 3 — tRPC router setup with initial queries
-- [ ] Unit 4 — Layout shell with responsive sidebar navigation
-- [ ] Unit 5 — Overview page
-- [ ] Unit 6 — Transactions page (pagination, search, sort, filter)
-- [ ] Unit 7 — Budgets page (CRUD + progress + latest transactions)
-- [ ] Unit 8 — Pots page (CRUD + progress + add/withdraw)
-- [ ] Unit 9 — Recurring Bills page (list + search + sort + status)
-- [ ] Unit 10 — Form validation (Zod + error messages)
-- [ ] Unit 11 — Tests (Vitest + RTL + MSW)
+- [x] Unit 1 — Root workspace config (package.json, turbo.json, .gitignore, .prettierrc) + AI tooling files
+- [x] Unit 2 — apps/web: package.json, next.config.ts, tailwind.config.ts, tsconfig.json, postcss.config.js
+- [ ] Unit 3 — apps/web: Root layout + global CSS + app/page.tsx
+- [ ] Unit 4 — packages/db: Prisma schema + client
+- [ ] Unit 5 — packages/shared: Types + Zod schemas
+- [ ] Unit 6 — Install dependencies + verify `turbo dev`
+- [ ] Unit 7 — Prisma schema matching data.json structure + seed script
+- [ ] Unit 8 — tRPC router setup with initial queries
+- [ ] Unit 9 — Layout shell with responsive sidebar navigation
+- [ ] Unit 10 — Overview page
+- [ ] Unit 11 — Transactions page (pagination, search, sort, filter)
+- [ ] Unit 12 — Budgets page (CRUD + progress + latest transactions)
+- [ ] Unit 13 — Pots page (CRUD + progress + add/withdraw)
+- [ ] Unit 14 — Recurring Bills page (list + search + sort + status)
+- [ ] Unit 15 — Form validation (Zod + error messages)
+- [ ] Unit 16 — Tests (Vitest + RTL + MSW)
 
 | Active unit | Files involved | Exact next step | Verification owed |
 |---|---|---|---|
-| Unit 1 | `package.json`, `turbo.json`, `apps/web/`, `packages/db/`, `packages/shared/` | Initialize Turborepo and install dependencies | `turbo dev` starts without errors |
+| Unit 2 | `apps/web/package.json`, `apps/web/next.config.ts`, `apps/web/tailwind.config.ts`, `apps/web/tsconfig.json`, `apps/web/postcss.config.js` | Write apps/web config files — one at a time | NPM install completes, no build errors |
 
 > **Session boundary note**: If the active unit is incomplete, use
 > `git stash push -m "description"` (preferred) rather than a `wip:` commit. Record the
