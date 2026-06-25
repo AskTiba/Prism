@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import RootLayout from './layout';
 import '@testing-library/jest-dom/vitest';
@@ -9,14 +9,6 @@ vi.mock('next/font/google', () => ({
 
 vi.mock('@/lib/providers', () => ({
   Providers: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-}));
-
-vi.mock('next/link', () => ({
-  default: ({ children, href, ...props }: any) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  ),
 }));
 
 describe('RootLayout', () => {
@@ -52,5 +44,16 @@ describe('RootLayout', () => {
     for (const link of links) {
       expect(link.className).toMatch(/py-[3-9]/);
     }
+  });
+
+  it('renders SVG icons in the navigation', () => {
+    render(
+      <RootLayout>
+        <div>content</div>
+      </RootLayout>,
+    );
+    const nav = screen.getByRole('navigation');
+    const svgs = nav.querySelectorAll('svg');
+    expect(svgs.length).toBeGreaterThanOrEqual(5);
   });
 });

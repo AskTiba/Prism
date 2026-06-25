@@ -1,7 +1,22 @@
 import type { Metadata } from 'next';
 import { Public_Sans } from 'next/font/google';
 import { Providers } from '@/lib/providers';
+import {
+  LayoutDashboard,
+  ArrowLeftRight,
+  PiggyBank,
+  Banknote,
+  Receipt,
+} from 'lucide-react';
 import './globals.css';
+
+const NAV_ICONS: Record<string, React.ReactNode> = {
+  overview: <LayoutDashboard size={18} />,
+  transactions: <ArrowLeftRight size={18} />,
+  budgets: <Banknote size={18} />,
+  pots: <PiggyBank size={18} />,
+  bills: <Receipt size={18} />,
+};
 
 const publicSans = Public_Sans({
   subsets: ['latin'],
@@ -34,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       href={item.href}
                       className="flex items-center gap-3 rounded-lg px-3 py-4 text-sm text-grey-300 transition-colors hover:bg-grey-500/20 hover:text-white"
                     >
+                      {NAV_ICONS[item.icon]}
                       {item.label}
                     </a>
                   </li>
