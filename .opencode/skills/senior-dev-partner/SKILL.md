@@ -403,22 +403,38 @@ Regardless of stack chosen by the relevant persona:
 
 ### 6.1 Testing Philosophy — The Testing Trophy
 
-We follow the **Testing Trophy** model (Kent C. Dodds, 2021), not the testing pyramid:
+We follow the **Testing Trophy** model (Kent C. Dodds, 2021), not the testing pyramid.
+
+The guiding principle:
 
 > The more your tests resemble the way your software is used, the more confidence they can give you.
 
+Every testing decision is a trade-off across three dimensions. As you move up the trophy:
+
+| Dimension | Lower (Static / Unit) | Higher (Integration / E2E) |
+|---|---|---|
+| **Cost** | Cheap to write, cheap to maintain | Expensive to write, fragile to maintain |
+| **Speed** | Milliseconds — runs in CI instantly | Seconds to minutes — slows CI feedback loop |
+| **Confidence** | Low — can't verify units work together | High — exercises real code paths together |
+
+The goal is maximum confidence per dollar spent. This is why **Integration tests get the largest investment** — they balance cost and confidence better than any other type.
+
 **Priority by investment:** Integration > Unit > Static > E2E
 
-| Test type | Focus | Mocking discipline | Tooling |
-|---|---|---|---|
-| **Integration** (largest focus) | How units work together; render with real providers | Mock only: network (MSW) + animation | Vitest + RTL + userEvent + MSW |
-| **Unit** | Pure functions, utilities, validators, algorithms | None — test pure IO | Vitest |
-| **Static** | Type errors, typos, logic bugs at dev time | N/A | TypeScript strict + ESLint |
-| **E2E** | Single critical user flow (full app) | Nothing — real backend | Playwright |
+| Test type | Focus | Mocking discipline | Tooling | What it CAN'T verify |
+|---|---|---|---|---|
+| **Integration** (largest focus) | How units work together; render with real providers | Mock only: network (MSW) + animation | Vitest + RTL + userEvent + MSW | Backend data passing, production infra |
+| **Unit** | Pure functions, utilities, validators, algorithms | None — test pure IO | Vitest | Whether dependencies are called correctly |
+| **Static** | Type errors, typos, logic bugs at dev time | N/A | TypeScript strict + ESLint | Business logic correctness |
+| **E2E** | Single critical user flow (full app) | Nothing — real backend | Playwright | Any edge case not exercised by the flow |
 
-**Why we test:** Confidence — not coverage numbers. Every test must earn its keep by providing confidence that the code works and that future changes won't break it.
+**Why we test:** Confidence — not coverage numbers. Every test must earn its keep by providing confidence that the code works and that future changes won't break it. A test that never fails is not providing value — it's just noise and maintenance cost.
 
-**Mocking discipline:** Mock as little as possible. Every mock is a trade-off — it moves the test further from how the software is actually used. If you must mock, prefer MSW for network and inline factories for test data. Never mock what you don't own.
+**Mocking discipline:** Mock as little as possible. Every mock is a trade-off — it moves the test further from how the software is actually used. This means:
+- Never mock `fetch` or `http` directly — use **MSW** (Mock Service Worker) to intercept at the network level
+- Never shallow render components — use **RTL** which renders real DOM
+- Never mock what you don't own — test against real module behavior where possible
+- Prefer inline factories and `@faker-js/faker` over shared test fixtures (shared fixtures create hidden coupling between tests)
 
 ### 6.2 Test-First — Mandatory for All Code (Strict)
 

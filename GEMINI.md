@@ -85,10 +85,21 @@ This is the operating procedure for every task. No exceptions.
 │  2. IMPLEMENT → Exactly ONE unit (one file/slice)           │
 │  3. VERIFY → Builds, runs, tests pass for THIS slice       │
 │  4. SURFACE → "Unit N done. Files: X, Y. Want me to stage?"│
-│  5. STOP → Do NOT proceed. Wait for developer.              │
-│  6. REPEAT → After commit or explicit "continue"            │
+│               ^ EXACT wording — never "proceed",            │
+│                 "want me to commit", or anything else       │
+│  5. STOP → Say nothing else. Do NOT proceed. Wait silently. │
+│  6. REPEAT → Depends on developer response (see table below)│
 └────────────────────────────────────────────────────────────┘
 ```
+
+**Developer response mapping (MANDATORY):**
+
+| Developer says | You do |
+|---|---|
+| `"commit"` or `"stage it"` | Run Commit Gate, then return to step 2 |
+| `"continue"` or `"next unit"` | Log the deferral, return to step 2 |
+| `"stop"` | Run session-end checklist |
+| Anything else (e.g. "okay", "looks good", 👍) | Ask: *"To clarify — want me to stage it, continue, or stop?"* |
 
 Breaking this loop (implementing multiple units before surfacing, or writing
 unit N+1 without waiting) is a protocol violation — same severity as skipping
@@ -152,13 +163,25 @@ Derive from the staged diff, not from memory. No body by default.
 4. Run again and confirm green
 5. Refactor if needed, re-running after each change
 
-Testing philosophy (Testing Trophy model):
-- **Integration** (largest focus): React Testing Library + userEvent + MSW
-- **Unit**: Pure functions, validators, algorithms (Vitest)
-- **Static**: TypeScript strict + ESLint
-- **E2E**: One critical user flow (Playwright)
+Testing philosophy (Testing Trophy model — Kent C. Dodds):
+> The more your tests resemble the way your software is used, the more confidence they can give you.
 
-Never mock what you don't own. Prefer MSW for network mocking.
+Trade-offs by level:
+
+| Level | Cost | Speed | Confidence | What it CAN'T verify |
+|-------|------|-------|------------|---------------------|
+| Integration (largest focus) | Medium | Fast | High | Backend data, production infra |
+| Unit | Low | Instant | Low-Moderate | Dependency correctness |
+| Static | Lowest | Instant | Low | Business logic |
+| E2E | Highest | Slowest | Highest | Edge cases outside the flow |
+
+**Priority by investment:** Integration > Unit > Static > E2E
+
+**Mocking discipline:**
+- MSW for network — never mock `fetch`/`http` directly
+- RTL for DOM — never shallow render
+- Never mock what you don't own
+- Inline factories or `@faker-js/faker` — no shared fixtures
 
 ---
 

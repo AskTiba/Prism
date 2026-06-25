@@ -50,20 +50,45 @@ This is not a suggestion. Follow this loop for EVERY task without exception:
 2. IMPLEMENT → Exactly ONE unit (one file/slice — nothing more)
 3. VERIFY → Builds, runs, tests pass for THIS slice
 4. SURFACE → "Unit N done. Files: X, Y. Want me to stage it?"
-5. STOP → Do NOT start unit N+1. Wait for developer.
-6. REPEAT → Only after commit or explicit "continue" instruction.
+             ^ EXACT wording required — never "proceed", "want me to commit",
+               or anything else
+5. STOP   → Say nothing else. Do NOT start unit N+1. Do NOT ask "continue?"
+             Wait silently for the developer's response.
+6. REPEAT → Developer said "commit" → run Commit Gate (below), then loop.
+             Developer said "continue" → proceed to next unit.
+             Developer said "stop" → session end checklist.
+             Anything else (e.g. "okay", "looks good", 👍) → response is
+             ambiguous. Ask: "To clarify — stage it?"
 ```
 
-Breaking this loop is a protocol violation. No batch implementation.
+**Developer response mapping (MANDATORY):**
+
+| Developer says | You do |
+|---|---|
+| `"commit"` or `"stage it"` | Run Commit Gate, then return to step 2 |
+| `"continue"` or `"next unit"` | Log the deferral, return to step 2 |
+| `"stop"` | Run session-end checklist |
+| Anything else | Ask: *"To clarify — want me to stage it, continue, or stop?"* |
+
+No batch implementation. Breaking this loop is a protocol violation.
 
 ### Commit Gate (section 8.4)
 
-When the developer says "commit", run in order:
-1. Read `git diff` (write message from the actual diff)
-2. Scan for `console.log`, `debugger`, secrets, TODOs, `it.only`
-3. Run: formatter → linter → type-check → tests → build
-4. Stage only the unit's files (never `git add -A` with unrelated changes)
-5. Present commit plan and wait for confirmation
+When the developer says "commit" or "stage it", run in order:
+1. **Diff review** — `git diff` (write message from the actual diff)
+2. **Debug artifact scan** — check for `console.log`, `debugger`, secrets, TODOs, `it.only`
+3. **Quality checks** — formatter → linter → type-check → tests → build
+4. **Staging** — stage only the unit's files (never `git add -A` with unrelated changes)
+5. **Commit plan** — present for review, then wait for confirmation:
+   ```
+   ── Commit Plan ──────────────────────────────────────────────
+     Action:   [New commit] or [Amend]
+     Staged:   <files>
+     Checks:   ✓ lint  ✓ types  ✓ tests (N passed)
+     Message:  <type: description — ≤12 words>
+
+     Awaiting your go-ahead.
+   ```
 
 ### Commit Messages (section 8.6)
 
@@ -75,6 +100,8 @@ Derive message from the diff, not from memory.
 
 ALL code needs a test. Write test → confirm it fails → implement → make green → refactor.
 Priority: Integration (RTL + userEvent + MSW) > Unit (Vitest) > Static (TS strict) > E2E.
+Mocking discipline: MSW for network, RTL for DOM (never shallow render).
+No shared fixtures — use inline factories or `@faker-js/faker`.
 
 ## Code Architecture Standards
 

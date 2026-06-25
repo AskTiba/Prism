@@ -1,0 +1,52 @@
+{
+  "transactions": [
+    { "avatar": "/images/avatars/emma-richardson.jpg", "name": "Emma Richardson", "category": "General", "date": "2024-08-19T14:23:11Z", "amount": 75.50, "recurring": false },
+    { "avatar": "/images/avatars/savvy.jpg", "name": "Savvy", "category": "General", "date": "2024-08-19T14:23:11Z", "amount": -2500.00, "recurring": false },
+    { "avatar": "/images/avatars/spotify.jpg", "name": "Spotify", "category": "Entertainment", "date": "2024-08-18T04:12:34Z", "amount": -14.99, "recurring": true },
+    { "avatar": "/images/avatars/electra.jpg", "name": "Electra", "category": "Bills", "date": "2024-08-17T10:05:42Z", "amount": -280.00, "recurring": false },
+    { "avatar": "/images/avatars/maverick.jpg", "name": "Maverick", "category": "General", "date": "2024-08-17T09:33:05Z", "amount": -350.00, "recurring": false },
+    { "avatar": "/images/avatars/youtube.jpg", "name": "YouTube Premium", "category": "Entertainment", "date": "2024-08-16T11:00:55Z", "amount": -18.99, "recurring": true },
+    { "avatar": "/images/avatars/serenity.jpg", "name": "Serenity Spa", "category": "Personal Care", "date": "2024-08-16T07:20:29Z", "amount": -180.00, "recurring": false },
+    { "avatar": "/images/avatars/sunnyside.jpg", "name": "Sunnyside Cafe", "category": "Dining Out", "date": "2024-08-15T10:15:11Z", "amount": -32.50, "recurring": false },
+    { "avatar": "/images/avatars/pixel-play.jpg", "name": "Pixel Playground", "category": "Entertainment", "date": "2024-08-15T05:22:08Z", "amount": -49.99, "recurring": false },
+    { "avatar": "/images/avatars/pixar.jpg", "name": "Pixar", "category": "Entertainment", "date": "2024-08-14T17:01:39Z", "amount": -12.99, "recurring": false },
+    { "avatar": "/images/avatars/velocity.jpg", "name": "Velocity Fitness", "category": "Personal Care", "date": "2024-08-14T05:44:18Z", "amount": -55.00, "recurring": true },
+    { "avatar": "/images/avatars/elevate.jpg", "name": "Elevate Education", "category": "Education", "date": "2024-08-13T20:30:12Z", "amount": -45.00, "recurring": false },
+    { "avatar": "/images/avatars/greenplate.jpg", "name": "Green Plate Kitchen", "category": "Dining Out", "date": "2024-08-12T21:33:55Z", "amount": -24.80, "recurring": false },
+    { "avatar": "/images/avatars/netflix.jpg", "name": "Netflix", "category": "Entertainment", "date": "2024-08-12T18:00:00Z", "amount": -15.99, "recurring": true },
+    { "avatar": "/images/avatars/luna.jpg", "name": "Luna Sound", "category": "Entertainment", "date": "2024-08-11T22:10:44Z", "amount": -9.99, "recurring": true },
+    { "avatar": "/images/avatars/target.jpg", "name": "Target", "category": "Shopping", "date": "2024-08-10T15:45:30Z", "amount": -156.43, "recurring": false },
+    { "avatar": "/images/avatars/walmart.jpg", "name": "Walmart", "category": "Groceries", "date": "2024-08-09T11:20:00Z", "amount": -89.37, "recurring": false },
+    { "avatar": "/images/avatars/uber.jpg", "name": "Uber", "category": "Transportation", "date": "2024-08-08T08:15:22Z", "amount": -23.50, "recurring": false },
+    { "avatar": "/images/avatars/telus.jpg", "name": "Telus", "category": "Bills", "date": "2024-08-07T09:00:00Z", "amount": -95.00, "recurring": true },
+    { "avatar": "/images/avatars/whole-foods.jpg", "name": "Whole Foods", "category": "Groceries", "date": "2024-08-06T14:30:00Z", "amount": -212.80, "recurring": false },
+    { "avatar": "/images/avatars/amazon.jpg", "name": "Amazon", "category": "Shopping", "date": "2024-08-05T10:00:00Z", "amount": -45.99, "recurring": false },
+    { "avatar": "/images/avatars/starbucks.jpg", "name": "Starbucks", "category": "Dining Out", "date": "2024-08-04T07:45:00Z", "amount": -7.50, "recurring": false },
+    { "avatar": "/images/avatars/shell.jpg", "name": "Shell", "category": "Transportation", "date": "2024-08-03T16:20:00Z", "amount": -67.00, "recurring": false },
+    { "avatar": "/images/avatars/costco.jpg", "name": "Costco", "category": "Groceries", "date": "2024-08-02T12:15:00Z", "amount": -187.50, "recurring": false },
+    { "avatar": "/images/avatars/adobe.jpg", "name": "Adobe Creative Cloud", "category": "General", "date": "2024-08-01T08:00:00Z", "amount": -54.99, "recurring": true },
+    { "avatar": "/images/avatars/hbo.jpg", "name": "HBO Max", "category": "Entertainment", "date": "2024-07-30T18:00:00Z", "amount": -14.99, "recurring": true },
+    { "avatar": "/images/avatars/cvs.jpg", "name": "CVS Pharmacy", "category": "Personal Care", "date": "2024-07-29T10:30:00Z", "amount": -34.27, "recurring": false },
+    { "avatar": "/images/avatars/publix.jpg", "name": "Publix", "category": "Groceries", "date": "2024-07-28T13:00:00Z", "amount": -124.80, "recurring": false },
+    { "avatar": "/images/avatars/delta.jpg", "name": "Delta Airlines", "category": "Transportation", "date": "2024-07-27T06:00:00Z", "amount": -520.00, "recurring": false },
+    { "avatar": "/images/avatars/freelance.jpg", "name": "Freelance Income", "category": "General", "date": "2024-07-25T09:00:00Z", "amount": 1750.00, "recurring": false },
+    { "avatar": "/images/avatars/hulu.jpg", "name": "Hulu", "category": "Entertainment", "date": "2024-07-22T18:00:00Z", "amount": -11.99, "recurring": true },
+    { "avatar": "/images/avatars/aldi.jpg", "name": "Aldi", "category": "Groceries", "date": "2024-07-21T11:30:00Z", "amount": -76.40, "recurring": false },
+    { "avatar": "/images/avatars/best-buy.jpg", "name": "Best Buy", "category": "Shopping", "date": "2024-07-20T15:00:00Z", "amount": -1299.00, "recurring": false },
+    { "avatar": "/images/avatars/lyft.jpg", "name": "Lyft", "category": "Transportation", "date": "2024-07-19T08:30:00Z", "amount": -18.75, "recurring": false },
+    { "avatar": "/images/avatars/divvy.jpg", "name": "Divvy", "category": "Dining Out", "date": "2024-07-18T12:45:00Z", "amount": -65.00, "recurring": false }
+  ],
+  "budgets": [
+    { "category": "Entertainment", "maximum": 80.00, "theme": "#277C78" },
+    { "category": "Bills", "maximum": 400.00, "theme": "#82C9D7" },
+    { "category": "Groceries", "maximum": 500.00, "theme": "#F2CDAC" },
+    { "category": "Dining Out", "maximum": 150.00, "theme": "#826CB0" },
+    { "category": "Transportation", "maximum": 100.00, "theme": "#C94736" }
+  ],
+  "pots": [
+    { "name": "Emergency Fund", "target": 5000.00, "total": 1850.00, "theme": "#277C78" },
+    { "name": "Vacation", "target": 3000.00, "total": 1200.00, "theme": "#82C9D7" },
+    { "name": "New Laptop", "target": 2500.00, "total": 900.00, "theme": "#F2CDAC" },
+    { "name": "Holiday Gifts", "target": 800.00, "total": 350.00, "theme": "#826CB0" }
+  ]
+}
