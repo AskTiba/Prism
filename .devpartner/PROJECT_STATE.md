@@ -1,6 +1,6 @@
 # Project State
 
-> Last updated: 2026-06-25 21:00 by Emily (Senior Dev Partner)
+> Last updated: 2026-06-25 21:15 by Emily (Senior Dev Partner)
 > This file is the source of truth for project continuity across sessions.
 
 ## 1. Project Snapshot
@@ -10,7 +10,7 @@
 | Project name | Personal Finance App |
 | Primary stack | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript |
 | Repo / branch | main (local, no remote) |
-| Current milestone | Scaffold: root config committed — apps/web next |
+| Current milestone | Scaffold complete — building app layout and pages |
 | Overall status | Green |
 
 ## 2. What Currently Works
@@ -19,37 +19,35 @@
 |---|---|---|
 | Root workspace config | `package.json`, `turbo.json`, `.gitignore`, `.prettierrc` | Monorepo foundation committed |
 | AI tooling files | `AGENTS.md`, `GEMINI.md`, `opencode.jsonc`, `.opencode/skills/`, `.devpartner/` | All AI integration files committed |
-| Skill hub structure (`~/dev/skill5.0/`) | Manual review | Universal AI skill directory — updated with mandatory work loop |
+| apps/web scaffold | `package.json`, `tsconfig.json`, `next.config.ts`, `tailwind.config.ts`, `postcss.config.js` | Next.js App Router + Tailwind CSS configured, `npm install` passed |
+| Skill hub structure (`~/dev/skill5.0/`) | Manual review | Universal AI skill directory |
 
 > Anything not yet verified belongs in section 3 as "implemented, unverified" —
 > not here.
 
 ## 3. In Progress
 
-**Current feature/task:** apps/web scaffold — Next.js App Router + Tailwind CSS
+**Current feature/task:** Root layout + global CSS + responsive sidebar navigation
 
-**Unit decomposition:**
+**Unit decomposition (linear, one at a time):**
 
-- [x] Unit 1 — Root workspace config (package.json, turbo.json, .gitignore, .prettierrc) + AI tooling files
-- [x] Unit 2 — apps/web: package.json, next.config.ts, tailwind.config.ts, tsconfig.json, postcss.config.js
-- [ ] Unit 3 — apps/web: Root layout + global CSS + app/page.tsx
-- [ ] Unit 4 — packages/db: Prisma schema + client
-- [ ] Unit 5 — packages/shared: Types + Zod schemas
-- [ ] Unit 6 — Install dependencies + verify `turbo dev`
-- [ ] Unit 7 — Prisma schema matching data.json structure + seed script
-- [ ] Unit 8 — tRPC router setup with initial queries
-- [ ] Unit 9 — Layout shell with responsive sidebar navigation
-- [ ] Unit 10 — Overview page
-- [ ] Unit 11 — Transactions page (pagination, search, sort, filter)
-- [ ] Unit 12 — Budgets page (CRUD + progress + latest transactions)
-- [ ] Unit 13 — Pots page (CRUD + progress + add/withdraw)
-- [ ] Unit 14 — Recurring Bills page (list + search + sort + status)
-- [ ] Unit 15 — Form validation (Zod + error messages)
-- [ ] Unit 16 — Tests (Vitest + RTL + MSW)
+- [x] Unit 1 — Root workspace config + AI tooling files
+- [x] Unit 2 — apps/web scaffold (Next.js + Tailwind + npm install)
+- [ ] Unit 3 — Root layout + global CSS + responsive sidebar navigation
+- [ ] Unit 4 — packages/db: Prisma schema + client + seed from data.json
+- [ ] Unit 5 — packages/shared: Types + Zod schemas + constants
+- [ ] Unit 6 — tRPC router + TanStack Query provider setup
+- [ ] Unit 7 — Overview page
+- [ ] Unit 8 — Transactions page (table, pagination, search, sort, filter)
+- [ ] Unit 9 — Budgets page (CRUD, progress bars, latest 3 transactions)
+- [ ] Unit 10 — Pots page (CRUD, progress, add/withdraw)
+- [ ] Unit 11 — Recurring Bills page (list, search, sort, status)
+- [ ] Unit 12 — Form validation (Zod schemas + error messages)
+- [ ] Unit 13 — Tests (Vitest + RTL + MSW)
 
 | Active unit | Files involved | Exact next step | Verification owed |
 |---|---|---|---|
-| Unit 2 | `apps/web/package.json`, `apps/web/next.config.ts`, `apps/web/tailwind.config.ts`, `apps/web/tsconfig.json`, `apps/web/postcss.config.js` | Write apps/web config files — one at a time | NPM install completes, no build errors |
+| Unit 3 | `apps/web/src/app/layout.tsx`, `apps/web/src/app/globals.css`, sidebar components | Write root layout with sidebar nav structure | Browser renders at mobile, tablet, desktop with nav visible |
 
 > **Session boundary note**: If the active unit is incomplete, use
 > `git stash push -m "description"` (preferred) rather than a `wip:` commit. Record the
