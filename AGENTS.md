@@ -47,18 +47,20 @@ This is not a suggestion. Follow this loop for EVERY task without exception:
 
 ```
 1. DECOMPOSE → State the ordered list of verifiable units
-2. IMPLEMENT → Exactly ONE unit (one file/slice — nothing more)
-3. VERIFY → Builds, runs, tests pass for THIS slice
-4. SURFACE → "Unit N done. Files: X, Y. Want me to stage it?"
-             ^ EXACT wording required — never "proceed", "want me to commit",
-               or anything else
-5. STOP   → Say nothing else. Do NOT start unit N+1. Do NOT ask "continue?"
-             Wait silently for the developer's response.
-6. REPEAT → Developer said "commit" → run Commit Gate (below), then loop.
-             Developer said "continue" → proceed to next unit.
-             Developer said "stop" → session end checklist.
-             Anything else (e.g. "okay", "looks good", 👍) → response is
-             ambiguous. Ask: "To clarify — stage it?"
+2. IMPLEMENT → Write the TEST first → confirm it FAILS →
+               then write the code to pass it
+               (code + test = one slice, never code without test)
+3. VERIFY   → Tests ALL pass + builds clean for THIS slice
+4. SURFACE  → "Unit N done. Files: X, Y. Want me to stage it?"
+               ^ EXACT wording required — never "proceed", "want me to commit",
+                 or anything else
+5. STOP     → Say nothing else. Do NOT start unit N+1. Do NOT ask "continue?"
+               Wait silently for the developer's response.
+6. REPEAT   → Developer said "commit" → run Commit Gate (below), then loop.
+               Developer said "continue" → proceed to next unit.
+               Developer said "stop" → session end checklist.
+               Anything else (e.g. "okay", "looks good", 👍) → response is
+               ambiguous. Ask: "To clarify — stage it?"
 ```
 
 **Developer response mapping (MANDATORY):**
@@ -71,13 +73,16 @@ This is not a suggestion. Follow this loop for EVERY task without exception:
 | Anything else | Ask: *"To clarify — want me to stage it, continue, or stop?"* |
 
 No batch implementation. Breaking this loop is a protocol violation.
+Tests are NOT optional. A unit without a test is an incomplete unit.
 
 ### Commit Gate (section 8.4)
 
 When the developer says "commit" or "stage it", run in order:
 1. **Diff review** — `git diff` (write message from the actual diff)
 2. **Debug artifact scan** — check for `console.log`, `debugger`, secrets, TODOs, `it.only`
-3. **Quality checks** — formatter → linter → type-check → tests → build
+3. **Quality checks** — formatter → linter → type-check → tests → build.
+   **Tests must pass.** A commit with no test file for a changed implementation
+   is a gate failure — flag it to the developer.
 4. **Staging** — stage only the unit's files (never `git add -A` with unrelated changes)
 5. **Commit plan** — present for review, then wait for confirmation:
    ```
@@ -98,7 +103,9 @@ Derive message from the diff, not from memory.
 
 ### Test-First (section 6.2)
 
-ALL code needs a test. Write test → confirm it fails → implement → make green → refactor.
+ALL code needs a test. A unit without a test is an incomplete unit — never committed.
+Write test → confirm it fails → implement → make green → refactor. Code and test are one
+slice; there is no "code now, tests later."
 Priority: Integration (RTL + userEvent + MSW) > Unit (Vitest) > Static (TS strict) > E2E.
 Mocking discipline: MSW for network, RTL for DOM (never shallow render).
 No shared fixtures — use inline factories or `@faker-js/faker`.

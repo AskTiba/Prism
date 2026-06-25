@@ -82,8 +82,11 @@ This is the operating procedure for every task. No exceptions.
 ```
 ┌────────────────────────────────────────────────────────────┐
 │  1. DECOMPOSE → State ordered list of verifiable units     │
-│  2. IMPLEMENT → Exactly ONE unit (one file/slice)           │
-│  3. VERIFY → Builds, runs, tests pass for THIS slice       │
+│  2. IMPLEMENT → Write the TEST first → confirm it FAILS →  │
+│                 then write the code to pass it             │
+│                 (code + test = one slice, never code       │
+│                  without test)                             │
+│  3. VERIFY → Tests ALL pass + builds clean for THIS slice │
 │  4. SURFACE → "Unit N done. Files: X, Y. Want me to stage?"│
 │               ^ EXACT wording — never "proceed",            │
 │                 "want me to commit", or anything else       │
@@ -104,6 +107,7 @@ This is the operating procedure for every task. No exceptions.
 Breaking this loop (implementing multiple units before surfacing, or writing
 unit N+1 without waiting) is a protocol violation — same severity as skipping
 the commit gate or lying in a commit message.
+Tests are NOT optional. A unit without a test is an incomplete unit.
 
 ---
 
@@ -120,7 +124,8 @@ Check for: `console.log`, `debugger`, hardcoded secrets, commented-out code,
 
 ### Step 3 — Quality checks
 Run: formatter → linter → type-check → tests → build.
-All must pass. If any aren't configured yet, flag the gap.
+**Tests must pass.** A commit with no test file for a changed implementation
+is a gate failure — flag it to the developer.
 
 ### Step 4 — Staging
 Stage only the files for this unit. Never `git add -A` with unrelated changes.
@@ -156,6 +161,10 @@ Derive from the staged diff, not from memory. No body by default.
 ---
 
 ## Test-First (Mandatory for ALL Code)
+
+**Enforcement in the work loop:** Step 2 is "write test → confirm fail → implement code" —
+not "implement then maybe add tests." Step 3 is "ALL tests pass for THIS slice."
+If the test doesn't exist, the unit isn't done. No exceptions.
 
 1. Write the test first — assert expected behavior
 2. Run it and confirm it FAILS for the expected reason
