@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "AGENTS.md",
+    ".devpartner/PROJECT_STATE.md",
+    ".devpartner/DECISIONS.md",
+    ".devpartner/ERROR_LOG.md",
+    ".devpartner/ROADMAP.md"
+  ],
+  "agent": {
+    "plan": {
+      "mode": "primary",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny"
+      }
+    },
+    "build": {
+      "mode": "primary",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
+      }
+    }
+  }
+}
