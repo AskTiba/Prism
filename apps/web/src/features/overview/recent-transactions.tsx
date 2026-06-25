@@ -25,7 +25,7 @@ export function RecentTransactions() {
       <ul className="divide-y divide-grey-100">
         {transactions.map((tx) => (
           <li key={tx.id} className="flex items-center justify-between py-3">
-            <span className="text-sm font-medium">{tx.name}</span>
+            <span className="min-w-0 truncate text-sm font-medium">{tx.name}</span>
             <span
               className={`text-sm font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
             >
