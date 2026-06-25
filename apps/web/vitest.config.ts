@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config'
 import path from 'path'
 
@@ -7,7 +8,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  esbuild: {
+    jsx: 'automatic',
+  },
   test: {
     globals: true,
+    environment: 'jsdom',
+    setupFiles: [],
   },
 })
