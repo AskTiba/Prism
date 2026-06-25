@@ -5,6 +5,7 @@ import { trpc } from '@/lib/trpc';
 export function PotsSummary() {
   const { data: pots } = trpc.pots.list.useQuery();
   const items = pots ?? [];
+  const totalSaved = items.reduce((s, p) => s + p.total, 0);
 
   return (
     <div className="rounded-xl bg-white px-5 py-6">
@@ -14,20 +15,38 @@ export function PotsSummary() {
           See Details
         </a>
       </div>
-      <ul className="space-y-3">
-        {items.map((pot) => (
-          <li key={pot.id} className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+
+      <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="flex items-center gap-4 rounded-xl bg-beige px-4 py-5 sm:w-2/5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green/10">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path
+                d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm1-6h-2V5h2v4zm0 2h-2v-2h2v2z"
+                fill="#277C78"
+              />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm text-grey-500">Total Saved</p>
+            <p className="text-2xl font-bold text-grey-900">${totalSaved.toFixed(2)}</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 sm:w-3/5">
+          {items.slice(0, 4).map((pot) => (
+            <div key={pot.id} className="flex items-start gap-3">
               <span
-                className="h-3 w-3 rounded-full"
+                className="mt-1 block h-8 w-1 shrink-0 rounded-full"
                 style={{ backgroundColor: pot.theme }}
               />
-              <span className="text-sm">{pot.name}</span>
+              <div>
+                <p className="text-xs text-grey-500">{pot.name}</p>
+                <p className="text-sm font-bold text-grey-900">${pot.total.toFixed(2)}</p>
+              </div>
             </div>
-            <span className="text-sm font-bold">${pot.total.toFixed(2)}</span>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
