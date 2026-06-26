@@ -10,7 +10,9 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
-    "lint": {},
+    "//#lint": {
+      "inputs": ["**/*.ts", "**/*.tsx", "**/*.mjs"]
+    },
     "test": {},
     "typecheck": {},
     "format": {},

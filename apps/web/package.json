@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "lint": "next lint",
+    "build": "next build --no-lint",
+    "lint": "eslint . --max-warnings 100",
     "typecheck": "tsc --noEmit",
     "test": "vitest"
   },

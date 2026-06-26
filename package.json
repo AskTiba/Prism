@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "turbo lint",
+    "lint": "eslint . --max-warnings 100",
+    "lint:fix": "eslint . --fix",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
     "format": "turbo format",
@@ -18,7 +19,12 @@
     "db:seed": "turbo db:seed"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@next/eslint-plugin-next": "^16.2.9",
+    "eslint": "^10.5.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "prettier": "^3.5.0",
-    "turbo": "^2.5.0"
+    "turbo": "^2.5.0",
+    "typescript-eslint": "^8.62.0"
   }
 }
