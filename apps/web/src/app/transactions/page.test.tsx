@@ -60,6 +60,18 @@ describe('TransactionsPage', () => {
     const filter = screen.getByRole('combobox', { name: /category/i });
     expect(filter).toBeInTheDocument();
   });
+
+  it('renders avatar images in table rows', () => {
+    const { container } = render(<TransactionsPage />);
+    const imgs = container.querySelectorAll('table img');
+    expect(imgs.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('renders recurring badge for recurring transactions', () => {
+    render(<TransactionsPage />);
+    const badges = screen.getAllByText(/recurring|monthly/i);
+    expect(badges.length).toBeGreaterThanOrEqual(1);
+  });
 });
 
 describe('TransactionsPage touch targets', () => {

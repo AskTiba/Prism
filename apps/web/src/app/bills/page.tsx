@@ -65,7 +65,18 @@ export default function BillsPage() {
           <tbody>
             {bills.map((bill) => (
               <tr key={bill.id} className="border-b border-grey-100 last:border-0">
-                <td className="px-5 py-3 font-medium">{bill.name}</td>
+                <td className="px-5 py-3">
+                  <div className="flex items-center gap-3">
+                    {bill.avatar ? (
+                      <img src={bill.avatar} alt="" className="h-8 w-8 rounded-full object-cover" />
+                    ) : (
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
+                        {bill.name.charAt(0)}
+                      </span>
+                    )}
+                    <span className="font-medium">{bill.name}</span>
+                  </div>
+                </td>
                 <td className="px-5 py-3 font-bold">{formatCurrency(bill.amount)}</td>
                 <td className="px-5 py-3">
                   <span

@@ -90,7 +90,18 @@ export default function TransactionsPage() {
           <tbody>
             {transactions.map((tx) => (
               <tr key={tx.id} className="border-b border-grey-100 last:border-0">
-                <td className="px-5 py-3 font-medium">{tx.name}</td>
+                <td className="px-5 py-3">
+                  <div className="flex items-center gap-3">
+                    {tx.avatar ? (
+                      <img src={tx.avatar} alt="" className="h-8 w-8 rounded-full object-cover" />
+                    ) : (
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
+                        {tx.name.charAt(0)}
+                      </span>
+                    )}
+                    <span className="font-medium">{tx.name}</span>
+                  </div>
+                </td>
                 <td className="px-5 py-3 text-grey-500">{tx.category}</td>
                 <td className="px-5 py-3 text-grey-500">
                   {new Date(tx.date).toLocaleDateString('en-US', {
@@ -99,10 +110,17 @@ export default function TransactionsPage() {
                     year: 'numeric',
                   })}
                 </td>
-                <td
-                  className={`px-5 py-3 text-right font-bold ${tx.amount < 0 ? '' : 'text-green'}`}
-                >
-                  {formatCurrency(tx.amount)}
+                <td className="px-5 py-3 text-right">
+                  <div className="flex flex-col items-end gap-1">
+                    <span className={`font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}>
+                      {formatCurrency(tx.amount)}
+                    </span>
+                    {tx.recurring && (
+                      <span className="rounded-full bg-grey-100 px-2 py-0.5 text-xs text-grey-500">
+                        Monthly
+                      </span>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
