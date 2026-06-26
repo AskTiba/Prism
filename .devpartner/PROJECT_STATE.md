@@ -1,6 +1,6 @@
 # Project State
 
-> Last updated: 2026-06-27 by Emily (Senior Dev Partner)
+> Last updated: 2026-06-28 by Emily (Senior Dev Partner)
 > This file is the source of truth for project continuity across sessions.
 
 ## 1. Project Snapshot
@@ -10,7 +10,7 @@
 | Project name      | Personal Finance App                                                                                          |
 | Primary stack     | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React + ESLint |
 | Repo / branch     | main (local, no remote)                                                                                       |
-| Current milestone | All 13 core units + design alignment + P0.1 multi-user auth + P0.2 PostgreSQL + P0.3 CI/CD & ESLint |
+| Current milestone | All 13 core units + design alignment + P0.1–P0.5 + P1.2–P1.4 + Enhanced transaction filters |
 | Overall status    | Green                                                                                                         |
 
 ## 2. What Currently Works
@@ -24,9 +24,9 @@
 | Root layout + sidebar                   | `layout.tsx`, `globals.css`                                                                                                                                                                                      | Responsive sidebar with 5 links, 48dp touch targets, Lucide icons |
 | Data layer                              | Prisma schema (Transaction, Budget, Pot), client singleton, seed script                                                                                                                                          | SQLite + Prisma Client generated from data.json                   |
 | Shared package                          | Constants, types, Zod schemas for budget/pot CRUD + transaction filters                                                                                                                                          | 30 tests passing                                                  |
-| tRPC routers                            | Transactions (list with pagination/search/sort/filter), Budgets (CRUD + spent), Pots (CRUD + add/withdraw)                                                                                                       | 14 router tests passing                                           |
+| tRPC routers                            | Transactions (list with pagination/search/sort/filter/subtype/tags/date), Budgets (CRUD + spent), Pots (CRUD + add/withdraw)                                                                                     | 17 router tests passing                                           |
 | Overview page                           | SummaryCards (dark Current Balance, white Income/Expenses), RecentTransactions (avatar, category, date), BudgetSummary (Recharts donut chart), PotsSummary (Total Saved box + 2x2 grid), BillsSummary            | 18 overview tests                                                 |
-| Transactions page                       | Search, category filter, sort dropdown, paginated table with Prev/Next, avatar column, recurring badge                                                                                                           | 9 tests                                                           |
+| Transactions page                       | Search, category, subtype, tags, date range filters, sort dropdown, paginated table with Prev/Next, avatar column, recurring badge                                                                               | 17 tests                                                          |
 | Budgets page                            | Budget cards with theme color, spent vs maximum, progress bars                                                                                                                                                   | 3 tests                                                           |
 | Pots page                               | Pot cards with theme color, total vs target, progress bars                                                                                                                                                       | 2 tests                                                           |
 | Recurring Bills page                    | List with paid/upcoming status, counts, search, avatar column                                                                                                                                                    | 2 tests                                                           |
@@ -39,27 +39,31 @@
 | ESLint config (P0.3) | `eslint.config.js` — ESLint v10 flat config with @eslint/js, typescript-eslint, react-hooks, @next/eslint-plugin-next | 0 errors, 5 warnings on current codebase |
 | CI/CD skill hub | `.opencode/skills/ci-partner/` — reusable CI/CD scaffolding skill copied from ~/dev/skill5.0/ci-partner/ | Auto-detects stack from package.json/turbo.json/vitest.config.ts |
 | PostgreSQL migration (P0.2) | Prisma schema provider changed to `postgresql`, `pg` driver installed, Neon cloud DB configured, seeded | 7 tables created in Neon, 35 txns/5 budgets/4 pots seeded |
+| Data sovereignty (P0.4) | Export CSV api route + link on transactions page, delete account dialog in sidebar | Committed |
+| Enhanced schema (P0.5) | tags + subtype fields on Transaction model, CSV export includes new columns, tag badges + subtype badge on transactions page | Committed |
+| Net Worth Aggregator (P1.2) | netWorth tRPC procedure + NetWorthCard on overview | 2 units committed |
+| Cash Flow Calendar (P1.3) | projectCashFlow pure function + cashFlowProjection tRPC + CashFlowCard on overview | 3 units committed |
+| Subscription Radar (P1.4) | detectSubscriptions pure function + detectedSubscriptions tRPC + widget on bills page | 3 units committed |
+| Enhanced transaction filters | subtype/tags/date filters added to tRPC list + filter UI on transactions page | 2 units committed |
 
 ## 3. In Progress
 
-**Current feature/task:** All P0 items complete. Ready for Phase 1.
+**Current feature/task:** All P0 + Phase 1 features complete. Paused.
 
 **Unit decomposition (linear, one at a time):**
 
 - [x] All 13 core units + DA-1 (complete)
-- [x] P0.1 Unit 1 — Install NextAuth.js deps + add User/Session Prisma models + db:push
-- [x] P0.1 Unit 2 — Auth config + API route handler
-- [x] P0.1 Unit 3 — tRPC auth context + protectedProcedure
-- [x] P0.1 Unit 4 — Wire userId into all routers + seed + tests
-- [x] P0.1 Unit 5 — Auth UI in sidebar
-- [x] P0.2 Unit 1 — Schema provider to postgresql + pg driver + .env.example
-- [x] P0.2 Unit 2 — Generate client + verify tests pass
-- [x] P0.2 Unit 3 — db:push + db:seed against Neon PostgreSQL
-- [x] P0.3 Unit 1 — Copy ci-partner to .opencode/skills/
-- [x] P0.3 Unit 2 — Generate .github/workflows/ci.yml
-- [x] P0.3 Unit 3 — Generate eslint.config.js
-- [x] P0.3 Unit 4 — Install ESLint deps + wire turbo.json
-- [x] P0.3 Unit 5 — Verify lint/typecheck/test/build pass
+- [x] P0.1-P0.5 (all units complete)
+- [x] P1.2 Unit 1 — netWorth tRPC procedure + tests
+- [x] P1.2 Unit 2 — NetWorthCard widget on overview + tests
+- [x] P1.3 Unit 1 — projectCashFlow pure function + tests
+- [x] P1.3 Unit 2 — cashFlowProjection tRPC procedure + tests
+- [x] P1.3 Unit 3 — CashFlowCard widget on overview + tests
+- [x] P1.4 Unit 1 — detectSubscriptions pure function + tests
+- [x] P1.4 Unit 2 — detectedSubscriptions tRPC procedure + tests
+- [x] P1.4 Unit 3 — DetectedSubscriptions widget on bills page + tests
+- [x] Enhanced filter Unit 1 — Add subtype/tags/date range to tRPC list + tests
+- [x] Enhanced filter Unit 2 — Add filter UI to transactions page + tests
 
 ## 4. Known Issues / Blocked
 
@@ -77,8 +81,8 @@ See `personal_finance_app_feature_brief.md` and `.devpartner/ROADMAP.md` for the
 - [x] P0.1: Multi-user auth (NextAuth.js v5)
 - [x] P0.2: PostgreSQL migration + Prisma
 - [x] P0.3: CI/CD pipeline (GitHub Actions)
-- [ ] P0.4: Data sovereignty (export + delete)
-- [ ] P0.5: Enhanced transaction schema (tags, subtypes)
+- [x] P0.4: Data sovereignty (export + delete)
+- [x] P0.5: Enhanced transaction schema (tags, subtypes)
 
 ## 6. Conventions & Environment
 
