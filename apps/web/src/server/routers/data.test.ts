@@ -1,9 +1,29 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { TRPCError } from '@trpc/server';
 import { dataRouter } from './data';
 
 const mockPrisma = {
   transaction: {
     findMany: vi.fn(),
+    deleteMany: vi.fn(),
+  },
+  budget: {
+    deleteMany: vi.fn(),
+  },
+  pot: {
+    deleteMany: vi.fn(),
+  },
+  session: {
+    deleteMany: vi.fn(),
+  },
+  account: {
+    deleteMany: vi.fn(),
+  },
+  authenticator: {
+    deleteMany: vi.fn(),
+  },
+  user: {
+    delete: vi.fn(),
   },
 };
 
@@ -69,5 +89,43 @@ describe('dataRouter.exportCsv', () => {
     expect(mockPrisma.transaction.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: { userId: 'test-user' } }),
     );
+  });
+});
+
+describe('dataRouter.deleteAccount', () => {
+  it('deletes all user data and the user account', async () => {
+    mockPrisma.transaction.deleteMany.mockResolvedValue({ count: 5 });
+    mockPrisma.budget.deleteMany.mockResolvedValue({ count: 2 });
+    mockPrisma.pot.deleteMany.mockResolvedValue({ count: 1 });
+    mockPrisma.session.deleteMany.mockResolvedValue({ count: 0 });
+    mockPrisma.account.deleteMany.mockResolvedValue({ count: 0 });
+    mockPrisma.authenticator.deleteMany.mockResolvedValue({ count: 0 });
+    mockPrisma.user.delete.mockResolvedValue({ id: 'test-user' });
+
+    const caller = createCaller();
+    const result = await caller.deleteAccount();
+
+    expect(mockPrisma.transaction.deleteMany).toHaveBeenCalledWith({
+      where: { userId: 'test-user' },
+    });
+    expect(mockPrisma.budget.deleteMany).toHaveBeenCalledWith({
+      where: { userId: 'test-user' },
+    });
+    expect(mockPrisma.pot.deleteMany).toHaveBeenCalledWith({
+      where: { userId: 'test-user' },
+    });
+    expect(mockPrisma.user.delete).toHaveBeenCalledWith({
+      where: { id: 'test-user' },
+    });
+    expect(result).toEqual({ success: true });
+  });
+
+  it('rejects unauthenticated requests', async () => {
+    const caller = dataRouter.createCaller({
+      prisma: mockPrisma as any,
+      session: null,
+    } as any);
+
+    await expect(caller.deleteAccount()).rejects.toThrow(TRPCError);
   });
 });

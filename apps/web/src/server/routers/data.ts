@@ -9,6 +9,16 @@ function escapeCsv(value: string | number | boolean): string {
 }
 
 export const dataRouter = router({
+  deleteAccount: protectedProcedure.mutation(async ({ ctx }) => {
+    await ctx.prisma.transaction.deleteMany({ where: { userId: ctx.userId } });
+    await ctx.prisma.budget.deleteMany({ where: { userId: ctx.userId } });
+    await ctx.prisma.pot.deleteMany({ where: { userId: ctx.userId } });
+    await ctx.prisma.session.deleteMany({ where: { userId: ctx.userId } });
+    await ctx.prisma.account.deleteMany({ where: { userId: ctx.userId } });
+    await ctx.prisma.authenticator.deleteMany({ where: { userId: ctx.userId } });
+    await ctx.prisma.user.delete({ where: { id: ctx.userId } });
+    return { success: true };
+  }),
   exportCsv: protectedProcedure.query(async ({ ctx }) => {
     const transactions = await ctx.prisma.transaction.findMany({
       where: { userId: ctx.userId },
