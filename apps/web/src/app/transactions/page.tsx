@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trpc } from '@/lib/trpc';
-import { CATEGORIES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
+import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
 
 function formatCurrency(amount: number): string {
   const prefix = amount < 0 ? '' : '+';
@@ -12,12 +12,20 @@ function formatCurrency(amount: number): string {
 export default function TransactionsPage() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
+  const [subtype, setSubtype] = useState('');
+  const [tags, setTags] = useState('');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
   const [sort, setSort] = useState('latest');
   const [page, setPage] = useState(1);
 
   const { data } = trpc.transactions.list.useQuery({
     search: search || undefined,
     category: (category || undefined) as any,
+    subtype: (subtype || undefined) as any,
+    tags: tags || undefined,
+    dateFrom: dateFrom || undefined,
+    dateTo: dateTo || undefined,
     sort: sort as any,
     page,
     pageSize: PAGE_SIZE,
@@ -61,6 +69,57 @@ export default function TransactionsPage() {
         </select>
 
         <select
+          value={subtype}
+          onChange={(e) => {
+            setSubtype(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
+          aria-label="Subtype filter"
+        >
+          <option value="">All Subtypes</option>
+          {SUBTYPES.map((st) => (
+            <option key={st} value={st}>
+              {st}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="search"
+          placeholder="Search tags"
+          value={tags}
+          onChange={(e) => {
+            setTags(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
+          aria-label="Search tags"
+        />
+
+        <input
+          type="date"
+          value={dateFrom}
+          onChange={(e) => {
+            setDateFrom(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
+          aria-label="From date"
+        />
+
+        <input
+          type="date"
+          value={dateTo}
+          onChange={(e) => {
+            setDateTo(e.target.value);
+            setPage(1);
+          }}
+          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
+          aria-label="To date"
+        />
+
+        <select
           value={sort}
           onChange={(e) => {
             setSort(e.target.value);
@@ -101,7 +160,11 @@ export default function TransactionsPage() {
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
                     {tx.avatar ? (
-                      <img src={tx.avatar} alt="" className="h-8 w-8 rounded-full object-cover" />
+                      <img
+                        src={tx.avatar}
+                        alt=""
+                        className="h-8 w-8 rounded-full object-cover"
+                      />
                     ) : (
                       <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
                         {tx.name.charAt(0)}
@@ -139,7 +202,9 @@ export default function TransactionsPage() {
                 </td>
                 <td className="px-5 py-3 text-right">
                   <div className="flex flex-col items-end gap-1">
-                    <span className={`font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}>
+                    <span
+                      className={`font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
+                    >
                       {formatCurrency(tx.amount)}
                     </span>
                     {tx.recurring && (

@@ -48,7 +48,7 @@ describe('TransactionsPage', () => {
 
   it('shows search input', () => {
     render(<TransactionsPage />);
-    expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/search transactions/i)).toBeInTheDocument();
   });
 
   it('shows pagination info', () => {
@@ -60,6 +60,26 @@ describe('TransactionsPage', () => {
     render(<TransactionsPage />);
     const filter = screen.getByRole('combobox', { name: /category/i });
     expect(filter).toBeInTheDocument();
+  });
+
+  it('shows subtype filter', () => {
+    render(<TransactionsPage />);
+    const filter = screen.getByRole('combobox', { name: /subtype/i });
+    expect(filter).toBeInTheDocument();
+  });
+
+  it('shows tags search input', () => {
+    render(<TransactionsPage />);
+    const input = screen.getByPlaceholderText(/search tags/i);
+    expect(input).toBeInTheDocument();
+  });
+
+  it('shows date range inputs', () => {
+    render(<TransactionsPage />);
+    const dateFrom = screen.getByLabelText(/from date/i);
+    const dateTo = screen.getByLabelText(/to date/i);
+    expect(dateFrom).toBeInTheDocument();
+    expect(dateTo).toBeInTheDocument();
   });
 
   it('renders export CSV link', () => {
