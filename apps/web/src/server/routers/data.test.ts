@@ -6,12 +6,14 @@ const mockPrisma = {
   transaction: {
     findMany: vi.fn(),
     deleteMany: vi.fn(),
+    aggregate: vi.fn(),
   },
   budget: {
     deleteMany: vi.fn(),
   },
   pot: {
     deleteMany: vi.fn(),
+    aggregate: vi.fn(),
   },
   session: {
     deleteMany: vi.fn(),
@@ -134,5 +136,50 @@ describe('dataRouter.deleteAccount', () => {
     } as any);
 
     await expect(caller.deleteAccount()).rejects.toThrow(TRPCError);
+  });
+});
+
+describe('dataRouter.netWorth', () => {
+  it('returns net worth breakdown from aggregate data', async () => {
+    mockPrisma.transaction.aggregate
+      .mockResolvedValueOnce({ _sum: { amount: 5000 } })
+      .mockResolvedValueOnce({ _sum: { amount: -3200 } });
+    mockPrisma.pot.aggregate.mockResolvedValue({ _sum: { total: 2400 } });
+
+    const caller = createCaller();
+    const result = await caller.netWorth();
+
+    expect(result).toEqual({
+      totalIncome: 5000,
+      totalExpenses: 3200,
+      totalPots: 2400,
+      netWorth: 4200,
+    });
+  });
+
+  it('handles null aggregates (no data)', async () => {
+    mockPrisma.transaction.aggregate
+      .mockResolvedValueOnce({ _sum: { amount: null } })
+      .mockResolvedValueOnce({ _sum: { amount: null } });
+    mockPrisma.pot.aggregate.mockResolvedValue({ _sum: { total: null } });
+
+    const caller = createCaller();
+    const result = await caller.netWorth();
+
+    expect(result).toEqual({
+      totalIncome: 0,
+      totalExpenses: 0,
+      totalPots: 0,
+      netWorth: 0,
+    });
+  });
+
+  it('rejects unauthenticated requests', async () => {
+    const caller = dataRouter.createCaller({
+      prisma: mockPrisma as any,
+      session: null,
+    } as any);
+
+    await expect(caller.netWorth()).rejects.toThrow(TRPCError);
   });
 });

@@ -9,6 +9,29 @@ function escapeCsv(value: string | number | boolean): string {
 }
 
 export const dataRouter = router({
+  netWorth: protectedProcedure.query(async ({ ctx }) => {
+    const [incomeResult, expenseResult, potsResult] = await Promise.all([
+      ctx.prisma.transaction.aggregate({
+        where: { userId: ctx.userId, amount: { gt: 0 } },
+        _sum: { amount: true },
+      }),
+      ctx.prisma.transaction.aggregate({
+        where: { userId: ctx.userId, amount: { lt: 0 } },
+        _sum: { amount: true },
+      }),
+      ctx.prisma.pot.aggregate({
+        where: { userId: ctx.userId },
+        _sum: { total: true },
+      }),
+    ]);
+
+    const totalIncome = incomeResult._sum.amount ?? 0;
+    const totalExpenses = Math.abs(expenseResult._sum.amount ?? 0);
+    const totalPots = potsResult._sum.total ?? 0;
+    const netWorth = totalIncome - totalExpenses + totalPots;
+
+    return { totalIncome, totalExpenses, totalPots, netWorth };
+  }),
   deleteAccount: protectedProcedure.mutation(async ({ ctx }) => {
     await ctx.prisma.transaction.deleteMany({ where: { userId: ctx.userId } });
     await ctx.prisma.budget.deleteMany({ where: { userId: ctx.userId } });
