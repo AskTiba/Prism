@@ -1,0 +1,38 @@
+image: node:{{NODE_VERSION}}
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - node_modules/
+    - .turbo/cache/
+
+stages:
+  - install
+  - quality
+  - build
+
+install:
+  stage: install
+  script:
+    - {{INSTALL_CMD}}
+  artifacts:
+    paths:
+      - node_modules/
+
+quality:
+  stage: quality
+  script:
+    {{PRISMA_GENERATE}}
+    - {{FORMAT_CHECK_CMD}}
+    - {{LINT_CMD}}
+    - {{TYPECHECK_CMD}}
+    - {{TEST_CMD}}
+  needs:
+    - install
+
+build:
+  stage: build
+  script:
+    - {{BUILD_CMD}}
+  needs:
+    - quality

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: {{NODE_VERSION}}
+          cache: '{{CACHE_KEY}}'
+
+      - run: {{CI_INSTALL_CMD}}
+
+      {{PRISMA_GENERATE}}
+
+      - run: {{FORMAT_CHECK_CMD}}
+
+      - run: {{LINT_CMD}}
+
+      - run: {{TYPECHECK_CMD}}
+
+      - run: {{TEST_CMD}}
+
+      - run: {{BUILD_CMD}}
