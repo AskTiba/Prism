@@ -38,8 +38,10 @@ financial inclusion, and privacy/security.
 | 5 pages implementation | Done | 2026-06-27 | Overview, Transactions, Budgets, Pots, Recurring Bills |
 | Form validation | Done | 2026-06-27 | Zod + error messages on Budget/Pot forms |
 | Responsive + accessibility | Done | 2026-06-27 | Nav wrap, 48dp touch targets, truncation |
-| Tests | Done | 2026-06-27 | 44+ tests across all units |
+| Tests | Done | 2026-06-27 | 44+ tests across all units, now 77 tests |
 | Design alignment | Done | 2026-06-27 | Dark cards, donut chart, icons, avatars, badges |
+| ESLint + CI/CD | Done | 2026-06-27 | ESLint v10 flat config + GitHub Actions pipeline |
+| CI/CD skill hub | Done | 2026-06-27 | ci-partner skill copied to .opencode/skills/ |
 | Full-stack upgrade (bonus) | Pending research | Future | Database, API routes, auth |
 | React Native app (bonus) | Not started | Future | Expo app consuming same API |
 
@@ -91,7 +93,7 @@ All 20+ features from `personal_finance_app_feature_brief.md` assessed:
 Infrastructure upgrades required before building Phase 1 features:
 - P0.1: Multi-user auth (NextAuth.js or Clerk)
 - P0.2: PostgreSQL migration + Prisma schema update
-- P0.3: CI/CD pipeline (GitHub Actions + lint + test + build)
+- [x] P0.3: CI/CD pipeline (GitHub Actions + lint + test + build)
 - P0.4: Data sovereignty (one-click export + deletion)
 - P0.5: Enhanced transaction schema (tags, subtypes, recurring metadata)
 
@@ -125,8 +127,7 @@ Infrastructure upgrades required before building Phase 1 features:
 - Behavioral Authentication (7.2), Decoy Account (7.4), Transparency Scorecard (7.5)
 
 ## Open Questions (deferred for user research)
-1. Multi-user auth: NextAuth.js (self-hosted) or Clerk (managed)?
-2. Open banking: Plaid (US/UK/EU), Mono/Stitch (Africa), or both?
+1. Open banking: Plaid (US/UK/EU), Mono/Stitch (Africa), or both?
 3. Mobile: Expo RN app alongside Phase 1, or web-only for now?
 4. AI Co-Pilot: BYO LLM key (OpenAI/Anthropic) or self-hosted (Llama)?
 5. Budget timeline: Incremental or milestone-targeted?
@@ -136,7 +137,7 @@ Infrastructure upgrades required before building Phase 1 features:
 | Date Identified | Item | Risk if Unaddressed | Deferred Because | Revisit When |
 |---|---|---|---|---|
 | 2026-06-27 | Pre-existing TS error in budgets.test.ts (category type) | `turbo typecheck` fails | Not introduced by any unit's changes; pre-existing in initial scaffold | Before any production deployment |
-| 2026-06-27 | No ESLint config | `next lint` offers interactive setup | Not blocking development | Before CI setup |
+| 2026-06-27 | 5 pre-existing ESLint warnings (no-img-element, no-explicit-any) | Can't reach zero-warning CI gate | Pre-existing design choices (img tags, any types in mocks) | Before production deployment |
 | 2026-06-27 | Vitest hangs with concurrent test files | Can't run full suite in one pass | Environment/resource issue | Before CI setup |
 | 2026-06-27 | No multi-user auth | Blocks all social/inclusion features | User researching options | Phase 0 start |
 | 2026-06-27 | SQLite not suitable for multi-user | Concurrency limits at scale | Acceptable for single-user MVP | Phase 0 start |

@@ -8,9 +8,9 @@
 | Field             | Value                                                                                                         |
 | ----------------- | ------------------------------------------------------------------------------------------------------------- |
 | Project name      | Personal Finance App                                                                                          |
-| Primary stack     | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React |
+| Primary stack     | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React + ESLint |
 | Repo / branch     | main (local, no remote)                                                                                       |
-| Current milestone | All 13 core units + design alignment + P0.1 multi-user auth |
+| Current milestone | All 13 core units + design alignment + P0.1 multi-user auth + P0.3 CI/CD & ESLint |
 | Overall status    | Green                                                                                                         |
 
 ## 2. What Currently Works
@@ -35,10 +35,13 @@
 | Pot add/withdraw form                   | Add/withdraw buttons with Zod validated amount input                                                                                                                                                             | 5 tests                                                           |
 | Design alignment | Summary cards (dark/white), Pots (Total Saved box + 2x2 grid), Recent Transactions (avatars + dates), Nav (Lucide SVG icons), Budget Overview (Recharts donut chart), Tables (avatar columns + recurring badges) | Committed across 7+ PRs |
 | Multi-user auth (P0.1) | NextAuth.js v5 + Prisma adapter, Credentials provider, tRPC protectedProcedure, userId-scoped routers, auth UI in sidebar | 5 commits on main |
+| CI/CD pipeline (P0.3) | `.github/workflows/ci.yml` — GitHub Actions (npm ci, Prisma generate, format:check, lint, typecheck, test, build) | Pre-scaffolded, activates on remote addition |
+| ESLint config (P0.3) | `eslint.config.js` — ESLint v10 flat config with @eslint/js, typescript-eslint, react-hooks, @next/eslint-plugin-next | 0 errors, 5 warnings on current codebase |
+| CI/CD skill hub | `.opencode/skills/ci-partner/` — reusable CI/CD scaffolding skill copied from ~/dev/skill5.0/ci-partner/ | Auto-detects stack from package.json/turbo.json/vitest.config.ts |
 
 ## 3. In Progress
 
-**Current feature/task:** P0.1 complete. Ready for P0.2 (PostgreSQL migration) or P0.3 (CI/CD).
+**Current feature/task:** P0.1 and P0.3 complete. Ready for P0.2 (PostgreSQL migration).
 
 **Unit decomposition (linear, one at a time):**
 
@@ -48,6 +51,11 @@
 - [x] P0.1 Unit 3 — tRPC auth context + protectedProcedure
 - [x] P0.1 Unit 4 — Wire userId into all routers + seed + tests
 - [x] P0.1 Unit 5 — Auth UI in sidebar
+- [x] P0.3 Unit 1 — Copy ci-partner to .opencode/skills/
+- [x] P0.3 Unit 2 — Generate .github/workflows/ci.yml
+- [x] P0.3 Unit 3 — Generate eslint.config.js
+- [x] P0.3 Unit 4 — Install ESLint deps + wire turbo.json
+- [x] P0.3 Unit 5 — Verify lint/typecheck/test/build pass
 
 ## 4. Known Issues / Blocked
 
@@ -55,7 +63,6 @@
 | ---------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------- | -------- |
 | Pre-existing TS error in budgets router test                                 | `tsc --noEmit` fails on `budgets.test.ts:45` (category type mismatch) | Needs test type fix                          | Low      |
 | Avatar test in transactions page expects images but mock data has no avatars | `transactions/page.test.tsx:67` fails — `avatar: null` in mock        | Pre-existing mock data issue                 | Low      |
-| No ESLint config configured                                                  | `next lint` prompts interactive setup                                 | Needs `eslint.config.*` creation             | Low      |
 | Vitest occasionally hangs running multiple test files concurrently           | CI/cache env issue                                                    | Investigate vitest config or resource limits | Low      |
 
 ## 5. Up Next (Roadmap-aligned)
@@ -66,7 +73,7 @@ See `personal_finance_app_feature_brief.md` and `.devpartner/ROADMAP.md` for the
 
 - [x] P0.1: Multi-user auth (NextAuth.js v5)
 - [ ] P0.2: PostgreSQL migration + Prisma
-- [ ] P0.3: CI/CD pipeline (GitHub Actions)
+- [x] P0.3: CI/CD pipeline (GitHub Actions)
 - [ ] P0.4: Data sovereignty (export + delete)
 - [ ] P0.5: Enhanced transaction schema (tags, subtypes)
 
@@ -74,7 +81,7 @@ See `personal_finance_app_feature_brief.md` and `.devpartner/ROADMAP.md` for the
 
 | Aspect                           | Convention                                                                     |
 | -------------------------------- | ------------------------------------------------------------------------------ |
-| Formatter / linter               | Prettier + ESLint (Turbo-managed — ESLint config not yet set up)               |
+| Formatter / linter               | Prettier + ESLint (Turbo-managed)                                              |
 | Type-check command               | `turbo typecheck`                                                              |
 | Test framework / command         | Vitest + RTL via `npx vitest run` (from apps/web)                              |
 | Test strategy                    | Integration-focused: RTL + userEvent for components, Vitest for pure functions |
