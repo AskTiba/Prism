@@ -22,6 +22,7 @@ vi.mock('@/lib/trpc', () => ({
     },
     data: {
       netWorth: { useQuery: () => ({ data: { totalIncome: 5000, totalExpenses: 3200, totalPots: 2400, netWorth: 4200 } }) },
+      cashFlowProjection: { useQuery: () => ({ data: [] }) },
     },
   },
 }))
