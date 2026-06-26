@@ -10,7 +10,7 @@
 | Project name      | Personal Finance App                                                                                          |
 | Primary stack     | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React |
 | Repo / branch     | main (local, no remote)                                                                                       |
-| Current milestone | All 13 core units complete + design alignment pass                                                            |
+| Current milestone | All 13 core units + design alignment + P0.1 multi-user auth |
 | Overall status    | Green                                                                                                         |
 
 ## 2. What Currently Works
@@ -33,11 +33,12 @@
 | Budget form                             | Create form with Zod validation (category select, max input, error display)                                                                                                                                      | 3 tests                                                           |
 | Pot form                                | Create form with Zod validation (name, target, theme select, error display)                                                                                                                                      | 4 tests                                                           |
 | Pot add/withdraw form                   | Add/withdraw buttons with Zod validated amount input                                                                                                                                                             | 5 tests                                                           |
-| Design alignment                        | Summary cards (dark/white), Pots (Total Saved box + 2x2 grid), Recent Transactions (avatars + dates), Nav (Lucide SVG icons), Budget Overview (Recharts donut chart), Tables (avatar columns + recurring badges) | Committed across 7+ PRs                                           |
+| Design alignment | Summary cards (dark/white), Pots (Total Saved box + 2x2 grid), Recent Transactions (avatars + dates), Nav (Lucide SVG icons), Budget Overview (Recharts donut chart), Tables (avatar columns + recurring badges) | Committed across 7+ PRs |
+| Multi-user auth (P0.1) | NextAuth.js v5 + Prisma adapter, Credentials provider, tRPC protectedProcedure, userId-scoped routers, auth UI in sidebar | 5 commits on main |
 
 ## 3. In Progress
 
-**Current feature/task:** Phase 0.1 — Multi-user auth with NextAuth.js v5
+**Current feature/task:** P0.1 complete. Ready for P0.2 (PostgreSQL migration) or P0.3 (CI/CD).
 
 **Unit decomposition (linear, one at a time):**
 
@@ -59,15 +60,15 @@
 
 ## 5. Up Next (Roadmap-aligned)
 
-See `personal_finance_app_feature_brief.md` and `.devpartner/ROADMAP.md` for the full 4-phase plan. User is researching before Phase 0 kick-off.
+See `personal_finance_app_feature_brief.md` and `.devpartner/ROADMAP.md` for the full 4-phase plan.
 
-### Phase 0 — Foundation (Pending user research)
+### Phase 0 — Foundation (P0.1 complete)
 
-1. Multi-user auth (NextAuth.js or Clerk)
-2. PostgreSQL migration + Prisma
-3. CI/CD pipeline (GitHub Actions)
-4. Data sovereignty (export + delete)
-5. Enhanced transaction schema (tags, subtypes)
+- [x] P0.1: Multi-user auth (NextAuth.js v5)
+- [ ] P0.2: PostgreSQL migration + Prisma
+- [ ] P0.3: CI/CD pipeline (GitHub Actions)
+- [ ] P0.4: Data sovereignty (export + delete)
+- [ ] P0.5: Enhanced transaction schema (tags, subtypes)
 
 ## 6. Conventions & Environment
 
