@@ -8,9 +8,9 @@
 | Field | Value |
 |---|---|
 | Project name | Personal Finance App |
-| Primary stack | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript |
+| Primary stack | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React |
 | Repo / branch | main (local, no remote) |
-| Current milestone | All 13 core units complete — app fully functional |
+| Current milestone | All 13 core units complete + design alignment pass |
 | Overall status | Green |
 
 ## 2. What Currently Works
@@ -21,23 +21,23 @@
 | AI tooling files | `AGENTS.md`, `GEMINI.md`, `opencode.jsonc`, `.opencode/skills/`, `.devpartner/` | All AI integration files committed |
 | apps/web scaffold | `package.json`, `tsconfig.json`, `next.config.ts`, `tailwind.config.ts`, `postcss.config.js` | Next.js App Router + Tailwind CSS configured |
 | Skill hub structure (`~/dev/skill5.0/`) | Manual review | Universal AI skill directory |
-| Root layout + sidebar | `layout.tsx`, `globals.css` | Responsive sidebar with 5 links, 48dp touch targets |
+| Root layout + sidebar | `layout.tsx`, `globals.css` | Responsive sidebar with 5 links, 48dp touch targets, Lucide icons |
 | Data layer | Prisma schema (Transaction, Budget, Pot), client singleton, seed script | SQLite + Prisma Client generated from data.json |
 | Shared package | Constants, types, Zod schemas for budget/pot CRUD + transaction filters | 30 tests passing |
 | tRPC routers | Transactions (list with pagination/search/sort/filter), Budgets (CRUD + spent), Pots (CRUD + add/withdraw) | 14 router tests passing |
-| Overview page | SummaryCards, RecentTransactions, BudgetSummary, PotsSummary, BillsSummary | 1 integration test |
-| Transactions page | Search, category filter, sort dropdown, paginated table with Prev/Next | 6 tests |
+| Overview page | SummaryCards (dark Current Balance, white Income/Expenses), RecentTransactions (avatar, category, date), BudgetSummary (Recharts donut chart), PotsSummary (Total Saved box + 2x2 grid), BillsSummary | 18 overview tests |
+| Transactions page | Search, category filter, sort dropdown, paginated table with Prev/Next, avatar column, recurring badge | 9 tests |
 | Budgets page | Budget cards with theme color, spent vs maximum, progress bars | 3 tests |
 | Pots page | Pot cards with theme color, total vs target, progress bars | 2 tests |
-| Recurring Bills page | List with paid/upcoming status, counts, search | 2 tests |
+| Recurring Bills page | List with paid/upcoming status, counts, search, avatar column | 2 tests |
 | Budget form | Create form with Zod validation (category select, max input, error display) | 3 tests |
 | Pot form | Create form with Zod validation (name, target, theme select, error display) | 4 tests |
 | Pot add/withdraw form | Add/withdraw buttons with Zod validated amount input | 5 tests |
-| Responsive accessibility fixes | Nav wrap + 48dp touch targets on nav, filters, pagination, widget links; truncated long names | 8 tests across layout, transactions, widgets |
+| Design alignment | Summary cards (dark/white), Pots (Total Saved box + 2x2 grid), Recent Transactions (avatars + dates), Nav (Lucide SVG icons), Budget Overview (Recharts donut chart), Tables (avatar columns + recurring badges) | Committed across 7+ PRs |
 
 ## 3. In Progress
 
-**Current feature/task:** None — all 13 units complete.
+**Current feature/task:** Design alignment complete. User is conducting independent research on the full feature brief before beginning Phase 1.
 
 **Unit decomposition (linear, one at a time):**
 
@@ -54,6 +54,7 @@
 - [x] Unit 11 — Recurring Bills page (list, search, sort, status)
 - [x] Unit 12 — Form validation (Budget create, Pot create, Pot add/withdraw)
 - [x] Unit 13 — Responsive audit + accessibility fixes (nav, touch targets, overflow)
+- [x] DA-1 — Design alignment: Summary cards, Pots overview, Recent Transactions, Nav icons, Budget donut chart, Avatar columns, Recurring badges
 
 ## 4. Known Issues / Blocked
 
@@ -61,15 +62,18 @@
 |---|---|---|---|
 | Pre-existing TS error in budgets router test | `tsc --noEmit` fails on `budgets.test.ts:45` (category type mismatch) | Needs test type fix | Low |
 | No ESLint config configured | `next lint` prompts interactive setup | Needs `eslint.config.*` creation | Low |
+| Vitest occasionally hangs running multiple test files concurrently | CI/cache env issue | Investigate vitest config or resource limits | Low |
 
 ## 5. Up Next (Roadmap-aligned)
 
-1. Full-stack upgrade: multi-user auth, PostgreSQL migration
-2. React Native mobile app consuming same tRPC API
-3. MSW integration tests for full-page workflows
-4. Dark mode support
-5. E2E tests with Playwright
-6. CI/CD setup (GitHub Actions)
+See `personal_finance_app_feature_brief.md` and `.devpartner/ROADMAP.md` for the full 4-phase plan. User is researching before Phase 0 kick-off.
+
+### Phase 0 — Foundation (Pending user research)
+1. Multi-user auth (NextAuth.js or Clerk)
+2. PostgreSQL migration + Prisma
+3. CI/CD pipeline (GitHub Actions)
+4. Data sovereignty (export + delete)
+5. Enhanced transaction schema (tags, subtypes)
 
 ## 6. Conventions & Environment
 
@@ -93,4 +97,4 @@
 
 ## 8. Open Questions for User
 
-- (none)
+- (unsolved during session — user researching)
