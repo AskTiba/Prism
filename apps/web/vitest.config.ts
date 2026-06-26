@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vitest/config'
-import path from 'path'
+import { defineConfig } from 'vitest/config';
+import path from 'path';
 
 export default defineConfig({
   resolve: {
@@ -15,5 +15,10 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: [],
+    server: {
+      deps: {
+        inline: ['next-auth', '@auth/core', '@auth/prisma-adapter'],
+      },
+    },
   },
-})
+});
