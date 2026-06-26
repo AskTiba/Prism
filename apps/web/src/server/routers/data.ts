@@ -1,5 +1,6 @@
 import { router, protectedProcedure } from '../trpc';
 import { detectSubscriptions } from '@/lib/subscription-radar';
+import { projectCashFlow } from '@/lib/cash-flow';
 
 function escapeCsv(value: string | number | boolean): string {
   const str = String(value);
@@ -43,6 +44,20 @@ export const dataRouter = router({
         name: tx.name,
         amount: tx.amount,
         date: tx.date.toISOString().split('T')[0],
+      })),
+    );
+  }),
+  cashFlowProjection: protectedProcedure.query(async ({ ctx }) => {
+    const transactions = await ctx.prisma.transaction.findMany({
+      where: { userId: ctx.userId },
+      select: { name: true, amount: true, date: true, recurring: true },
+    });
+    return projectCashFlow(
+      transactions.map((tx) => ({
+        name: tx.name,
+        amount: tx.amount,
+        date: tx.date.toISOString().split('T')[0],
+        recurring: tx.recurring,
       })),
     );
   }),

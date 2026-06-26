@@ -212,3 +212,29 @@ describe('dataRouter.detectedSubscriptions', () => {
     await expect(caller.detectedSubscriptions()).rejects.toThrow(TRPCError);
   });
 });
+
+describe('dataRouter.cashFlowProjection', () => {
+  it('returns projected entries from recurring transactions', async () => {
+    mockPrisma.transaction.findMany.mockResolvedValue([
+      { name: 'Rent', amount: -1200, date: new Date('2024-08-01'), recurring: true },
+      { name: 'Rent', amount: -1200, date: new Date('2024-07-01'), recurring: true },
+      { name: 'Rent', amount: -1200, date: new Date('2024-06-01'), recurring: true },
+    ]);
+
+    const caller = createCaller();
+    const result = await caller.cashFlowProjection();
+
+    expect(result.length).toBeGreaterThanOrEqual(1);
+    expect(result[0].name).toBe('Rent');
+    expect(result[0].amount).toBe(-1200);
+  });
+
+  it('rejects unauthenticated requests', async () => {
+    const caller = dataRouter.createCaller({
+      prisma: mockPrisma as any,
+      session: null,
+    } as any);
+
+    await expect(caller.cashFlowProjection()).rejects.toThrow(TRPCError);
+  });
+});
