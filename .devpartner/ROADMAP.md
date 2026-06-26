@@ -91,8 +91,8 @@ All 20+ features from `personal_finance_app_feature_brief.md` assessed:
 
 ### Phase 0 — Foundation (est. 6 weeks)
 Infrastructure upgrades required before building Phase 1 features:
-- P0.1: Multi-user auth (NextAuth.js or Clerk)
-- P0.2: PostgreSQL migration + Prisma schema update
+- [x] P0.1: Multi-user auth (NextAuth.js or Clerk)
+- [x] P0.2: PostgreSQL migration + Prisma schema update
 - [x] P0.3: CI/CD pipeline (GitHub Actions + lint + test + build)
 - P0.4: Data sovereignty (one-click export + deletion)
 - P0.5: Enhanced transaction schema (tags, subtypes, recurring metadata)
@@ -140,7 +140,8 @@ Infrastructure upgrades required before building Phase 1 features:
 | 2026-06-27 | 5 pre-existing ESLint warnings (no-img-element, no-explicit-any) | Can't reach zero-warning CI gate | Pre-existing design choices (img tags, any types in mocks) | Before production deployment |
 | 2026-06-27 | Vitest hangs with concurrent test files | Can't run full suite in one pass | Environment/resource issue | Before CI setup |
 | 2026-06-27 | No multi-user auth | Blocks all social/inclusion features | User researching options | Phase 0 start |
-| 2026-06-27 | SQLite not suitable for multi-user | Concurrency limits at scale | Acceptable for single-user MVP | Phase 0 start |
+| 2026-06-27 | PostgreSQL multi-user concurrency | Needs connection pooling at scale | Single-user MVP fits free Neon tier | Phase 1 start |
+| 2026-06-27 | PostgreSQL multi-user concurrency | Needs connection pooling at scale | Single-user MVP fits free Neon tier | Phase 1 start |
 | 2026-06-27 | No offline sync layer | Offline-first features blocked | Deferred to Phase 1 | Phase 1 start |
 
 ## Backlog (Unscheduled)

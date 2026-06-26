@@ -15,6 +15,7 @@
 | 2026-06-27 | ESLint v10 flat config over per-package `.eslintrc`                               | DevOps Engineer      | ESLint v10 is the latest major, flat config is the standard going forward; single root config covers monorepo with custom overrides for test files and CJS configs; simpler than maintaining `.eslintrc` per workspace                     | Per-workspace `.eslintrc` (more granular but harder to maintain)                                                  | No             |
 | 2026-06-27 | `next build --no-lint` over fixing all pre-existing lint errors first             | DevOps Engineer      | Lint runs separately via `turbo lint` (root `eslint .`); Next.js build should not be blocked by pre-existing issues unrelated to the code change; standard Turborepo pattern                                                                 | Fix all lint errors first (scope creep beyond CI setup)                                                           | No             |
 | 2026-06-27 | GitHub Actions pre-scaffolded (no remote)                                         | DevOps Engineer      | CI pipeline is ready-to-activate — user just adds a remote and pushes; no placeholder/toggle code needed                                                                                                                                     | Conditional CI (more complex, adds branch logic)                                                                  | No             |
+| 2026-06-27 | Neon PostgreSQL cloud DB for P0.2 migration                                      | Staff Database Engineer | Serverless PostgreSQL fits single-user MVP scale; free tier adequate for dev; Prisma abstracts away provider differences so migration is low-risk                                                                                           | Docker local PostgreSQL (more setup, no benefit over cloud at current scale)                                      | No             |
 
 ## Git Conventions for This Project
 
@@ -42,4 +43,5 @@
 58e1563 fix: 48dp touch targets on overview widget links
 8790c0e fix: truncate long transaction names in overview
 e6583dd build: add ESLint config and CI pipeline
+b01f81d feat: migrate from SQLite to PostgreSQL
 ```

@@ -10,7 +10,7 @@
 | Project name      | Personal Finance App                                                                                          |
 | Primary stack     | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React + ESLint |
 | Repo / branch     | main (local, no remote)                                                                                       |
-| Current milestone | All 13 core units + design alignment + P0.1 multi-user auth + P0.3 CI/CD & ESLint |
+| Current milestone | All 13 core units + design alignment + P0.1 multi-user auth + P0.2 PostgreSQL + P0.3 CI/CD & ESLint |
 | Overall status    | Green                                                                                                         |
 
 ## 2. What Currently Works
@@ -38,10 +38,11 @@
 | CI/CD pipeline (P0.3) | `.github/workflows/ci.yml` — GitHub Actions (npm ci, Prisma generate, format:check, lint, typecheck, test, build) | Pre-scaffolded, activates on remote addition |
 | ESLint config (P0.3) | `eslint.config.js` — ESLint v10 flat config with @eslint/js, typescript-eslint, react-hooks, @next/eslint-plugin-next | 0 errors, 5 warnings on current codebase |
 | CI/CD skill hub | `.opencode/skills/ci-partner/` — reusable CI/CD scaffolding skill copied from ~/dev/skill5.0/ci-partner/ | Auto-detects stack from package.json/turbo.json/vitest.config.ts |
+| PostgreSQL migration (P0.2) | Prisma schema provider changed to `postgresql`, `pg` driver installed, Neon cloud DB configured, seeded | 7 tables created in Neon, 35 txns/5 budgets/4 pots seeded |
 
 ## 3. In Progress
 
-**Current feature/task:** P0.1 and P0.3 complete. Ready for P0.2 (PostgreSQL migration).
+**Current feature/task:** All P0 items complete. Ready for Phase 1.
 
 **Unit decomposition (linear, one at a time):**
 
@@ -51,6 +52,9 @@
 - [x] P0.1 Unit 3 — tRPC auth context + protectedProcedure
 - [x] P0.1 Unit 4 — Wire userId into all routers + seed + tests
 - [x] P0.1 Unit 5 — Auth UI in sidebar
+- [x] P0.2 Unit 1 — Schema provider to postgresql + pg driver + .env.example
+- [x] P0.2 Unit 2 — Generate client + verify tests pass
+- [x] P0.2 Unit 3 — db:push + db:seed against Neon PostgreSQL
 - [x] P0.3 Unit 1 — Copy ci-partner to .opencode/skills/
 - [x] P0.3 Unit 2 — Generate .github/workflows/ci.yml
 - [x] P0.3 Unit 3 — Generate eslint.config.js
@@ -72,7 +76,7 @@ See `personal_finance_app_feature_brief.md` and `.devpartner/ROADMAP.md` for the
 ### Phase 0 — Foundation (P0.1 complete)
 
 - [x] P0.1: Multi-user auth (NextAuth.js v5)
-- [ ] P0.2: PostgreSQL migration + Prisma
+- [x] P0.2: PostgreSQL migration + Prisma
 - [x] P0.3: CI/CD pipeline (GitHub Actions)
 - [ ] P0.4: Data sovereignty (export + delete)
 - [ ] P0.5: Enhanced transaction schema (tags, subtypes)
