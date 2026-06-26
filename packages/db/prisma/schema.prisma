@@ -85,6 +85,8 @@ model Transaction {
   avatar    String?
   name      String
   category  String
+  tags      String[]
+  subtype   String?
   date      DateTime
   amount    Float
   recurring Boolean  @default(false)

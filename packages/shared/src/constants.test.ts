@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { CATEGORIES, CATEGORY_THEMES, SORT_OPTIONS, PAGE_SIZE } from './constants'
+import { CATEGORIES, CATEGORY_THEMES, SORT_OPTIONS, PAGE_SIZE, SUBTYPES } from './constants'
 
 describe('CATEGORIES', () => {
   it('contains expected categories', () => {
@@ -33,6 +33,13 @@ describe('SORT_OPTIONS', () => {
       expect(typeof opt.label).toBe('string')
       expect(typeof opt.value).toBe('string')
     }
+  })
+})
+
+describe('SUBTYPES', () => {
+  it('contains expected subtypes', () => {
+    expect(SUBTYPES).toContain('Essentials')
+    expect(SUBTYPES).toContain('Discretionary')
   })
 })
 

@@ -5,6 +5,8 @@ export type Transaction = {
   avatar: string | null
   name: string
   category: Category
+  tags: string[]
+  subtype: string | null
   date: string
   amount: number
   recurring: boolean

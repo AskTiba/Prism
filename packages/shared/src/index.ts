@@ -3,9 +3,10 @@ export {
   CATEGORY_THEMES,
   SORT_OPTIONS,
   PAGE_SIZE,
+  SUBTYPES,
 } from './constants'
 
-export type { Category, SortOption } from './constants'
+export type { Category, SortOption, Subtype } from './constants'
 
 export type {
   Transaction,

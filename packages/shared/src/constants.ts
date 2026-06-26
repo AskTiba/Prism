@@ -1,3 +1,11 @@
+export const SUBTYPES = [
+  'Income',
+  'Transfer',
+  'Essentials',
+  'Discretionary',
+  'Saving',
+] as const
+
 export const CATEGORIES = [
   'Entertainment',
   'Bills',
@@ -37,3 +45,4 @@ export const PAGE_SIZE = 10
 
 export type Category = (typeof CATEGORIES)[number]
 export type SortOption = (typeof SORT_OPTIONS)[number]['value']
+export type Subtype = (typeof SUBTYPES)[number]
