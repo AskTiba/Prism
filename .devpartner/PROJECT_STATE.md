@@ -44,17 +44,18 @@
 - [x] All 13 core units + DA-1 (complete)
 - [x] P0.1 Unit 1 — Install NextAuth.js deps + add User/Session Prisma models + db:push
 - [x] P0.1 Unit 2 — Auth config + API route handler
-- [ ] P0.1 Unit 3 — tRPC auth context + protectedProcedure
+- [x] P0.1 Unit 3 — tRPC auth context + protectedProcedure
 - [ ] P0.1 Unit 4 — Wire userId into all routers + seed + tests
 - [ ] P0.1 Unit 5 — Auth UI in sidebar
 
 ## 4. Known Issues / Blocked
 
-| Issue                                                              | Impact                                                                | Blocked on                                   | Priority |
-| ------------------------------------------------------------------ | --------------------------------------------------------------------- | -------------------------------------------- | -------- |
-| Pre-existing TS error in budgets router test                       | `tsc --noEmit` fails on `budgets.test.ts:45` (category type mismatch) | Needs test type fix                          | Low      |
-| No ESLint config configured                                        | `next lint` prompts interactive setup                                 | Needs `eslint.config.*` creation             | Low      |
-| Vitest occasionally hangs running multiple test files concurrently | CI/cache env issue                                                    | Investigate vitest config or resource limits | Low      |
+| Issue                                                                        | Impact                                                                | Blocked on                                   | Priority |
+| ---------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------- | -------- |
+| Pre-existing TS error in budgets router test                                 | `tsc --noEmit` fails on `budgets.test.ts:45` (category type mismatch) | Needs test type fix                          | Low      |
+| Avatar test in transactions page expects images but mock data has no avatars | `transactions/page.test.tsx:67` fails — `avatar: null` in mock        | Pre-existing mock data issue                 | Low      |
+| No ESLint config configured                                                  | `next lint` prompts interactive setup                                 | Needs `eslint.config.*` creation             | Low      |
+| Vitest occasionally hangs running multiple test files concurrently           | CI/cache env issue                                                    | Investigate vitest config or resource limits | Low      |
 
 ## 5. Up Next (Roadmap-aligned)
 
