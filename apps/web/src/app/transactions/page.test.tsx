@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import TransactionsPage from './page';
 import '@testing-library/jest-dom/vitest';
 
@@ -28,7 +27,7 @@ beforeEach(() => {
         category: i % 2 === 0 ? 'Bills' : 'Income',
         date: '2024-08-19T14:23:11Z',
         recurring: i % 3 === 0,
-        avatar: null,
+        avatar: i === 0 ? '/images/avatars/emma-richardson.jpg' : null,
       })),
       total: 25,
       page: 1,
