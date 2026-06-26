@@ -12,6 +12,9 @@ vi.mock('@/lib/trpc', () => ({
     transactions: {
       list: { useQuery: () => mockUseQuery.list() },
     },
+    data: {
+      detectedSubscriptions: { useQuery: () => ({ data: [] }) },
+    },
   },
 }));
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import { DetectedSubscriptions } from './detected-subscriptions';
 
 function formatCurrency(amount: number): string {
   const prefix = amount < 0 ? '-' : '+';
@@ -28,6 +29,8 @@ export default function BillsPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Recurring Bills</h1>
+
+      <DetectedSubscriptions />
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl bg-white px-5 py-6">
