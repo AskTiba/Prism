@@ -97,4 +97,48 @@ describe('transactionsRouter.list', () => {
       }),
     );
   });
+
+  it('filters by subtype', async () => {
+    mockPrisma.transaction.findMany.mockResolvedValue([]);
+    mockPrisma.transaction.count.mockResolvedValue(0);
+
+    const caller = createCaller();
+    await caller.list({ subtype: 'Essentials' });
+
+    expect(mockPrisma.transaction.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({ subtype: 'Essentials' }),
+      }),
+    );
+  });
+
+  it('filters by tags search', async () => {
+    mockPrisma.transaction.findMany.mockResolvedValue([]);
+    mockPrisma.transaction.count.mockResolvedValue(0);
+
+    const caller = createCaller();
+    await caller.list({ tags: 'urgent' });
+
+    expect(mockPrisma.transaction.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({ tags: { has: 'urgent' } }),
+      }),
+    );
+  });
+
+  it('filters by date range', async () => {
+    mockPrisma.transaction.findMany.mockResolvedValue([]);
+    mockPrisma.transaction.count.mockResolvedValue(0);
+
+    const caller = createCaller();
+    await caller.list({ dateFrom: '2024-01-01', dateTo: '2024-12-31' });
+
+    expect(mockPrisma.transaction.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          date: { gte: expect.any(Date), lte: expect.any(Date) },
+        }),
+      }),
+    );
+  });
 });

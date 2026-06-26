@@ -7,6 +7,14 @@ export const transactionsRouter = router({
     .query(async ({ ctx, input }) => {
       const where: Record<string, unknown> = { userId: ctx.userId };
       if (input.category) where.category = input.category;
+      if (input.subtype) where.subtype = input.subtype;
+      if (input.tags) where.tags = { has: input.tags };
+      if (input.dateFrom || input.dateTo) {
+        const dateFilter: Record<string, Date> = {};
+        if (input.dateFrom) dateFilter.gte = new Date(input.dateFrom);
+        if (input.dateTo) dateFilter.lte = new Date(input.dateTo);
+        where.date = dateFilter;
+      }
       if (input.search) {
         where.name = { contains: input.search };
       }
