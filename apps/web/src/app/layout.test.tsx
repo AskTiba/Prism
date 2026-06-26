@@ -6,6 +6,16 @@ vi.mock('@/lib/auth-actions', () => ({
   signOutAction: 'mocked-action' as any,
 }));
 
+vi.mock('@/lib/trpc', () => ({
+  trpc: {
+    data: {
+      deleteAccount: {
+        useMutation: () => ({ mutateAsync: vi.fn(), isError: false, error: null }),
+      },
+    },
+  },
+}));
+
 import { Sidebar } from '@/components/Sidebar';
 
 describe('Sidebar', () => {

@@ -1,5 +1,6 @@
 import type { Session } from 'next-auth';
 import { signOutAction } from '@/lib/auth-actions';
+import { DeleteAccountDialog } from './DeleteAccountDialog';
 import {
   LayoutDashboard,
   ArrowLeftRight,
@@ -35,17 +36,22 @@ export function Sidebar({ session }: { session: Session | null }) {
           </li>
         ))}
         {session?.user ? (
-          <li>
-            <form action={signOutAction}>
-              <button
-                type="submit"
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-4 text-sm text-grey-300 transition-colors hover:bg-grey-500/20 hover:text-white"
-              >
-                <LogOut size={18} />
-                Sign Out
-              </button>
-            </form>
-          </li>
+          <>
+            <li>
+              <form action={signOutAction}>
+                <button
+                  type="submit"
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-4 text-sm text-grey-300 transition-colors hover:bg-grey-500/20 hover:text-white"
+                >
+                  <LogOut size={18} />
+                  Sign Out
+                </button>
+              </form>
+            </li>
+            <li>
+              <DeleteAccountDialog />
+            </li>
+          </>
         ) : (
           <li>
             <a
