@@ -25,6 +25,8 @@ beforeEach(() => {
         name: `Transaction ${i + 1}`,
         amount: i % 2 === 0 ? -50 : 100,
         category: i % 2 === 0 ? 'Bills' : 'Income',
+        tags: i === 0 ? ['urgent', 'monthly'] : [],
+        subtype: i % 2 === 0 ? 'Essentials' : 'Income',
         date: '2024-08-19T14:23:11Z',
         recurring: i % 3 === 0,
         avatar: i === 0 ? '/images/avatars/emma-richardson.jpg' : null,
@@ -77,6 +79,18 @@ describe('TransactionsPage', () => {
     render(<TransactionsPage />);
     const badges = screen.getAllByText(/recurring|monthly/i);
     expect(badges.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('renders tags for transactions that have them', () => {
+    render(<TransactionsPage />);
+    expect(screen.getByText('urgent')).toBeInTheDocument();
+    expect(screen.getByText('monthly')).toBeInTheDocument();
+  });
+
+  it('renders subtype for transactions', () => {
+    render(<TransactionsPage />);
+    const essentials = screen.getAllByText('Essentials');
+    expect(essentials.length).toBeGreaterThanOrEqual(1);
   });
 });
 

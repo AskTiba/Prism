@@ -39,7 +39,12 @@ export function RecentTransactions() {
             )}
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{tx.name}</p>
-              <p className="text-xs text-grey-500">{tx.category}</p>
+              <p className="text-xs text-grey-500">
+                {tx.category}
+                {tx.subtype && (
+                  <span className="ml-1 rounded bg-beige px-1 text-[10px]">{tx.subtype}</span>
+                )}
+              </p>
             </div>
             <div className="text-right">
               <p

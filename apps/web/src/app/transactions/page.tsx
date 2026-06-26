@@ -90,6 +90,7 @@ export default function TransactionsPage() {
             <tr className="border-b border-grey-100 text-grey-500">
               <th className="px-5 py-3 font-medium">Name</th>
               <th className="px-5 py-3 font-medium">Category</th>
+              <th className="px-5 py-3 font-medium">Tags</th>
               <th className="px-5 py-3 font-medium">Date</th>
               <th className="px-5 py-3 text-right font-medium">Amount</th>
             </tr>
@@ -109,7 +110,26 @@ export default function TransactionsPage() {
                     <span className="font-medium">{tx.name}</span>
                   </div>
                 </td>
-                <td className="px-5 py-3 text-grey-500">{tx.category}</td>
+                <td className="px-5 py-3 text-grey-500">
+                  {tx.category}
+                  {tx.subtype && (
+                    <span className="ml-2 rounded bg-beige px-1.5 py-0.5 text-xs text-grey-500">
+                      {tx.subtype}
+                    </span>
+                  )}
+                </td>
+                <td className="px-5 py-3">
+                  <div className="flex flex-wrap gap-1">
+                    {tx.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-grey-100 px-2 py-0.5 text-xs text-grey-500"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </td>
                 <td className="px-5 py-3 text-grey-500">
                   {new Date(tx.date).toLocaleDateString('en-US', {
                     month: 'short',
