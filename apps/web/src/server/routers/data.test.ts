@@ -47,6 +47,8 @@ describe('dataRouter.exportCsv', () => {
         category: 'Dining Out',
         recurring: false,
         avatar: null,
+        tags: ['morning', 'quick'],
+        subtype: 'Discretionary',
       },
       {
         id: '2',
@@ -56,6 +58,8 @@ describe('dataRouter.exportCsv', () => {
         category: 'Income',
         recurring: true,
         avatar: null,
+        tags: [],
+        subtype: 'Income',
       },
     ]);
 
@@ -63,12 +67,15 @@ describe('dataRouter.exportCsv', () => {
     const csv = await caller.exportCsv();
 
     const lines = csv.trim().split('\n');
-    expect(lines[0]).toBe('Date,Name,Category,Amount,Recurring');
+    expect(lines[0]).toBe('Date,Name,Category,Amount,Recurring,Tags,Subtype');
     expect(lines[1]).toContain('Coffee');
     expect(lines[1]).toContain('-5');
+    expect(lines[1]).toContain('morning;quick');
+    expect(lines[1]).toContain('Discretionary');
     expect(lines[2]).toContain('Salary');
     expect(lines[2]).toContain('3000');
     expect(lines[2]).toContain('true');
+    expect(lines[2]).toContain('Income');
   });
 
   it('returns only headers when no transactions exist', async () => {
@@ -77,7 +84,7 @@ describe('dataRouter.exportCsv', () => {
     const caller = createCaller();
     const csv = await caller.exportCsv();
 
-    expect(csv.trim()).toBe('Date,Name,Category,Amount,Recurring');
+    expect(csv.trim()).toBe('Date,Name,Category,Amount,Recurring,Tags,Subtype');
   });
 
   it('only returns transactions for the current user', async () => {

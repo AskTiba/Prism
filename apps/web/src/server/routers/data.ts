@@ -25,7 +25,7 @@ export const dataRouter = router({
       orderBy: { date: 'desc' },
     });
 
-    const headers = ['Date', 'Name', 'Category', 'Amount', 'Recurring'];
+    const headers = ['Date', 'Name', 'Category', 'Amount', 'Recurring', 'Tags', 'Subtype'];
     const rows = transactions.map((tx) =>
       [
         tx.date.toISOString().split('T')[0],
@@ -33,6 +33,8 @@ export const dataRouter = router({
         tx.category,
         tx.amount,
         tx.recurring,
+        tx.tags.join(';'),
+        tx.subtype ?? '',
       ]
         .map(escapeCsv)
         .join(','),
