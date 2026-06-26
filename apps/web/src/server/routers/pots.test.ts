@@ -16,7 +16,8 @@ beforeEach(() => {
 });
 
 function createCaller() {
-  return potsRouter.createCaller({ prisma: mockPrisma as any, session: null });
+  const session = { user: { id: 'test-user' }, expires: '2099-01-01T00:00:00.000Z' };
+  return potsRouter.createCaller({ prisma: mockPrisma as any, session } as any);
 }
 
 describe('potsRouter.list', () => {

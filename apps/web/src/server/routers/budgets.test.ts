@@ -18,7 +18,8 @@ beforeEach(() => {
 });
 
 function createCaller() {
-  return budgetsRouter.createCaller({ prisma: mockPrisma as any, session: null });
+  const session = { user: { id: 'test-user' }, expires: '2099-01-01T00:00:00.000Z' };
+  return budgetsRouter.createCaller({ prisma: mockPrisma as any, session } as any);
 }
 
 describe('budgetsRouter.list', () => {
@@ -45,7 +46,9 @@ describe('budgetsRouter.create', () => {
     const result = await caller.create(input);
 
     expect(result.category).toBe('Groceries');
-    expect(mockPrisma.budget.create).toHaveBeenCalledWith({ data: input });
+    expect(mockPrisma.budget.create).toHaveBeenCalledWith({
+      data: { ...input, userId: 'test-user' },
+    });
   });
 });
 

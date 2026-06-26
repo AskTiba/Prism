@@ -96,22 +96,26 @@ model Transaction {
 model Budget {
   id       String   @id @default(cuid())
   userId   String?
-  category String   @unique
+  category String
   maximum  Float
   theme    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user     User?    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, category])
 }
 
 model Pot {
   id       String   @id @default(cuid())
   userId   String?
-  name     String   @unique
+  name     String
   target   Float
   total    Float    @default(0)
   theme    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user     User?    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, name])
 }

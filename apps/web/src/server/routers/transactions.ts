@@ -1,31 +1,44 @@
-import { z } from 'zod'
-import { router, publicProcedure } from '../trpc'
-import { transactionFiltersSchema } from '@repo/shared'
+import { z } from 'zod';
+import { router, protectedProcedure } from '../trpc';
+import { transactionFiltersSchema } from '@repo/shared';
 
 export const transactionsRouter = router({
-  list: publicProcedure
+  list: protectedProcedure
     .input(transactionFiltersSchema)
     .query(async ({ ctx, input }) => {
-      const where: Record<string, unknown> = {}
-      if (input.category) where.category = input.category
+      const where: Record<string, unknown> = { userId: ctx.userId };
+      if (input.category) where.category = input.category;
       if (input.search) {
-        where.name = { contains: input.search }
+        where.name = { contains: input.search };
       }
 
-      const orderBy: Record<string, string> = {}
+      const orderBy: Record<string, string> = {};
       switch (input.sort) {
-        case 'latest': orderBy.date = 'desc'; break
-        case 'oldest': orderBy.date = 'asc'; break
-        case 'a-z': orderBy.name = 'asc'; break
-        case 'z-a': orderBy.name = 'desc'; break
-        case 'highest': orderBy.amount = 'desc'; break
-        case 'lowest': orderBy.amount = 'asc'; break
-        default: orderBy.date = 'desc'
+        case 'latest':
+          orderBy.date = 'desc';
+          break;
+        case 'oldest':
+          orderBy.date = 'asc';
+          break;
+        case 'a-z':
+          orderBy.name = 'asc';
+          break;
+        case 'z-a':
+          orderBy.name = 'desc';
+          break;
+        case 'highest':
+          orderBy.amount = 'desc';
+          break;
+        case 'lowest':
+          orderBy.amount = 'asc';
+          break;
+        default:
+          orderBy.date = 'desc';
       }
 
-      const page = input.page ?? 1
-      const pageSize = input.pageSize ?? 10
-      const skip = (page - 1) * pageSize
+      const page = input.page ?? 1;
+      const pageSize = input.pageSize ?? 10;
+      const skip = (page - 1) * pageSize;
 
       const [items, total] = await Promise.all([
         ctx.prisma.transaction.findMany({
@@ -35,7 +48,7 @@ export const transactionsRouter = router({
           take: pageSize,
         }),
         ctx.prisma.transaction.count({ where }),
-      ])
+      ]);
 
       return {
         items,
@@ -43,6 +56,6 @@ export const transactionsRouter = router({
         page,
         pageSize,
         totalPages: Math.ceil(total / pageSize),
-      }
+      };
     }),
-})
+});

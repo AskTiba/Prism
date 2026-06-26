@@ -1,51 +1,53 @@
-import { z } from 'zod'
-import { router, publicProcedure } from '../trpc'
-import { potCreateSchema, potUpdateSchema, potAddWithdrawSchema } from '@repo/shared'
+import { z } from 'zod';
+import { router, protectedProcedure } from '../trpc';
+import { potCreateSchema, potUpdateSchema, potAddWithdrawSchema } from '@repo/shared';
 
 export const potsRouter = router({
-  list: publicProcedure.query(async ({ ctx }) => {
-    const pots = await ctx.prisma.pot.findMany()
-    return pots
+  list: protectedProcedure.query(async ({ ctx }) => {
+    const pots = await ctx.prisma.pot.findMany({
+      where: { userId: ctx.userId },
+    });
+    return pots;
   }),
 
-  create: publicProcedure
-    .input(potCreateSchema)
-    .mutation(async ({ ctx, input }) => {
-      return ctx.prisma.pot.create({ data: input })
-    }),
+  create: protectedProcedure.input(potCreateSchema).mutation(async ({ ctx, input }) => {
+    return ctx.prisma.pot.create({
+      data: { ...input, userId: ctx.userId },
+    });
+  }),
 
-  update: publicProcedure
+  update: protectedProcedure
     .input(z.object({ id: z.string(), data: potUpdateSchema }))
     .mutation(async ({ ctx, input }) => {
       return ctx.prisma.pot.update({
         where: { id: input.id },
         data: input.data,
-      })
+      });
     }),
 
-  remove: publicProcedure
+  remove: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      return ctx.prisma.pot.delete({ where: { id: input.id } })
+      return ctx.prisma.pot.delete({ where: { id: input.id } });
     }),
 
-  addMoney: publicProcedure
+  addMoney: protectedProcedure
     .input(z.object({ id: z.string(), amount: potAddWithdrawSchema.shape.amount }))
     .mutation(async ({ ctx, input }) => {
-      const pot = await ctx.prisma.pot.findUniqueOrThrow({ where: { id: input.id } })
+      const pot = await ctx.prisma.pot.findUniqueOrThrow({ where: { id: input.id } });
       return ctx.prisma.pot.update({
         where: { id: input.id },
         data: { total: pot.total + input.amount },
-      })
+      });
     }),
 
-  withdraw: publicProcedure
+  withdraw: protectedProcedure
     .input(z.object({ id: z.string(), amount: potAddWithdrawSchema.shape.amount }))
     .mutation(async ({ ctx, input }) => {
-      const pot = await ctx.prisma.pot.findUniqueOrThrow({ where: { id: input.id } })
+      const pot = await ctx.prisma.pot.findUniqueOrThrow({ where: { id: input.id } });
       return ctx.prisma.pot.update({
         where: { id: input.id },
         data: { total: pot.total - input.amount },
-      })
+      });
     }),
-})
+});

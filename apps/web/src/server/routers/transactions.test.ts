@@ -13,7 +13,8 @@ beforeEach(() => {
 });
 
 function createCaller() {
-  return transactionsRouter.createCaller({ prisma: mockPrisma as any, session: null });
+  const session = { user: { id: 'test-user' }, expires: '2099-01-01T00:00:00.000Z' };
+  return transactionsRouter.createCaller({ prisma: mockPrisma as any, session } as any);
 }
 
 describe('transactionsRouter.list', () => {
