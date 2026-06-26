@@ -60,6 +60,13 @@ describe('TransactionsPage', () => {
     expect(filter).toBeInTheDocument();
   });
 
+  it('renders export CSV link', () => {
+    render(<TransactionsPage />);
+    const link = screen.getByRole('link', { name: /export csv/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/api/export/transactions');
+  });
+
   it('renders avatar images in table rows', () => {
     const { container } = render(<TransactionsPage />);
     const imgs = container.querySelectorAll('table img');

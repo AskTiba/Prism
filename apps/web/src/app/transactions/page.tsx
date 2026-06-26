@@ -75,6 +75,13 @@ export default function TransactionsPage() {
             </option>
           ))}
         </select>
+
+        <a
+          href="/api/export/transactions"
+          className="ml-auto rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm font-medium text-grey-900 hover:bg-grey-50"
+        >
+          Export CSV
+        </a>
       </div>
 
       <div className="overflow-x-auto rounded-xl bg-white">
