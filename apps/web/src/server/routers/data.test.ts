@@ -183,3 +183,32 @@ describe('dataRouter.netWorth', () => {
     await expect(caller.netWorth()).rejects.toThrow(TRPCError);
   });
 });
+
+describe('dataRouter.detectedSubscriptions', () => {
+  it('returns detected subscriptions from transaction data', async () => {
+    mockPrisma.transaction.findMany.mockResolvedValue([
+      { name: 'Netflix', amount: -15.99, date: new Date('2024-08-15') },
+      { name: 'Netflix', amount: -15.99, date: new Date('2024-07-15') },
+      { name: 'Netflix', amount: -15.99, date: new Date('2024-06-15') },
+      { name: 'Coffee', amount: -5, date: new Date('2024-08-01') },
+    ]);
+
+    const caller = createCaller();
+    const result = await caller.detectedSubscriptions();
+
+    expect(result).toHaveLength(1);
+    expect(result[0].name).toBe('Netflix');
+    expect(result[0].amount).toBe(15.99);
+    expect(result[0].interval).toBe('monthly');
+    expect(result[0].nextDate).toBe('2024-09-15');
+  });
+
+  it('rejects unauthenticated requests', async () => {
+    const caller = dataRouter.createCaller({
+      prisma: mockPrisma as any,
+      session: null,
+    } as any);
+
+    await expect(caller.detectedSubscriptions()).rejects.toThrow(TRPCError);
+  });
+});

@@ -1,4 +1,5 @@
 import { router, protectedProcedure } from '../trpc';
+import { detectSubscriptions } from '@/lib/subscription-radar';
 
 function escapeCsv(value: string | number | boolean): string {
   const str = String(value);
@@ -31,6 +32,19 @@ export const dataRouter = router({
     const netWorth = totalIncome - totalExpenses + totalPots;
 
     return { totalIncome, totalExpenses, totalPots, netWorth };
+  }),
+  detectedSubscriptions: protectedProcedure.query(async ({ ctx }) => {
+    const transactions = await ctx.prisma.transaction.findMany({
+      where: { userId: ctx.userId },
+      select: { name: true, amount: true, date: true },
+    });
+    return detectSubscriptions(
+      transactions.map((tx) => ({
+        name: tx.name,
+        amount: tx.amount,
+        date: tx.date.toISOString().split('T')[0],
+      })),
+    );
   }),
   deleteAccount: protectedProcedure.mutation(async ({ ctx }) => {
     await ctx.prisma.transaction.deleteMany({ where: { userId: ctx.userId } });
