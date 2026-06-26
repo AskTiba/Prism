@@ -46,7 +46,7 @@
 - [x] P0.1 Unit 2 — Auth config + API route handler
 - [x] P0.1 Unit 3 — tRPC auth context + protectedProcedure
 - [x] P0.1 Unit 4 — Wire userId into all routers + seed + tests
-- [ ] P0.1 Unit 5 — Auth UI in sidebar
+- [x] P0.1 Unit 5 — Auth UI in sidebar
 
 ## 4. Known Issues / Blocked
 

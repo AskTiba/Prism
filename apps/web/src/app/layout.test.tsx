@@ -1,23 +1,16 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import RootLayout from './layout';
 import '@testing-library/jest-dom/vitest';
 
-vi.mock('next/font/google', () => ({
-  Public_Sans: () => ({ className: 'public-sans' }),
+vi.mock('@/lib/auth-actions', () => ({
+  signOutAction: 'mocked-action' as any,
 }));
 
-vi.mock('@/lib/providers', () => ({
-  Providers: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-}));
+import { Sidebar } from '@/components/Sidebar';
 
-describe('RootLayout', () => {
+describe('Sidebar', () => {
   it('renders all five nav links', () => {
-    render(
-      <RootLayout>
-        <div>content</div>
-      </RootLayout>,
-    );
+    render(<Sidebar session={null} />);
     expect(screen.getByText('Overview')).toBeInTheDocument();
     expect(screen.getByText('Transactions')).toBeInTheDocument();
     expect(screen.getByText('Budgets')).toBeInTheDocument();
@@ -25,21 +18,27 @@ describe('RootLayout', () => {
     expect(screen.getByText('Recurring Bills')).toBeInTheDocument();
   });
 
-  it('renders children', () => {
+  it('shows Sign In link when unauthenticated', () => {
+    render(<Sidebar session={null} />);
+    expect(screen.getByText('Sign In')).toBeInTheDocument();
+    expect(screen.queryByText('Sign Out')).not.toBeInTheDocument();
+  });
+
+  it('shows Sign Out button when authenticated', () => {
     render(
-      <RootLayout>
-        <div>test content</div>
-      </RootLayout>,
+      <Sidebar
+        session={{
+          user: { id: '1', name: 'Test User' },
+          expires: '2099-01-01T00:00:00Z',
+        }}
+      />,
     );
-    expect(screen.getByText('test content')).toBeInTheDocument();
+    expect(screen.getByText('Sign Out')).toBeInTheDocument();
+    expect(screen.queryByText('Sign In')).not.toBeInTheDocument();
   });
 
   it('has nav links with adequate vertical padding for touch targets', () => {
-    render(
-      <RootLayout>
-        <div>content</div>
-      </RootLayout>,
-    );
+    render(<Sidebar session={null} />);
     const links = screen.getAllByRole('link').filter((l) => l.closest('nav'));
     for (const link of links) {
       expect(link.className).toMatch(/py-[3-9]/);
@@ -47,11 +46,7 @@ describe('RootLayout', () => {
   });
 
   it('renders SVG icons in the navigation', () => {
-    render(
-      <RootLayout>
-        <div>content</div>
-      </RootLayout>,
-    );
+    render(<Sidebar session={null} />);
     const nav = screen.getByRole('navigation');
     const svgs = nav.querySelectorAll('svg');
     expect(svgs.length).toBeGreaterThanOrEqual(5);
