@@ -65,8 +65,7 @@
 
 | Issue                                                                        | Impact                                                                | Blocked on                                   | Priority |
 | ---------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------- | -------- |
-| Pre-existing TS error in budgets router test                                 | `tsc --noEmit` fails on `budgets.test.ts:45` (category type mismatch) | Needs test type fix                          | Low      |
-| Avatar test in transactions page expects images but mock data has no avatars | `transactions/page.test.tsx:67` fails — `avatar: null` in mock        | Pre-existing mock data issue                 | Low      |
+| Pre-existing TS error in budgets router test                                 | `tsc --noEmit` fails on `budgets.test.ts:46` (category type mismatch) | Needs test type fix                          | Low      |
 | Vitest occasionally hangs running multiple test files concurrently           | CI/cache env issue                                                    | Investigate vitest config or resource limits | Low      |
 
 ## 5. Up Next (Roadmap-aligned)
