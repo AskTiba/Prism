@@ -30,13 +30,25 @@ export default function SignInPage() {
           <h2 className="mb-8 text-2xl font-bold text-grey-900 md:text-3xl">Sign In</h2>
           <form action={signInAction} className="flex flex-col gap-5">
             <div>
-              <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-grey-500">
+              <label
+                htmlFor="email"
+                className="mb-1.5 block text-sm font-medium text-grey-500"
+              >
                 Email
               </label>
-              <GlassInput id="email" name="email" type="email" required className="w-full" />
+              <GlassInput
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="w-full"
+              />
             </div>
             <div>
-              <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-grey-500">
+              <label
+                htmlFor="password"
+                className="mb-1.5 block text-sm font-medium text-grey-500"
+              >
                 Password
               </label>
               <GlassInput
