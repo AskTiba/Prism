@@ -1,6 +1,5 @@
 {
   "buildCommand": "npx turbo build",
   "installCommand": "npm ci",
-  "framework": "nextjs",
-  "outputDirectory": "apps/web/.next"
+  "framework": "nextjs"
 }
