@@ -79,7 +79,7 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
           type="button"
           onClick={handleSubmit(onAdd)}
           disabled={addMoney.isPending}
-          className="inline-flex items-center justify-center gap-2 flex-1 rounded-xl bg-green px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-green/80 disabled:opacity-50 shadow-lg shadow-green/20"
+          className="inline-flex items-center justify-center gap-2 flex-1 rounded-xl bg-green px-4 py-3 text-sm font-bold text-white transition-colors duration-150 hover:bg-green/85 disabled:opacity-50 shadow-md shadow-green/10 min-h-[48px]"
         >
           <Plus size={16} />
           Add Money
@@ -88,7 +88,7 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
           type="button"
           onClick={handleSubmit(onWithdraw)}
           disabled={withdraw.isPending}
-          className="inline-flex items-center justify-center gap-2 flex-1 rounded-xl bg-red px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-red/80 disabled:opacity-50 shadow-lg shadow-red/20"
+          className="inline-flex items-center justify-center gap-2 flex-1 rounded-xl bg-red px-4 py-3 text-sm font-bold text-white transition-colors duration-150 hover:bg-red/85 disabled:opacity-50 shadow-md shadow-red/10 min-h-[48px]"
         >
           <Minus size={16} />
           Withdraw

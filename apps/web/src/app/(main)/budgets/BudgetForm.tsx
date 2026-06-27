@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import { useForm, Controller } from 'react-hook-form';
+import GlassButton from '@/components/ui/GlassButton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { budgetCreateSchema, CATEGORIES, CATEGORY_THEMES } from '@repo/shared';
@@ -87,14 +88,15 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
 
       {errors.root && <p className="text-sm text-red">{errors.root.message}</p>}
 
-      <button
+      <GlassButton
         type="submit"
+        variant="primary"
         disabled={create.isPending}
-        className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 disabled:opacity-50 shadow-lg shadow-black/10"
+        className="w-full"
       >
         <Plus size={16} />
         Add Budget
-      </button>
+      </GlassButton>
     </form>
   );
 }

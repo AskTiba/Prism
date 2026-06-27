@@ -8,6 +8,7 @@ import { trpc } from '@/lib/trpc';
 import { signOutAction } from '@/lib/auth-actions';
 import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassInput from '@/components/ui/GlassInput';
+import GlassButton from '@/components/ui/GlassButton';
 
 const deleteSchema = z.object({
   confirm: z.literal('DELETE'),
@@ -68,13 +69,13 @@ export function DeleteAccountDialog() {
             >
               Cancel
             </button>
-            <button
+            <GlassButton
               type="submit"
+              variant="danger"
               disabled={confirmValue !== 'DELETE'}
-              className="rounded-xl bg-red px-4 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-red/80 shadow-lg shadow-red/20 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Confirm Delete
-            </button>
+            </GlassButton>
           </div>
         </form>
       </GlassDialog>

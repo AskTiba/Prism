@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { trpc } from '@/lib/trpc'
 import { GlassDialog } from '@/components/ui/GlassDialog'
+import GlassButton from '@/components/ui/GlassButton'
 import { PotForm } from './PotForm'
 import { PotMoneyForm } from './PotMoneyForm'
 
@@ -42,14 +43,14 @@ export default function PotsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Pots</h1>
-        <button
+        <GlassButton
           type="button"
+          variant="primary"
           onClick={() => setNewOpen(true)}
-          className="inline-flex items-center gap-2 rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
         >
           <Plus size={16} />
           New Pot
-        </button>
+        </GlassButton>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
@@ -60,13 +61,14 @@ export default function PotsPage() {
               <h2 className="text-lg font-bold">{pot.name}</h2>
             </div>
             <PotProgress total={pot.total} target={pot.target} theme={pot.theme} />
-            <button
+            <GlassButton
               type="button"
+              variant="primary"
               onClick={() => setSelectedPot(pot)}
-              className="mt-4 w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
+              className="mt-4 w-full"
             >
               Add / Withdraw
-            </button>
+            </GlassButton>
           </div>
         ))}
         {items.length === 0 && (

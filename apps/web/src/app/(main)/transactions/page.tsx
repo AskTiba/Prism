@@ -46,14 +46,14 @@ export default function TransactionsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Transactions</h1>
-        <button
+        <GlassButton
           type="button"
+          variant="primary"
           onClick={() => setNewOpen(true)}
-          className="inline-flex items-center gap-2 rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
         >
           <Plus size={16} />
           New Transaction
-        </button>
+        </GlassButton>
       </div>
 
       <div className="flex flex-wrap gap-3">

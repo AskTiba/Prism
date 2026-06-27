@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { transactionCreateSchema, CATEGORIES, SUBTYPES } from '@repo/shared';
 import { trpc } from '@/lib/trpc';
 import GlassInput from '@/components/ui/GlassInput';
+import GlassButton from '@/components/ui/GlassButton';
 import GlassSelect from '@/components/ui/GlassSelect';
 
 type TransactionFormData = z.infer<typeof transactionCreateSchema>;
@@ -147,14 +148,15 @@ export function TransactionForm({ onSuccess }: { onSuccess: () => void }) {
 
       {errors.root && <p className="text-sm text-red">{errors.root.message}</p>}
 
-      <button
+      <GlassButton
         type="submit"
+        variant="primary"
         disabled={create.isPending}
-        className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 disabled:opacity-50 shadow-lg shadow-black/10"
+        className="w-full"
       >
         <Plus size={16} />
         Add Transaction
-      </button>
+      </GlassButton>
     </form>
   );
 }
