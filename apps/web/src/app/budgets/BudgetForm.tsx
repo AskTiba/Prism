@@ -1,59 +1,66 @@
 'use client';
 
-import { useState } from 'react';
-import { budgetCreateSchema } from '@repo/shared';
+import { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { budgetCreateSchema, CATEGORIES, CATEGORY_THEMES } from '@repo/shared';
 import { trpc } from '@/lib/trpc';
-import { CATEGORIES, CATEGORY_THEMES } from '@repo/shared';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassSelect from '@/components/ui/GlassSelect';
 
+type BudgetFormData = z.infer<typeof budgetCreateSchema>;
+
 export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
-  const [category, setCategory] = useState('');
-  const [maximum, setMaximum] = useState('');
-  const theme = category ? CATEGORY_THEMES[category] : '';
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<BudgetFormData>({
+    resolver: zodResolver(budgetCreateSchema),
+    defaultValues: { category: '' as any, maximum: undefined, theme: '' },
+  });
+
+  const category = watch('category');
+
+  useEffect(() => {
+    if (category && CATEGORY_THEMES[category]) {
+      setValue('theme', CATEGORY_THEMES[category]);
+    }
+  }, [category, setValue]);
+
   const create = trpc.budgets.create.useMutation();
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setErrors({});
-
-    const result = budgetCreateSchema.safeParse({
-      category,
-      maximum: maximum ? parseFloat(maximum) : undefined,
-      theme,
-    });
-
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      for (const issue of result.error.issues) {
-        const path = issue.path[0] as string;
-        fieldErrors[path] = issue.message;
-      }
-      setErrors(fieldErrors);
-      return;
-    }
-
+  async function onSubmit(data: BudgetFormData) {
     try {
-      await create.mutateAsync(result.data);
+      await create.mutateAsync(data);
       onSuccess();
     } catch {
-      setErrors({ form: 'Failed to create budget. Please try again.' });
+      setValue('theme', '');
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-grey-500">Category</label>
-        <GlassSelect
-          value={category}
-          onChange={(v) => setCategory(v)}
-          options={CATEGORIES.map((c) => ({ value: c, label: c }))}
-          placeholder="Select a category"
-          aria-label="Category"
+        <Controller
+          name="category"
+          control={control}
+          render={({ field }) => (
+            <GlassSelect
+              value={field.value ?? ''}
+              onChange={(v) => field.onChange(v)}
+              options={CATEGORIES.map((c) => ({ value: c, label: c }))}
+              placeholder="Select a category"
+              aria-label="Category"
+            />
+          )}
         />
-        {errors.category && <p className="mt-1 text-xs text-red">{errors.category}</p>}
+        {errors.category && <p className="mt-1 text-xs text-red">{errors.category.message}</p>}
       </div>
 
       <div>
@@ -65,13 +72,15 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
           variant="form"
           type="number"
           step="0.01"
-          value={maximum}
-          onChange={(e) => setMaximum(e.target.value)}
+          {...register('maximum', { setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)) })}
         />
-        {errors.maximum && <p className="mt-1 text-xs text-red">{errors.maximum}</p>}
+        {errors.maximum && <p className="mt-1 text-xs text-red">{errors.maximum.message}</p>}
       </div>
 
-      {errors.form && <p className="text-sm text-red">{errors.form}</p>}
+      <input type="hidden" {...register('theme')} />
+      {errors.theme && <p className="mt-1 text-xs text-red">{errors.theme.message}</p>}
+
+      {errors.root && <p className="text-sm text-red">{errors.root.message}</p>}
 
       <button
         type="submit"

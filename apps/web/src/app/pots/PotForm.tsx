@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useForm, Controller, type Resolver } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { potCreateSchema } from '@repo/shared';
 import { trpc } from '@/lib/trpc';
 import GlassInput from '@/components/ui/GlassInput';
@@ -19,56 +21,43 @@ const THEME_COLORS = [
   '#597C7C',
 ];
 
+type PotFormData = z.infer<typeof potCreateSchema>;
+
 export function PotForm({ onSuccess }: { onSuccess: () => void }) {
-  const [name, setName] = useState('');
-  const [target, setTarget] = useState('');
-  const [theme, setTheme] = useState(THEME_COLORS[0]);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<PotFormData>({
+    resolver: zodResolver(potCreateSchema) as unknown as Resolver<PotFormData>,
+    defaultValues: {
+      name: '',
+      target: undefined,
+      total: 0,
+      theme: THEME_COLORS[0],
+    },
+  });
+
   const create = trpc.pots.create.useMutation();
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setErrors({});
-
-    const result = potCreateSchema.safeParse({
-      name,
-      target: target ? parseFloat(target) : undefined,
-      total: 0,
-      theme,
-    });
-
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      for (const issue of result.error.issues) {
-        const path = issue.path[0] as string;
-        fieldErrors[path] = issue.message;
-      }
-      setErrors(fieldErrors);
-      return;
-    }
-
+  async function onSubmit(data: PotFormData) {
     try {
-      await create.mutateAsync(result.data);
+      await create.mutateAsync(data);
       onSuccess();
     } catch {
-      setErrors({ form: 'Failed to create pot. Please try again.' });
+      /* mutation error */
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-grey-500">
           Name
         </label>
-        <GlassInput
-          id="name"
-          variant="form"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        {errors.name && <p className="mt-1 text-xs text-red">{errors.name}</p>}
+        <GlassInput id="name" variant="form" type="text" {...register('name')} />
+        {errors.name && <p className="mt-1 text-xs text-red">{errors.name.message}</p>}
       </div>
 
       <div>
@@ -80,25 +69,34 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
           variant="form"
           type="number"
           step="0.01"
-          value={target}
-          onChange={(e) => setTarget(e.target.value)}
+          {...register('target', {
+            setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)),
+          })}
         />
-        {errors.target && <p className="mt-1 text-xs text-red">{errors.target}</p>}
+        {errors.target && <p className="mt-1 text-xs text-red">{errors.target.message}</p>}
       </div>
 
       <div>
         <label className="block text-sm font-medium text-grey-500">Theme</label>
-        <GlassSelect
-          value={theme}
-          onChange={(v) => setTheme(v)}
-          options={THEME_COLORS.map((c) => ({ value: c, label: c }))}
-          placeholder="Select theme"
-          aria-label="Theme"
+        <Controller
+          name="theme"
+          control={control}
+          render={({ field }) => (
+            <GlassSelect
+              value={field.value}
+              onChange={(v) => field.onChange(v)}
+              options={THEME_COLORS.map((c) => ({ value: c, label: c }))}
+              placeholder="Select theme"
+              aria-label="Theme"
+            />
+          )}
         />
-        {errors.theme && <p className="mt-1 text-xs text-red">{errors.theme}</p>}
+        {errors.theme && <p className="mt-1 text-xs text-red">{errors.theme.message}</p>}
       </div>
 
-      {errors.form && <p className="text-sm text-red">{errors.form}</p>}
+      <input type="hidden" {...register('total', { valueAsNumber: true })} />
+
+      {errors.root && <p className="text-sm text-red">{errors.root.message}</p>}
 
       <button
         type="submit"
