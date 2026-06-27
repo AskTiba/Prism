@@ -1,6 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { trpc } from '@/lib/trpc'
+import { Glass } from '@samasante/liquid-glass'
+import { BudgetForm } from './BudgetForm'
 
 function BudgetProgress({ spent, maximum, theme }: { spent: number; maximum: number; theme: string }) {
   const percentage = Math.min((spent / maximum) * 100, 100)
@@ -21,13 +24,22 @@ function BudgetProgress({ spent, maximum, theme }: { spent: number; maximum: num
 }
 
 export default function BudgetsPage() {
+  const [open, setOpen] = useState(false)
   const { data: budgets } = trpc.budgets.list.useQuery()
+  const utils = trpc.useUtils()
   const items = budgets ?? []
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Budgets</h1>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
+        >
+          + New Budget
+        </button>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -42,6 +54,29 @@ export default function BudgetsPage() {
           </div>
         ))}
       </div>
+
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="mx-4 w-full max-w-md">
+            <Glass
+              style={{ borderRadius: 16, padding: 24 }}
+              optics={{
+                frost: 10,
+                depth: 0.45,
+                curvature: 0.2,
+                strength: 0.1,
+                dispersion: 0.15,
+                bend: 0.3,
+                specular: 0.5,
+                brightness: 0.1,
+              }}
+            >
+              <h2 className="text-lg font-bold text-grey-900">New Budget</h2>
+              <BudgetForm onSuccess={() => { setOpen(false); utils.budgets.list.invalidate() }} />
+            </Glass>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
