@@ -39,7 +39,7 @@ describe('budgetsRouter.list', () => {
 
 describe('budgetsRouter.create', () => {
   it('creates a budget', async () => {
-    const input = { category: 'Groceries', maximum: 500, theme: '#F2CDAC' };
+    const input = { category: 'Groceries' as const, maximum: 500, theme: '#F2CDAC' };
     mockPrisma.budget.create.mockResolvedValue({ id: '2', ...input });
 
     const caller = createCaller();
