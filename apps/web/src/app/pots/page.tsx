@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc'
-import { Glass } from '@samasante/liquid-glass'
+import { GlassDialog } from '@/components/ui/GlassDialog'
 import { PotForm } from './PotForm'
 import { PotMoneyForm } from './PotMoneyForm'
 
@@ -75,54 +75,18 @@ export default function PotsPage() {
         )}
       </div>
 
-      {newOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="mx-4 w-full max-w-md">
-            <Glass
-              style={{ borderRadius: 16, padding: 24 }}
-              optics={{
-                frost: 10, depth: 0.45, curvature: 0.2,
-                strength: 0.1, dispersion: 0.15, bend: 0.3,
-                specular: 0.5, brightness: 0.1,
-              }}
-            >
-              <h2 className="text-lg font-bold text-grey-900">New Pot</h2>
-              <PotForm onSuccess={() => { setNewOpen(false); utils.pots.list.invalidate() }} />
-            </Glass>
-          </div>
-        </div>
-      )}
+      <GlassDialog open={newOpen} onClose={() => setNewOpen(false)} title="New Pot">
+        <PotForm onSuccess={() => { setNewOpen(false); utils.pots.list.invalidate() }} />
+      </GlassDialog>
 
-      {selectedPot && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="mx-4 w-full max-w-md">
-            <Glass
-              style={{ borderRadius: 16, padding: 24 }}
-              optics={{
-                frost: 10, depth: 0.45, curvature: 0.2,
-                strength: 0.1, dispersion: 0.15, bend: 0.3,
-                specular: 0.5, brightness: 0.1,
-              }}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-grey-900">{selectedPot.name}</h2>
-                <button
-                  type="button"
-                  onClick={() => setSelectedPot(null)}
-                  className="text-2xl text-grey-500 hover:text-grey-900 transition-colors leading-none"
-                  aria-label="Close"
-                >
-                  &times;
-                </button>
-              </div>
-              <PotMoneyForm
-                pot={selectedPot}
-                onSuccess={() => { utils.pots.list.invalidate(); setSelectedPot(null) }}
-              />
-            </Glass>
-          </div>
-        </div>
-      )}
+      <GlassDialog open={!!selectedPot} onClose={() => setSelectedPot(null)} title={selectedPot?.name ?? ''}>
+        {selectedPot && (
+          <PotMoneyForm
+            pot={selectedPot}
+            onSuccess={() => { utils.pots.list.invalidate(); setSelectedPot(null) }}
+          />
+        )}
+      </GlassDialog>
     </div>
   )
 }

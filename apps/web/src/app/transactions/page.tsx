@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { trpc } from '@/lib/trpc';
 import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
-import { Glass } from '@samasante/liquid-glass';
+import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassSelect from '@/components/ui/GlassSelect';
 import GlassButton from '@/components/ui/GlassButton';
@@ -240,25 +240,11 @@ export default function TransactionsPage() {
         </div>
       </div>
 
-      {newOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="mx-4 w-full max-w-md">
-            <Glass
-              style={{ borderRadius: 16, padding: 24 }}
-              optics={{
-                frost: 10, depth: 0.45, curvature: 0.2,
-                strength: 0.1, dispersion: 0.15, bend: 0.3,
-                specular: 0.5, brightness: 0.1,
-              }}
-            >
-              <h2 className="text-lg font-bold text-grey-900">New Transaction</h2>
-              <TransactionForm
-                onSuccess={() => { setNewOpen(false); utils.transactions.list.invalidate() }}
-              />
-            </Glass>
-          </div>
-        </div>
-      )}
+      <GlassDialog open={newOpen} onClose={() => setNewOpen(false)} title="New Transaction">
+        <TransactionForm
+          onSuccess={() => { setNewOpen(false); utils.transactions.list.invalidate() }}
+        />
+      </GlassDialog>
     </div>
   );
 }
