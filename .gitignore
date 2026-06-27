@@ -6,5 +6,6 @@ turbo/
 *.tsbuildinfo
 .env
 .env.*.local
+.vercel
 *.db
 *.db-journal
