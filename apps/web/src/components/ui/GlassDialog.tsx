@@ -11,7 +11,10 @@ interface GlassDialogProps {
 
 export function GlassDialog({ open, onClose, title, children }: GlassDialogProps) {
   const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  });
 
   useEffect(() => {
     if (!open) return;
