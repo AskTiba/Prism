@@ -155,7 +155,7 @@ export default function TransactionsPage() {
                 <td className="px-5 py-3 text-grey-500">
                   {tx.category}
                   {tx.subtype && (
-                    <span className="ml-2 rounded bg-beige px-1.5 py-0.5 text-xs text-grey-500">
+                    <span className="ml-2 rounded bg-beige px-2 py-0.5 text-xs text-grey-500">
                       {tx.subtype}
                     </span>
                   )}

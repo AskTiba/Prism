@@ -9,7 +9,7 @@ type GlassInputProps = InputHTMLAttributes<HTMLInputElement> & {
 const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
   ({ className = '', variant = 'filter', ...props }, ref) => {
     const [focused, setFocused] = useState(false);
-    const padding = variant === 'filter' ? 'px-4 py-3.5' : 'px-3 py-2.5';
+    const padding = variant === 'filter' ? 'px-4 py-3' : 'px-3 py-2.5';
 
     return (
       <div

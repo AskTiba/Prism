@@ -71,7 +71,11 @@ export default function BillsPage() {
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
                     {bill.avatar ? (
-                      <img src={bill.avatar} alt="" className="h-8 w-8 rounded-full object-cover" />
+                      <img
+                        src={bill.avatar}
+                        alt=""
+                        className="h-8 w-8 rounded-full object-cover"
+                      />
                     ) : (
                       <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
                         {bill.name.charAt(0)}
@@ -83,7 +87,7 @@ export default function BillsPage() {
                 <td className="px-5 py-3 font-bold">{formatCurrency(bill.amount)}</td>
                 <td className="px-5 py-3">
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                    className={`rounded-full px-3 py-0.5 text-xs font-medium ${
                       paid.includes(bill)
                         ? 'bg-green/10 text-green'
                         : 'bg-red/10 text-red'

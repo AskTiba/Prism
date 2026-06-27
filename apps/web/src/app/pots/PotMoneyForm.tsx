@@ -73,14 +73,14 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
         <button
           type="button"
           onClick={handleAdd}
-          className="flex-1 rounded-xl bg-green py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-green/80 shadow-lg shadow-green/20"
+          className="flex-1 rounded-xl bg-green px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-green/80 shadow-lg shadow-green/20"
         >
           Add Money
         </button>
         <button
           type="button"
           onClick={handleWithdraw}
-          className="flex-1 rounded-xl bg-red py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-red/80 shadow-lg shadow-red/20"
+          className="flex-1 rounded-xl bg-red px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-red/80 shadow-lg shadow-red/20"
         >
           Withdraw
         </button>

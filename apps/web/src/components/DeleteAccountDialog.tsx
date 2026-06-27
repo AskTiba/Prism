@@ -22,7 +22,7 @@ export function DeleteAccountDialog() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full items-center gap-3 rounded-xl px-3 py-4 text-sm text-red transition-all duration-200 hover:bg-grey-500/20 glass-surface"
+        className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red transition-all duration-150 hover:bg-white/[0.06] hover:text-red/80 hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.15)] md:rounded-none md:px-6"
       >
         Delete Account
       </button>
@@ -62,7 +62,7 @@ export function DeleteAccountDialog() {
                     setOpen(false);
                     setConfirmText('');
                   }}
-                  className="rounded-xl bg-white/60 backdrop-blur-md border border-white/40 px-4 py-2 text-sm font-medium text-grey-900 hover:bg-white/80 transition-all"
+                  className="rounded-xl bg-white/60 backdrop-blur-md border border-white/40 px-4 py-3 text-sm font-medium text-grey-900 hover:bg-white/80 transition-all"
                 >
                   Cancel
                 </button>
@@ -70,7 +70,7 @@ export function DeleteAccountDialog() {
                   type="button"
                   disabled={confirmText !== 'DELETE'}
                   onClick={handleConfirm}
-                  className="rounded-xl bg-red px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-red/80 shadow-lg shadow-red/20 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-xl bg-red px-4 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-red/80 shadow-lg shadow-red/20 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Confirm Delete
                 </button>

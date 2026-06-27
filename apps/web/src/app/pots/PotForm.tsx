@@ -102,7 +102,7 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
 
       <button
         type="submit"
-        className="w-full rounded-xl bg-grey-900 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10"
+        className="w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10"
       >
         Add Pot
       </button>
