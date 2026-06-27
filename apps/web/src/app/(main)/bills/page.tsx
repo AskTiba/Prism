@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import Image from 'next/image';
 import { DetectedSubscriptions } from './detected-subscriptions';
 
 function formatCurrency(amount: number): string {
@@ -71,9 +72,11 @@ export default function BillsPage() {
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
                     {bill.avatar ? (
-                      <img
+                      <Image
                         src={bill.avatar}
                         alt=""
+                        width={32}
+                        height={32}
                         className="h-8 w-8 rounded-full object-cover"
                       />
                     ) : (

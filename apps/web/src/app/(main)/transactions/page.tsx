@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
+import Image from 'next/image';
 import { trpc } from '@/lib/trpc';
-import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
+import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE, type Category, type Subtype, type SortOption } from '@repo/shared';
 import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassSelect from '@/components/ui/GlassSelect';
@@ -29,12 +30,12 @@ export default function TransactionsPage() {
 
   const { data } = trpc.transactions.list.useQuery({
     search: search || undefined,
-    category: (category || undefined) as any,
-    subtype: (subtype || undefined) as any,
+    category: (category || undefined) as Category | undefined,
+    subtype: (subtype || undefined) as Subtype | undefined,
     tags: tags || undefined,
     dateFrom: dateFrom || undefined,
     dateTo: dateTo || undefined,
-    sort: sort as any,
+    sort: sort as SortOption,
     page,
     pageSize: PAGE_SIZE,
   });
@@ -154,9 +155,11 @@ export default function TransactionsPage() {
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
                     {tx.avatar ? (
-                      <img
+                      <Image
                         src={tx.avatar}
                         alt=""
+                        width={32}
+                        height={32}
                         className="h-8 w-8 rounded-full object-cover"
                       />
                     ) : (

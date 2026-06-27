@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm, type Resolver } from 'react-hook-form';
+import { useForm, type Resolver, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { trpc } from '@/lib/trpc';
@@ -21,14 +21,14 @@ export function DeleteAccountDialog() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     reset,
   } = useForm<DeleteFormData>({
     defaultValues: { confirm: '' },
     resolver: zodResolver(deleteSchema) as unknown as Resolver<DeleteFormData>,
   });
 
-  const confirmValue = watch('confirm');
+  const confirmValue = useWatch({ control, name: 'confirm' });
   const deleteAccount = trpc.data.deleteAccount.useMutation();
 
   async function onSubmit() {

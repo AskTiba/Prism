@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import Image from 'next/image';
 
 function formatCurrency(amount: number): string {
   const prefix = amount < 0 ? '-' : '+';
@@ -31,7 +32,7 @@ export function RecentTransactions() {
         {transactions.map((tx) => (
           <li key={tx.id} className="flex items-center gap-3 py-3">
             {tx.avatar ? (
-              <img src={tx.avatar} alt="" className="h-8 w-8 rounded-full object-cover" />
+              <Image src={tx.avatar} alt="" width={32} height={32} className="h-8 w-8 rounded-full object-cover" />
             ) : (
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
                 {tx.name.charAt(0)}

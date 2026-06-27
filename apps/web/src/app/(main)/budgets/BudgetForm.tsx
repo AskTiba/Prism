@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { Plus } from 'lucide-react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import GlassButton from '@/components/ui/GlassButton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -18,15 +18,14 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
     register,
     handleSubmit,
     control,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<BudgetFormData>({
     resolver: zodResolver(budgetCreateSchema),
-    defaultValues: { category: '' as any, maximum: undefined, theme: '' },
+    defaultValues: { category: '' as unknown as BudgetFormData['category'], maximum: undefined, theme: '' },
   });
 
-  const category = watch('category');
+  const category = useWatch({ control, name: 'category' });
 
   useEffect(() => {
     if (category && CATEGORY_THEMES[category]) {

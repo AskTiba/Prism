@@ -58,14 +58,14 @@ export default function GlassSelect({
         close();
       }
     }
-    function handleKey(e: KeyboardEvent) {
+    function handleKey(e: globalThis.KeyboardEvent) {
       if (e.key === 'Escape') close();
     }
     document.addEventListener('mousedown', handleClick);
-    document.addEventListener('keydown', handleKey as any);
+    document.addEventListener('keydown', handleKey);
     return () => {
       document.removeEventListener('mousedown', handleClick);
-      document.removeEventListener('keydown', handleKey as any);
+      document.removeEventListener('keydown', handleKey);
     };
   }, [open, close]);
 

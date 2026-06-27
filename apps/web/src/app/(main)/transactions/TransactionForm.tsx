@@ -23,7 +23,7 @@ export function TransactionForm({ onSuccess }: { onSuccess: () => void }) {
     defaultValues: {
       name: '',
       amount: undefined,
-      category: '' as any,
+      category: '' as unknown as TransactionFormData['category'],
       date: '',
       subtype: undefined,
       tags: [],
