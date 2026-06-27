@@ -123,7 +123,7 @@ export default function GlassSelect({
         aria-haspopup="listbox"
         onClick={() => setOpen(!open)}
         onKeyDown={handleKeyDown}
-        className="flex w-full min-h-[48px] items-center justify-between gap-2.5 rounded-xl bg-white/60 px-4 py-3 text-sm text-grey-900 shadow-sm backdrop-blur-lg transition-shadow duration-150 hover:shadow-md"
+        className="flex w-full min-h-[48px] items-center justify-between gap-2.5 rounded-xl bg-white/60 px-4 py-3 text-sm text-grey-900 shadow-sm backdrop-blur-lg transition-shadow duration-150 hover:shadow-md focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none"
       >
         <span className={selected ? 'text-grey-900' : 'text-grey-300'}>{label}</span>
         <svg
@@ -157,7 +157,7 @@ export default function GlassSelect({
                 aria-selected={value === ''}
                 onClick={() => handleSelect('')}
                 onMouseEnter={() => (activeRef.current = -1)}
-                className={`glass-option w-full rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 ${
+                className={`glass-option w-full min-h-[48px] rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${
                   value === ''
                     ? 'text-grey-900 font-medium bg-green/5'
                     : 'text-grey-500 hover:text-grey-900 hover:bg-white/30'
@@ -172,7 +172,7 @@ export default function GlassSelect({
                   aria-selected={value === opt.value}
                   onClick={() => handleSelect(opt.value)}
                   onMouseEnter={() => (activeRef.current = i)}
-                  className={`glass-option w-full rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 ${
+                  className={`glass-option w-full min-h-[48px] rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${
                     value === opt.value
                       ? 'text-grey-900 font-medium bg-green/5'
                       : 'text-grey-500 hover:text-grey-900 hover:bg-white/30'

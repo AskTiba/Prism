@@ -13,7 +13,7 @@ const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
 
     return (
       <div
-        className={`rounded-xl bg-white/60 shadow-sm backdrop-blur-lg transition-shadow duration-150 ${
+        className={`rounded-xl bg-white/60 shadow-sm backdrop-blur-lg transition-shadow duration-150 min-h-[48px] ${
           focused ? 'shadow-md ring-1 ring-green/30' : ''
         } ${className}`}
         style={{ width: variant === 'filter' ? undefined : '100%' }}
