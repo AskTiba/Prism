@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { budgetCreateSchema } from '@repo/shared';
 import { trpc } from '@/lib/trpc';
 import { CATEGORIES, CATEGORY_THEMES } from '@repo/shared';
+import GlassInput from '@/components/ui/GlassInput';
+import GlassSelect from '@/components/ui/GlassSelect';
 
 export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
   const [category, setCategory] = useState('');
@@ -43,22 +45,14 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="category" className="block text-sm font-medium text-grey-500">
-          Category
-        </label>
-        <select
-          id="category"
+        <label className="block text-sm font-medium text-grey-500">Category</label>
+        <GlassSelect
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-grey-300 px-3 py-2 text-sm"
-        >
-          <option value="">Select a category</option>
-          {CATEGORIES.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
+          onChange={(v) => setCategory(v)}
+          options={CATEGORIES.map((c) => ({ value: c, label: c }))}
+          placeholder="Select a category"
+          aria-label="Category"
+        />
         {errors.category && <p className="mt-1 text-xs text-red">{errors.category}</p>}
       </div>
 
@@ -66,13 +60,13 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
         <label htmlFor="maximum" className="block text-sm font-medium text-grey-500">
           Maximum
         </label>
-        <input
+        <GlassInput
           id="maximum"
+          variant="form"
           type="number"
           step="0.01"
           value={maximum}
           onChange={(e) => setMaximum(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-grey-300 px-3 py-2 text-sm"
         />
         {errors.maximum && <p className="mt-1 text-xs text-red">{errors.maximum}</p>}
       </div>
@@ -81,7 +75,7 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
 
       <button
         type="submit"
-        className="w-full rounded-lg bg-grey-900 py-3 text-sm font-bold text-white transition-colors hover:bg-grey-600"
+        className="w-full rounded-xl bg-grey-900 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10"
       >
         Add Budget
       </button>

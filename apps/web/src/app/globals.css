@@ -24,3 +24,56 @@
     @apply bg-beige text-grey-900 antialiased;
   }
 }
+
+@layer components {
+  .glass-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .glass-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .glass-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 99px;
+  }
+
+  .glass-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .glass-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  }
+
+  .glass-option {
+    position: relative;
+  }
+
+  .glass-option::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: transparent;
+    transition:
+      background 200ms ease,
+      opacity 200ms ease;
+    opacity: 0;
+  }
+
+  .glass-option:hover::before {
+    background: rgba(39, 124, 120, 0.3);
+    opacity: 1;
+  }
+
+  .glass-option[aria-selected='true']::before {
+    background: #277c78;
+    opacity: 1;
+  }
+}

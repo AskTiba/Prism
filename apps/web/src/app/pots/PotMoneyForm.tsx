@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { potAddWithdrawSchema } from '@repo/shared';
 import { trpc } from '@/lib/trpc';
+import GlassInput from '@/components/ui/GlassInput';
 
 interface PotMoneyFormProps {
   pot: { id: string; name: string; target: number; total: number; theme: string };
@@ -57,13 +58,13 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
         <label htmlFor="amount" className="block text-sm font-medium text-grey-500">
           Amount
         </label>
-        <input
+        <GlassInput
           id="amount"
+          variant="form"
           type="number"
           step="0.01"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-grey-300 px-3 py-2 text-sm"
         />
         {errors.amount && <p className="mt-1 text-xs text-red">{errors.amount}</p>}
       </div>
@@ -72,14 +73,14 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
         <button
           type="button"
           onClick={handleAdd}
-          className="flex-1 rounded-lg bg-green py-3 text-sm font-bold text-white transition-colors hover:bg-green/80"
+          className="flex-1 rounded-xl bg-green py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-green/80 shadow-lg shadow-green/20"
         >
           Add Money
         </button>
         <button
           type="button"
           onClick={handleWithdraw}
-          className="flex-1 rounded-lg bg-red py-3 text-sm font-bold text-white transition-colors hover:bg-red/80"
+          className="flex-1 rounded-xl bg-red py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-red/80 shadow-lg shadow-red/20"
         >
           Withdraw
         </button>

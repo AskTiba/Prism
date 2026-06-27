@@ -27,7 +27,7 @@ beforeEach(() => {
 describe('BudgetForm', () => {
   it('renders the form fields', () => {
     render(<BudgetForm onSuccess={vi.fn()} />);
-    expect(screen.getByLabelText(/category/i)).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: /category/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/maximum/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /add budget/i })).toBeInTheDocument();
   });
@@ -42,7 +42,10 @@ describe('BudgetForm', () => {
   it('shows error for negative maximum', async () => {
     const user = userEvent.setup();
     render(<BudgetForm onSuccess={vi.fn()} />);
-    await user.selectOptions(screen.getByLabelText(/category/i), 'Bills');
+    const combobox = screen.getByRole('combobox', { name: /category/i });
+    await user.click(combobox);
+    const option = screen.getByRole('option', { name: 'Bills' });
+    await user.click(option);
     await user.type(screen.getByLabelText(/maximum/i), '-10');
     await user.click(screen.getByRole('button', { name: /add budget/i }));
     expect(await screen.findByText(/greater than 0/i)).toBeInTheDocument();

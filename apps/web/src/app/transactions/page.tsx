@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { trpc } from '@/lib/trpc';
 import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
+import GlassInput from '@/components/ui/GlassInput';
+import GlassSelect from '@/components/ui/GlassSelect';
+import GlassButton from '@/components/ui/GlassButton';
 
 function formatCurrency(amount: number): string {
   const prefix = amount < 0 ? '' : '+';
@@ -39,7 +42,7 @@ export default function TransactionsPage() {
       <h1 className="text-2xl font-bold">Transactions</h1>
 
       <div className="flex flex-wrap gap-3">
-        <input
+        <GlassInput
           type="search"
           placeholder="Search transactions"
           value={search}
@@ -47,45 +50,32 @@ export default function TransactionsPage() {
             setSearch(e.target.value);
             setPage(1);
           }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
           aria-label="Search transactions"
         />
 
-        <select
+        <GlassSelect
           value={category}
-          onChange={(e) => {
-            setCategory(e.target.value);
+          onChange={(v) => {
+            setCategory(v);
             setPage(1);
           }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
+          options={CATEGORIES.map((c) => ({ value: c, label: c }))}
+          placeholder="All Categories"
           aria-label="Category filter"
-        >
-          <option value="">All Categories</option>
-          {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+        />
 
-        <select
+        <GlassSelect
           value={subtype}
-          onChange={(e) => {
-            setSubtype(e.target.value);
+          onChange={(v) => {
+            setSubtype(v);
             setPage(1);
           }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
+          options={SUBTYPES.map((s) => ({ value: s, label: s }))}
+          placeholder="All Subtypes"
           aria-label="Subtype filter"
-        >
-          <option value="">All Subtypes</option>
-          {SUBTYPES.map((st) => (
-            <option key={st} value={st}>
-              {st}
-            </option>
-          ))}
-        </select>
+        />
 
-        <input
+        <GlassInput
           type="search"
           placeholder="Search tags"
           value={tags}
@@ -93,57 +83,46 @@ export default function TransactionsPage() {
             setTags(e.target.value);
             setPage(1);
           }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
           aria-label="Search tags"
         />
 
-        <input
+        <GlassInput
           type="date"
           value={dateFrom}
           onChange={(e) => {
             setDateFrom(e.target.value);
             setPage(1);
           }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
           aria-label="From date"
         />
 
-        <input
+        <GlassInput
           type="date"
           value={dateTo}
           onChange={(e) => {
             setDateTo(e.target.value);
             setPage(1);
           }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
           aria-label="To date"
         />
 
-        <select
+        <GlassSelect
           value={sort}
-          onChange={(e) => {
-            setSort(e.target.value);
+          onChange={(v) => {
+            setSort(v);
             setPage(1);
           }}
-          className="rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm"
+          options={SORT_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
+          placeholder="Sort by"
           aria-label="Sort by"
-        >
-          {SORT_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        />
 
-        <a
-          href="/api/export/transactions"
-          className="ml-auto rounded-lg border border-grey-300 bg-white px-4 py-3.5 text-sm font-medium text-grey-900 hover:bg-grey-50"
-        >
-          Export CSV
+        <a href="/api/export/transactions">
+          <GlassButton type="button">Export CSV</GlassButton>
         </a>
       </div>
 
-      <div className="overflow-x-auto rounded-xl bg-white">
+      <div className="overflow-x-auto rounded-xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm">
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-b border-grey-100 text-grey-500">
@@ -225,20 +204,18 @@ export default function TransactionsPage() {
           Page {page} of {totalPages}
         </span>
         <div className="flex gap-2">
-          <button
+          <GlassButton
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
-            className="rounded-lg border border-grey-300 px-4 py-3.5 disabled:opacity-50"
           >
             Prev
-          </button>
-          <button
+          </GlassButton>
+          <GlassButton
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page >= totalPages}
-            className="rounded-lg border border-grey-300 px-4 py-3.5 disabled:opacity-50"
           >
             Next
-          </button>
+          </GlassButton>
         </div>
       </div>
     </div>

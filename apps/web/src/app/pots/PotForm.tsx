@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { potCreateSchema } from '@repo/shared';
 import { trpc } from '@/lib/trpc';
+import GlassInput from '@/components/ui/GlassInput';
+import GlassSelect from '@/components/ui/GlassSelect';
 
 const THEME_COLORS = [
   '#277C78',
@@ -59,12 +61,12 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
         <label htmlFor="name" className="block text-sm font-medium text-grey-500">
           Name
         </label>
-        <input
+        <GlassInput
           id="name"
+          variant="form"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-grey-300 px-3 py-2 text-sm"
         />
         {errors.name && <p className="mt-1 text-xs text-red">{errors.name}</p>}
       </div>
@@ -73,33 +75,26 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
         <label htmlFor="target" className="block text-sm font-medium text-grey-500">
           Target
         </label>
-        <input
+        <GlassInput
           id="target"
+          variant="form"
           type="number"
           step="0.01"
           value={target}
           onChange={(e) => setTarget(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-grey-300 px-3 py-2 text-sm"
         />
         {errors.target && <p className="mt-1 text-xs text-red">{errors.target}</p>}
       </div>
 
       <div>
-        <label htmlFor="theme" className="block text-sm font-medium text-grey-500">
-          Theme
-        </label>
-        <select
-          id="theme"
+        <label className="block text-sm font-medium text-grey-500">Theme</label>
+        <GlassSelect
           value={theme}
-          onChange={(e) => setTheme(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-grey-300 px-3 py-2 text-sm"
-        >
-          {THEME_COLORS.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
+          onChange={(v) => setTheme(v)}
+          options={THEME_COLORS.map((c) => ({ value: c, label: c }))}
+          placeholder="Select theme"
+          aria-label="Theme"
+        />
         {errors.theme && <p className="mt-1 text-xs text-red">{errors.theme}</p>}
       </div>
 
@@ -107,7 +102,7 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
 
       <button
         type="submit"
-        className="w-full rounded-lg bg-grey-900 py-3 text-sm font-bold text-white transition-colors hover:bg-grey-600"
+        className="w-full rounded-xl bg-grey-900 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10"
       >
         Add Pot
       </button>
