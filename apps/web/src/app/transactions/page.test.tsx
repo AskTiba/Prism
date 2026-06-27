@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import TransactionsPage from './page';
 import '@testing-library/jest-dom/vitest';
 
@@ -7,16 +8,27 @@ const mockUseQuery = vi.hoisted(() => ({
   list: vi.fn(),
 }));
 
+const mockCreateMutate = vi.hoisted(() => vi.fn());
+const mockInvalidate = vi.hoisted(() => vi.fn());
+
 vi.mock('@/lib/trpc', () => ({
   trpc: {
+    useUtils: () => ({
+      transactions: { list: { invalidate: mockInvalidate } },
+    }),
     transactions: {
       list: { useQuery: () => mockUseQuery.list() },
+      create: {
+        useMutation: () => ({ mutateAsync: mockCreateMutate, isError: false, error: null }),
+      },
     },
   },
 }));
 
 beforeEach(() => {
   vi.clearAllMocks();
+
+  mockCreateMutate.mockResolvedValue({ id: 'new' });
 
   mockUseQuery.list.mockReturnValue({
     data: {
@@ -111,6 +123,29 @@ describe('TransactionsPage', () => {
     render(<TransactionsPage />);
     const essentials = screen.getAllByText('Essentials');
     expect(essentials.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('renders new transaction button', () => {
+    render(<TransactionsPage />);
+    expect(screen.getByRole('button', { name: /new transaction/i })).toBeInTheDocument();
+  });
+
+  it('opens transaction form dialog when button is clicked', async () => {
+    const user = userEvent.setup();
+    render(<TransactionsPage />);
+    await user.click(screen.getByRole('button', { name: /new transaction/i }));
+    expect(screen.getByText('New Transaction')).toBeInTheDocument();
+    expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/amount/i)).toBeInTheDocument();
+  });
+
+  it('shows form fields in dialog when opened', async () => {
+    const user = userEvent.setup();
+    render(<TransactionsPage />);
+    await user.click(screen.getByRole('button', { name: /new transaction/i }));
+    expect(screen.getByText('New Transaction')).toBeInTheDocument();
+    expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/amount/i)).toBeInTheDocument();
   });
 });
 

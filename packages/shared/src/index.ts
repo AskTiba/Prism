@@ -25,4 +25,5 @@ export {
   potCreateSchema,
   potUpdateSchema,
   potAddWithdrawSchema,
+  transactionCreateSchema,
 } from './schemas'

@@ -40,3 +40,13 @@ export const potUpdateSchema = potCreateSchema.partial();
 export const potAddWithdrawSchema = z.object({
   amount: z.number().positive(),
 });
+
+export const transactionCreateSchema = z.object({
+  name: z.string().min(1).max(100),
+  amount: z.number(),
+  category: categorySchema,
+  date: z.string().min(1),
+  subtype: subtypeSchema.optional(),
+  tags: z.array(z.string()).default([]),
+  recurring: z.boolean().default(false),
+});

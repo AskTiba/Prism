@@ -1,5 +1,5 @@
 import { router, protectedProcedure } from '../trpc';
-import { transactionFiltersSchema } from '@repo/shared';
+import { transactionFiltersSchema, transactionCreateSchema } from '@repo/shared';
 
 export const transactionsRouter = router({
   list: protectedProcedure
@@ -64,5 +64,22 @@ export const transactionsRouter = router({
         pageSize,
         totalPages: Math.ceil(total / pageSize),
       };
+    }),
+
+  create: protectedProcedure
+    .input(transactionCreateSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.transaction.create({
+        data: {
+          name: input.name,
+          amount: input.amount,
+          category: input.category,
+          date: new Date(input.date),
+          subtype: input.subtype ?? null,
+          tags: input.tags,
+          recurring: input.recurring,
+          userId: ctx.userId,
+        },
+      });
     }),
 });

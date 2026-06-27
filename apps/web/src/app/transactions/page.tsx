@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { trpc } from '@/lib/trpc';
 import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
+import { Glass } from '@samasante/liquid-glass';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassSelect from '@/components/ui/GlassSelect';
 import GlassButton from '@/components/ui/GlassButton';
+import { TransactionForm } from './TransactionForm';
 
 function formatCurrency(amount: number): string {
   const prefix = amount < 0 ? '' : '+';
@@ -13,6 +15,7 @@ function formatCurrency(amount: number): string {
 }
 
 export default function TransactionsPage() {
+  const [newOpen, setNewOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const [subtype, setSubtype] = useState('');
@@ -21,6 +24,7 @@ export default function TransactionsPage() {
   const [dateTo, setDateTo] = useState('');
   const [sort, setSort] = useState('latest');
   const [page, setPage] = useState(1);
+  const utils = trpc.useUtils();
 
   const { data } = trpc.transactions.list.useQuery({
     search: search || undefined,
@@ -39,7 +43,16 @@ export default function TransactionsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Transactions</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Transactions</h1>
+        <button
+          type="button"
+          onClick={() => setNewOpen(true)}
+          className="rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
+        >
+          + New Transaction
+        </button>
+      </div>
 
       <div className="flex flex-wrap gap-3">
         <GlassInput
@@ -218,6 +231,26 @@ export default function TransactionsPage() {
           </GlassButton>
         </div>
       </div>
+
+      {newOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="mx-4 w-full max-w-md">
+            <Glass
+              style={{ borderRadius: 16, padding: 24 }}
+              optics={{
+                frost: 10, depth: 0.45, curvature: 0.2,
+                strength: 0.1, dispersion: 0.15, bend: 0.3,
+                specular: 0.5, brightness: 0.1,
+              }}
+            >
+              <h2 className="text-lg font-bold text-grey-900">New Transaction</h2>
+              <TransactionForm
+                onSuccess={() => { setNewOpen(false); utils.transactions.list.invalidate() }}
+              />
+            </Glass>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
