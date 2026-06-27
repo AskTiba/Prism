@@ -41,7 +41,7 @@ export function Sidebar({ session }: { session: Session | null }) {
 
   return (
     <nav className="flex w-full items-center justify-between bg-grey-900 px-4 py-3 text-white md:w-64 md:flex-col md:items-start md:justify-start md:rounded-r-2xl md:pt-8 md:overflow-hidden">
-      <span className="text-lg font-bold md:px-6">finance</span>
+      <span className="text-lg font-bold md:px-6">Prism</span>
       <ul className="flex flex-wrap justify-end gap-x-1 gap-y-0 md:mt-8 md:w-full md:flex-col md:gap-0.5">
         {NAV_ITEMS.map((item) => (
           <li key={item.href} className="md:w-full">

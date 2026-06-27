@@ -11,8 +11,9 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Personal Finance App',
-  description: 'Track your finances across budgets, pots, and bills',
+  title: 'Prism',
+  description: 'See your finances from every angle',
+  icons: '/favicon.svg',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

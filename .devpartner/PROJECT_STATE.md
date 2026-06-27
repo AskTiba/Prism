@@ -5,13 +5,13 @@
 
 ## 1. Project Snapshot
 
-| Field             | Value                                                                                                         |
-| ----------------- | ------------------------------------------------------------------------------------------------------------- |
-| Project name      | Personal Finance App                                                                                          |
+| Field             | Value                                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Project name      | Personal Finance App                                                                                                   |
 | Primary stack     | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React + ESLint |
-| Repo / branch     | main (local, no remote)                                                                                       |
-| Current milestone | All 13 core units + design alignment + P0.1–P0.5 + P1.2–P1.4 + Enhanced transaction filters |
-| Overall status    | Green                                                                                                         |
+| Repo / branch     | main (local, no remote)                                                                                                |
+| Current milestone | All 13 core units + design alignment + P0.1–P0.5 + P1.2–P1.4 + Enhanced transaction filters                            |
+| Overall status    | Green                                                                                                                  |
 
 ## 2. What Currently Works
 
@@ -33,22 +33,23 @@
 | Budget form                             | Create form with Zod validation (category select, max input, error display)                                                                                                                                      | 3 tests                                                           |
 | Pot form                                | Create form with Zod validation (name, target, theme select, error display)                                                                                                                                      | 4 tests                                                           |
 | Pot add/withdraw form                   | Add/withdraw buttons with Zod validated amount input                                                                                                                                                             | 5 tests                                                           |
-| Design alignment | Summary cards (dark/white), Pots (Total Saved box + 2x2 grid), Recent Transactions (avatars + dates), Nav (Lucide SVG icons), Budget Overview (Recharts donut chart), Tables (avatar columns + recurring badges) | Committed across 7+ PRs |
-| Multi-user auth (P0.1) | NextAuth.js v5 + Prisma adapter, Credentials provider, tRPC protectedProcedure, userId-scoped routers, auth UI in sidebar | 5 commits on main |
-| CI/CD pipeline (P0.3) | `.github/workflows/ci.yml` — GitHub Actions (npm ci, Prisma generate, format:check, lint, typecheck, test, build) | Pre-scaffolded, activates on remote addition |
-| ESLint config (P0.3) | `eslint.config.js` — ESLint v10 flat config with @eslint/js, typescript-eslint, react-hooks, @next/eslint-plugin-next | 0 errors, 5 warnings on current codebase |
-| CI/CD skill hub | `.opencode/skills/ci-partner/` — reusable CI/CD scaffolding skill copied from ~/dev/skill5.0/ci-partner/ | Auto-detects stack from package.json/turbo.json/vitest.config.ts |
-| PostgreSQL migration (P0.2) | Prisma schema provider changed to `postgresql`, `pg` driver installed, Neon cloud DB configured, seeded | 7 tables created in Neon, 35 txns/5 budgets/4 pots seeded |
-| Data sovereignty (P0.4) | Export CSV api route + link on transactions page, delete account dialog in sidebar | Committed |
-| Enhanced schema (P0.5) | tags + subtype fields on Transaction model, CSV export includes new columns, tag badges + subtype badge on transactions page | Committed |
-| Net Worth Aggregator (P1.2) | netWorth tRPC procedure + NetWorthCard on overview | 2 units committed |
-| Cash Flow Calendar (P1.3) | projectCashFlow pure function + cashFlowProjection tRPC + CashFlowCard on overview | 3 units committed |
-| Subscription Radar (P1.4) | detectSubscriptions pure function + detectedSubscriptions tRPC + widget on bills page | 3 units committed |
-| Enhanced transaction filters | subtype/tags/date filters added to tRPC list + filter UI on transactions page | 2 units committed |
+| Design alignment                        | Summary cards (dark/white), Pots (Total Saved box + 2x2 grid), Recent Transactions (avatars + dates), Nav (Lucide SVG icons), Budget Overview (Recharts donut chart), Tables (avatar columns + recurring badges) | Committed across 7+ PRs                                           |
+| Multi-user auth (P0.1)                  | NextAuth.js v5 + Prisma adapter, Credentials provider, tRPC protectedProcedure, userId-scoped routers, auth UI in sidebar                                                                                        | 5 commits on main                                                 |
+| CI/CD pipeline (P0.3)                   | `.github/workflows/ci.yml` — GitHub Actions (npm ci, Prisma generate, format:check, lint, typecheck, test, build)                                                                                                | Pre-scaffolded, activates on remote addition                      |
+| ESLint config (P0.3)                    | `eslint.config.js` — ESLint v10 flat config with @eslint/js, typescript-eslint, react-hooks, @next/eslint-plugin-next                                                                                            | 0 errors, 5 warnings on current codebase                          |
+| CI/CD skill hub                         | `.opencode/skills/ci-partner/` — reusable CI/CD scaffolding skill copied from ~/dev/skill5.0/ci-partner/                                                                                                         | Auto-detects stack from package.json/turbo.json/vitest.config.ts  |
+| PostgreSQL migration (P0.2)             | Prisma schema provider changed to `postgresql`, `pg` driver installed, Neon cloud DB configured, seeded                                                                                                          | 7 tables created in Neon, 35 txns/5 budgets/4 pots seeded         |
+| Data sovereignty (P0.4)                 | Export CSV api route + link on transactions page, delete account dialog in sidebar                                                                                                                               | Committed                                                         |
+| Enhanced schema (P0.5)                  | tags + subtype fields on Transaction model, CSV export includes new columns, tag badges + subtype badge on transactions page                                                                                     | Committed                                                         |
+| Net Worth Aggregator (P1.2)             | netWorth tRPC procedure + NetWorthCard on overview                                                                                                                                                               | 2 units committed                                                 |
+| Cash Flow Calendar (P1.3)               | projectCashFlow pure function + cashFlowProjection tRPC + CashFlowCard on overview                                                                                                                               | 3 units committed                                                 |
+| Subscription Radar (P1.4)               | detectSubscriptions pure function + detectedSubscriptions tRPC + widget on bills page                                                                                                                            | 3 units committed                                                 |
+| Enhanced transaction filters            | subtype/tags/date filters added to tRPC list + filter UI on transactions page                                                                                                                                    | 2 units committed                                                 |
+| Vercel deployment config                | `vercel.json`, Prisma postinstall, `.gitignore` update                                                                                                                                                           | 2 commits on main                                                 |
 
 ## 3. In Progress
 
-**Current feature/task:** All P0 + Phase 1 features complete. Paused.
+**Current feature/task:** Vercel deployment prep — config committed, manual steps remain.
 
 **Unit decomposition (linear, one at a time):**
 
@@ -67,10 +68,10 @@
 
 ## 4. Known Issues / Blocked
 
-| Issue                                                                        | Impact                                                                | Blocked on                                   | Priority |
-| ---------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------- | -------- |
-| Pre-existing TS error in budgets router test                                 | `tsc --noEmit` fails on `budgets.test.ts:46` (category type mismatch) | Needs test type fix                          | Low      |
-| Vitest occasionally hangs running multiple test files concurrently           | CI/cache env issue                                                    | Investigate vitest config or resource limits | Low      |
+| Issue                                                              | Impact                                                                | Blocked on                                   | Priority |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------- | -------------------------------------------- | -------- |
+| Pre-existing TS error in budgets router test                       | `tsc --noEmit` fails on `budgets.test.ts:46` (category type mismatch) | Needs test type fix                          | Low      |
+| Vitest occasionally hangs running multiple test files concurrently | CI/cache env issue                                                    | Investigate vitest config or resource limits | Low      |
 
 ## 5. Up Next (Roadmap-aligned)
 
