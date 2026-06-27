@@ -10,8 +10,8 @@
 | Project name      | Personal Finance App                                                                                                   |
 | Primary stack     | Turborepo + Next.js App Router + Prisma + SQLite + tRPC + Tailwind CSS + TypeScript + Recharts + Lucide React + ESLint |
 | Repo / branch     | main (local, no remote)                                                                                                |
-| Current milestone | All 13 core units + design alignment + P0.1–P0.5 + P1.2–P1.4 + Enhanced transaction filters                            |
-| Overall status    | Green                                                                                                                  |
+| Current milestone | All 13 core units + design alignment + P0.1–P0.5 + P1.2–P1.4 + Enhanced filters + UI/UX Polish |
+| Overall status    | Green |
 
 ## 2. What Currently Works
 
@@ -49,7 +49,7 @@
 
 ## 3. In Progress
 
-**Current feature/task:** Vercel deployment prep — config committed, manual steps remain.
+**Current feature/task:** UI/UX Polish (Auth form refactor to useActionState, password visibility, GlassButton standardization, lint cleanup) — Complete.
 
 **Unit decomposition (linear, one at a time):**
 
@@ -65,6 +65,12 @@
 - [x] P1.4 Unit 3 — DetectedSubscriptions widget on bills page + tests
 - [x] Enhanced filter Unit 1 — Add subtype/tags/date range to tRPC list + tests
 - [x] Enhanced filter Unit 2 — Add filter UI to transactions page + tests
+- [x] UI/UX Polish Unit 1 — Refactor auth actions to ActionState
+- [x] UI/UX Polish Unit 2 — Password toggle in GlassInput
+- [x] UI/UX Polish Unit 3 — SubmitButton with useFormStatus
+- [x] UI/UX Polish Unit 4 — useActionState integration in signin/signup
+- [x] UI/UX Polish Unit 5 — GlassButton standardization & hover effects
+- [x] Tech Debt Cleanup — Resolve lint warnings (next/image, any types)
 
 ## 4. Known Issues / Blocked
 
