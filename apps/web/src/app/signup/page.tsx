@@ -28,7 +28,7 @@ export default function SignUpPage() {
       <div className="flex flex-1 items-center justify-center bg-white px-6 py-10 md:px-10">
         <div className="w-full max-w-sm">
           <h2 className="mb-8 text-2xl font-bold text-grey-900 md:text-3xl">Sign Up</h2>
-          <form action={signUpAction} className="flex flex-col gap-5">
+          <form action={signUpAction as any} className="flex flex-col gap-5">
             <div>
               <label
                 htmlFor="email"
