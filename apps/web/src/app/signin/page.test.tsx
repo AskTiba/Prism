@@ -12,7 +12,7 @@ describe('SignInPage', () => {
   it('renders email and password inputs', () => {
     render(<SignInPage />);
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
   });
 
   it('renders Sign In button', () => {

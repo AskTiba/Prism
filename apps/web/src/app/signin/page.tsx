@@ -1,8 +1,14 @@
+'use client';
+
+import { useActionState } from 'react';
 import Image from 'next/image';
 import GlassInput from '@/components/ui/GlassInput';
+import SubmitButton from '@/components/ui/SubmitButton';
 import { signInAction } from '@/lib/auth-actions';
 
 export default function SignInPage() {
+  const [state, action] = useActionState(signInAction, undefined);
+
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       <div className="relative flex h-48 flex-col justify-end overflow-hidden md:h-auto md:w-[45%] md:justify-center">
@@ -28,7 +34,12 @@ export default function SignInPage() {
       <div className="flex flex-1 items-center justify-center bg-white px-6 py-10 md:px-10">
         <div className="w-full max-w-sm">
           <h2 className="mb-8 text-2xl font-bold text-grey-900 md:text-3xl">Sign In</h2>
-          <form action={signInAction as any} className="flex flex-col gap-5">
+          <form action={action} className="flex flex-col gap-5">
+            {state?.error && (
+              <div className="rounded-lg bg-red-50 p-3 text-sm text-red-500">
+                {state.error}
+              </div>
+            )}
             <div>
               <label
                 htmlFor="email"
@@ -42,6 +53,7 @@ export default function SignInPage() {
                 type="email"
                 required
                 className="w-full"
+                error={state?.error ? true : undefined}
               />
             </div>
             <div>
@@ -57,14 +69,10 @@ export default function SignInPage() {
                 type="password"
                 required
                 className="w-full"
+                error={state?.error ? true : undefined}
               />
             </div>
-            <button
-              type="submit"
-              className="mt-2 w-full rounded-xl bg-grey-900 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-black/10 transition-all duration-200 hover:bg-grey-700 active:scale-[0.98]"
-            >
-              Sign In
-            </button>
+            <SubmitButton>Sign In</SubmitButton>
           </form>
           <p className="mt-8 text-center text-sm text-grey-500">
             Don&apos;t have an account?{' '}
