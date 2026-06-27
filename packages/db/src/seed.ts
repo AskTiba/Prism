@@ -1,6 +1,7 @@
 import { prisma } from './client';
 import path from 'path';
 import fs from 'fs';
+import bcrypt from 'bcryptjs';
 
 type SeedTransaction = {
   avatar: string | null;
@@ -41,10 +42,12 @@ async function main() {
     if (existing) {
       userId = existing.id;
     } else {
+      const hashedPassword = await bcrypt.hash('password123', 10);
       const user = await prisma.user.create({
         data: {
           name: 'Default User',
           email: 'user@example.com',
+          hashedPassword,
         },
       });
       userId = user.id;

@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import Credentials from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
 import { prisma } from '@repo/db/src/client';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -19,7 +20,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { email: credentials.email as string },
         });
 
-        if (!user) return null;
+        if (!user || !user.hashedPassword) return null;
+
+        const valid = await bcrypt.compare(
+          credentials.password as string,
+          user.hashedPassword,
+        );
+
+        if (!valid) return null;
 
         return {
           id: user.id,
