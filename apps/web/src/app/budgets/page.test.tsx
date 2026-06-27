@@ -66,7 +66,7 @@ describe('BudgetsPage', () => {
     const user = userEvent.setup()
     render(<BudgetsPage />)
     await user.click(screen.getByRole('button', { name: /new budget/i }))
-    expect(screen.getByText('New Budget')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /new budget/i })).toBeInTheDocument()
     expect(screen.getByRole('combobox', { name: /category/i })).toBeInTheDocument()
     expect(screen.getByLabelText(/maximum/i)).toBeInTheDocument()
   })

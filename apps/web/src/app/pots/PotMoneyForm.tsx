@@ -1,5 +1,6 @@
 'use client';
 
+import { Plus, Minus } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -49,15 +50,15 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
   }
 
   return (
-    <form className="space-y-4">
-      <p className="text-sm font-medium">{pot.name}</p>
+    <form className="space-y-5">
+      <p className="text-sm font-semibold text-grey-700">{pot.name}</p>
       <div className="flex justify-between text-sm text-grey-500">
         <span>${pot.total.toFixed(2)}</span>
         <span>of ${pot.target.toFixed(2)}</span>
       </div>
 
       <div>
-        <label htmlFor="amount" className="block text-sm font-medium text-grey-500">
+        <label htmlFor="amount" className="block text-sm font-semibold text-grey-700">
           Amount
         </label>
         <GlassInput
@@ -65,6 +66,7 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
           variant="form"
           type="number"
           step="0.01"
+          prefix="$"
           {...register('amount', {
             setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)),
           })}
@@ -76,15 +78,19 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
         <button
           type="button"
           onClick={handleSubmit(onAdd)}
-          className="flex-1 rounded-xl bg-green px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-green/80 shadow-lg shadow-green/20"
+          disabled={addMoney.isPending}
+          className="inline-flex items-center justify-center gap-2 flex-1 rounded-xl bg-green px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-green/80 disabled:opacity-50 shadow-lg shadow-green/20"
         >
+          <Plus size={16} />
           Add Money
         </button>
         <button
           type="button"
           onClick={handleSubmit(onWithdraw)}
-          className="flex-1 rounded-xl bg-red px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-red/80 shadow-lg shadow-red/20"
+          disabled={withdraw.isPending}
+          className="inline-flex items-center justify-center gap-2 flex-1 rounded-xl bg-red px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-red/80 disabled:opacity-50 shadow-lg shadow-red/20"
         >
+          <Minus size={16} />
           Withdraw
         </button>
       </div>

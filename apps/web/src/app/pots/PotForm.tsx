@@ -1,5 +1,6 @@
 'use client';
 
+import { Plus } from 'lucide-react';
 import { useForm, Controller, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -51,9 +52,9 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-grey-500">
+        <label htmlFor="name" className="block text-sm font-semibold text-grey-700">
           Name
         </label>
         <GlassInput id="name" variant="form" type="text" {...register('name')} />
@@ -61,7 +62,7 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
       </div>
 
       <div>
-        <label htmlFor="target" className="block text-sm font-medium text-grey-500">
+        <label htmlFor="target" className="block text-sm font-semibold text-grey-700">
           Target
         </label>
         <GlassInput
@@ -69,6 +70,7 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
           variant="form"
           type="number"
           step="0.01"
+          prefix="$"
           {...register('target', {
             setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)),
           })}
@@ -77,7 +79,7 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-grey-500">Theme</label>
+        <label className="block text-sm font-semibold text-grey-700">Theme</label>
         <Controller
           name="theme"
           control={control}
@@ -88,6 +90,7 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
               options={THEME_COLORS.map((c) => ({ value: c, label: c }))}
               placeholder="Select theme"
               aria-label="Theme"
+              variant="form"
             />
           )}
         />
@@ -100,8 +103,10 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
 
       <button
         type="submit"
-        className="w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10"
+        disabled={create.isPending}
+        className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 disabled:opacity-50 shadow-lg shadow-black/10"
       >
+        <Plus size={16} />
         Add Pot
       </button>
     </form>

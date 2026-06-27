@@ -69,7 +69,7 @@ describe('PotsPage', () => {
     const user = userEvent.setup()
     render(<PotsPage />)
     await user.click(screen.getByRole('button', { name: /new pot/i }))
-    expect(screen.getByText('New Pot')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /new pot/i })).toBeInTheDocument()
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/target/i)).toBeInTheDocument()
   })

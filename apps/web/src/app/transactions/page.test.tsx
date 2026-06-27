@@ -134,7 +134,7 @@ describe('TransactionsPage', () => {
     const user = userEvent.setup();
     render(<TransactionsPage />);
     await user.click(screen.getByRole('button', { name: /new transaction/i }));
-    expect(screen.getByText('New Transaction')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /new transaction/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/amount/i)).toBeInTheDocument();
   });
@@ -143,7 +143,7 @@ describe('TransactionsPage', () => {
     const user = userEvent.setup();
     render(<TransactionsPage />);
     await user.click(screen.getByRole('button', { name: /new transaction/i }));
-    expect(screen.getByText('New Transaction')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /new transaction/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/amount/i)).toBeInTheDocument();
   });

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Plus } from 'lucide-react'
 import { trpc } from '@/lib/trpc'
 import { GlassDialog } from '@/components/ui/GlassDialog'
 import { BudgetForm } from './BudgetForm'
@@ -36,9 +37,10 @@ export default function BudgetsPage() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
+          className="inline-flex items-center gap-2 rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
         >
-          + New Budget
+          <Plus size={16} />
+          New Budget
         </button>
       </div>
 

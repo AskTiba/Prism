@@ -26,6 +26,7 @@ interface GlassSelectProps {
   placeholder?: string;
   'aria-label'?: string;
   className?: string;
+  variant?: 'filter' | 'form';
 }
 
 export default function GlassSelect({
@@ -35,6 +36,7 @@ export default function GlassSelect({
   placeholder = 'Select...',
   'aria-label': ariaLabel,
   className = '',
+  variant = 'filter',
 }: GlassSelectProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -123,7 +125,7 @@ export default function GlassSelect({
         aria-haspopup="listbox"
         onClick={() => setOpen(!open)}
         onKeyDown={handleKeyDown}
-        className="flex w-full min-h-[48px] items-center justify-between gap-2.5 rounded-xl bg-white/60 px-4 py-3 text-sm text-grey-900 shadow-sm backdrop-blur-lg transition-shadow duration-150 hover:shadow-md focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none"
+        className={`flex w-full min-h-[48px] items-center justify-between gap-2.5 rounded-xl px-4 py-3 text-sm text-grey-900 shadow-sm transition-shadow duration-150 hover:shadow-md focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${variant === 'form' ? 'bg-white/90' : 'bg-white/60 backdrop-blur-lg'}`}
       >
         <span className={selected ? 'text-grey-900' : 'text-grey-300'}>{label}</span>
         <svg

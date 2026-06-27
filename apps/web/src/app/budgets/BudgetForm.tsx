@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { Plus } from 'lucide-react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -44,9 +45,9 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div>
-        <label className="block text-sm font-medium text-grey-500">Category</label>
+        <label className="block text-sm font-semibold text-grey-700">Category</label>
         <Controller
           name="category"
           control={control}
@@ -57,6 +58,7 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
               options={CATEGORIES.map((c) => ({ value: c, label: c }))}
               placeholder="Select a category"
               aria-label="Category"
+              variant="form"
             />
           )}
         />
@@ -64,7 +66,7 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
       </div>
 
       <div>
-        <label htmlFor="maximum" className="block text-sm font-medium text-grey-500">
+        <label htmlFor="maximum" className="block text-sm font-semibold text-grey-700">
           Maximum
         </label>
         <GlassInput
@@ -72,6 +74,7 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
           variant="form"
           type="number"
           step="0.01"
+          prefix="$"
           {...register('maximum', { setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)) })}
         />
         {errors.maximum && <p className="mt-1 text-xs text-red">{errors.maximum.message}</p>}
@@ -84,8 +87,10 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
 
       <button
         type="submit"
-        className="w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10"
+        disabled={create.isPending}
+        className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 disabled:opacity-50 shadow-lg shadow-black/10"
       >
+        <Plus size={16} />
         Add Budget
       </button>
     </form>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Plus } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE } from '@repo/shared';
 import { GlassDialog } from '@/components/ui/GlassDialog';
@@ -48,9 +49,10 @@ export default function TransactionsPage() {
         <button
           type="button"
           onClick={() => setNewOpen(true)}
-          className="rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
+          className="inline-flex items-center gap-2 rounded-xl bg-grey-900 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-grey-700 shadow-lg shadow-black/10 min-h-[48px]"
         >
-          + New Transaction
+          <Plus size={16} />
+          New Transaction
         </button>
       </div>
 

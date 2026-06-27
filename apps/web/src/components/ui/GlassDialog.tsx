@@ -37,9 +37,9 @@ export function GlassDialog({ open, onClose, title, children }: GlassDialogProps
         <Glass
           style={{ borderRadius: 16, padding: 24 }}
           optics={{
-            frost: 10, depth: 0.45, curvature: 0.2,
-            strength: 0.1, dispersion: 0.15, bend: 0.3,
-            specular: 0.5, brightness: 0.1,
+            frost: 18, depth: 0.5, curvature: 0.15,
+            strength: 0.2, dispersion: 0.1, bend: 0.2,
+            specular: 0.4, brightness: 0.25,
           }}
         >
           <div className="flex items-center justify-between mb-6">
