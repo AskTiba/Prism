@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import GlassInput from '@/components/ui/GlassInput';
-import { signInAction } from '@/lib/auth-actions';
+import { signUpAction } from '@/lib/auth-actions';
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       <div className="relative flex h-48 flex-col justify-end overflow-hidden md:h-auto md:w-[45%] md:justify-center">
@@ -27,8 +27,8 @@ export default function SignInPage() {
 
       <div className="flex flex-1 items-center justify-center bg-white px-6 py-10 md:px-10">
         <div className="w-full max-w-sm">
-          <h2 className="mb-8 text-2xl font-bold text-grey-900 md:text-3xl">Sign In</h2>
-          <form action={signInAction} className="flex flex-col gap-5">
+          <h2 className="mb-8 text-2xl font-bold text-grey-900 md:text-3xl">Sign Up</h2>
+          <form action={signUpAction} className="flex flex-col gap-5">
             <div>
               <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-grey-500">
                 Email
@@ -44,6 +44,7 @@ export default function SignInPage() {
                 name="password"
                 type="password"
                 required
+                minLength={6}
                 className="w-full"
               />
             </div>
@@ -51,16 +52,16 @@ export default function SignInPage() {
               type="submit"
               className="mt-2 w-full rounded-xl bg-grey-900 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-black/10 transition-all duration-200 hover:bg-grey-700 active:scale-[0.98]"
             >
-              Sign In
+              Sign Up
             </button>
           </form>
           <p className="mt-8 text-center text-sm text-grey-500">
-            Don&apos;t have an account?{' '}
+            Already have an account?{' '}
             <a
-              href="/signup"
+              href="/signin"
               className="font-semibold text-grey-900 underline decoration-grey-900/30 transition-colors hover:decoration-grey-900"
             >
-              Sign Up
+              Sign In
             </a>
           </p>
         </div>
