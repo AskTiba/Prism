@@ -61,40 +61,41 @@ export function PotForm({ onSuccess }: { onSuccess: () => void }) {
         {errors.name && <p className="mt-1 text-xs text-red">{errors.name.message}</p>}
       </div>
 
-      <div>
-        <label htmlFor="target" className="block text-sm font-semibold text-grey-700">
-          Target
-        </label>
-        <GlassInput
-          id="target"
-          variant="form"
-          type="number"
-          step="0.01"
-          prefix="$"
-          {...register('target', {
-            setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)),
-          })}
-        />
-        {errors.target && <p className="mt-1 text-xs text-red">{errors.target.message}</p>}
-      </div>
-
-      <div>
-        <label className="block text-sm font-semibold text-grey-700">Theme</label>
-        <Controller
-          name="theme"
-          control={control}
-          render={({ field }) => (
-            <GlassSelect
-              value={field.value}
-              onChange={(v) => field.onChange(v)}
-              options={THEME_COLORS.map((c) => ({ value: c, label: c }))}
-              placeholder="Select theme"
-              aria-label="Theme"
-              variant="form"
-            />
-          )}
-        />
-        {errors.theme && <p className="mt-1 text-xs text-red">{errors.theme.message}</p>}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="target" className="block text-sm font-semibold text-grey-700">
+            Target
+          </label>
+          <GlassInput
+            id="target"
+            variant="form"
+            type="number"
+            step="0.01"
+            prefix="$"
+            {...register('target', {
+              setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)),
+            })}
+          />
+          {errors.target && <p className="mt-1 text-xs text-red">{errors.target.message}</p>}
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-grey-700">Theme</label>
+          <Controller
+            name="theme"
+            control={control}
+            render={({ field }) => (
+              <GlassSelect
+                value={field.value}
+                onChange={(v) => field.onChange(v)}
+                options={THEME_COLORS.map((c) => ({ value: c, label: c }))}
+                placeholder="Select theme"
+                aria-label="Theme"
+                variant="form"
+              />
+            )}
+          />
+          {errors.theme && <p className="mt-1 text-xs text-red">{errors.theme.message}</p>}
+        </div>
       </div>
 
       <input type="hidden" {...register('total', { valueAsNumber: true })} />

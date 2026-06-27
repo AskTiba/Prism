@@ -160,25 +160,25 @@ export default function GlassSelect({
                 onClick={() => handleSelect('')}
                 onMouseEnter={() => (activeRef.current = -1)}
                 className={`glass-option w-full min-h-[48px] rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${
-                  value === ''
-                    ? 'text-grey-900 font-medium bg-green/5'
-                    : 'text-grey-500 hover:text-grey-900 hover:bg-white/30'
-                }`}
-              >
-                {placeholder}
-              </button>
-              {options.map((opt, i) => (
-                <button
-                  key={opt.value}
-                  role="option"
-                  aria-selected={value === opt.value}
-                  onClick={() => handleSelect(opt.value)}
-                  onMouseEnter={() => (activeRef.current = i)}
-                  className={`glass-option w-full min-h-[48px] rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${
-                    value === opt.value
-                      ? 'text-grey-900 font-medium bg-green/5'
-                      : 'text-grey-500 hover:text-grey-900 hover:bg-white/30'
-                  }`}
+                   value === ''
+                     ? 'text-grey-900 font-medium bg-green/5'
+                     : 'text-white/70 hover:text-white hover:bg-white/15'
+                 }`}
+               >
+                 {placeholder}
+               </button>
+               {options.map((opt, i) => (
+                 <button
+                   key={opt.value}
+                   role="option"
+                   aria-selected={value === opt.value}
+                   onClick={() => handleSelect(opt.value)}
+                   onMouseEnter={() => (activeRef.current = i)}
+                   className={`glass-option w-full min-h-[48px] rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${
+                     value === opt.value
+                       ? 'text-grey-900 font-medium bg-green/5'
+                       : 'text-white/70 hover:text-white hover:bg-white/15'
+                   }`}
                 >
                   {opt.label}
                 </button>

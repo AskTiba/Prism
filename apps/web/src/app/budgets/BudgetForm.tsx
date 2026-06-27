@@ -46,38 +46,40 @@ export function BudgetForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      <div>
-        <label className="block text-sm font-semibold text-grey-700">Category</label>
-        <Controller
-          name="category"
-          control={control}
-          render={({ field }) => (
-            <GlassSelect
-              value={field.value ?? ''}
-              onChange={(v) => field.onChange(v)}
-              options={CATEGORIES.map((c) => ({ value: c, label: c }))}
-              placeholder="Select a category"
-              aria-label="Category"
-              variant="form"
-            />
-          )}
-        />
-        {errors.category && <p className="mt-1 text-xs text-red">{errors.category.message}</p>}
-      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-semibold text-grey-700">Category</label>
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <GlassSelect
+                value={field.value ?? ''}
+                onChange={(v) => field.onChange(v)}
+                options={CATEGORIES.map((c) => ({ value: c, label: c }))}
+                placeholder="Select a category"
+                aria-label="Category"
+                variant="form"
+              />
+            )}
+          />
+          {errors.category && <p className="mt-1 text-xs text-red">{errors.category.message}</p>}
+        </div>
 
-      <div>
-        <label htmlFor="maximum" className="block text-sm font-semibold text-grey-700">
-          Maximum
-        </label>
-        <GlassInput
-          id="maximum"
-          variant="form"
-          type="number"
-          step="0.01"
-          prefix="$"
-          {...register('maximum', { setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)) })}
-        />
-        {errors.maximum && <p className="mt-1 text-xs text-red">{errors.maximum.message}</p>}
+        <div>
+          <label htmlFor="maximum" className="block text-sm font-semibold text-grey-700">
+            Maximum
+          </label>
+          <GlassInput
+            id="maximum"
+            variant="form"
+            type="number"
+            step="0.01"
+            prefix="$"
+            {...register('maximum', { setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)) })}
+          />
+          {errors.maximum && <p className="mt-1 text-xs text-red">{errors.maximum.message}</p>}
+        </div>
       </div>
 
       <input type="hidden" {...register('theme')} />
