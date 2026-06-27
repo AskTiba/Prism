@@ -103,6 +103,12 @@ describe('PotsPage', () => {
     expect(withdrawBtns.length).toBeGreaterThanOrEqual(1)
   })
 
+  it('shows empty state when no pots exist', () => {
+    mockUseQuery.potsList.mockReturnValue({ data: [] })
+    render(<PotsPage />)
+    expect(screen.getByText(/no pots yet/i)).toBeInTheDocument()
+  })
+
   it('closes dialog and invalidates after adding money', async () => {
     const user = userEvent.setup()
     render(<PotsPage />)

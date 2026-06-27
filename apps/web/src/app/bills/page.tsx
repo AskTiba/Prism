@@ -100,6 +100,14 @@ export default function BillsPage() {
             ))}
           </tbody>
         </table>
+        {bills.length === 0 && (
+          <div className="flex flex-col items-center justify-center px-5 py-12 text-center">
+            <h3 className="text-lg font-semibold text-grey-900">No recurring bills</h3>
+            <p className="mt-1 text-sm text-grey-500">
+              Recurring bills from your transactions will appear here.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -84,4 +84,10 @@ describe('BudgetsPage', () => {
     expect(mockInvalidate).toHaveBeenCalled()
     expect(screen.queryByRole('combobox', { name: /category/i })).not.toBeInTheDocument()
   })
+
+  it('shows empty state when no budgets exist', () => {
+    mockUseQuery.budgetsList.mockReturnValue({ data: [] })
+    render(<BudgetsPage />)
+    expect(screen.getByText(/no budgets yet/i)).toBeInTheDocument()
+  })
 })

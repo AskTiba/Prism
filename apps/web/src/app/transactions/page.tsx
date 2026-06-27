@@ -206,11 +206,19 @@ export default function TransactionsPage() {
                     )}
                   </div>
                 </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {transactions.length === 0 && (
+        <div className="flex flex-col items-center justify-center px-5 py-12 text-center">
+          <h3 className="text-lg font-semibold text-grey-900">No transactions found</h3>
+          <p className="mt-1 text-sm text-grey-500">
+            Add a transaction or adjust your filters to see results.
+          </p>
+        </div>
+      )}
+    </div>
 
       <div className="flex items-center justify-between text-sm text-grey-500">
         <span>

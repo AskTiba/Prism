@@ -147,6 +147,14 @@ describe('TransactionsPage', () => {
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/amount/i)).toBeInTheDocument();
   });
+
+  it('shows empty state when no transactions exist', () => {
+    mockUseQuery.list.mockReturnValue({
+      data: { items: [], total: 0, page: 1, pageSize: 10, totalPages: 0 },
+    });
+    render(<TransactionsPage />);
+    expect(screen.getByText(/no transactions found/i)).toBeInTheDocument();
+  });
 });
 
 describe('TransactionsPage touch targets', () => {

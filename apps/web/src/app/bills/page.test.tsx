@@ -72,4 +72,12 @@ describe('BillsPage', () => {
     render(<BillsPage />);
     expect(screen.getByText('-$15.99')).toBeInTheDocument();
   });
+
+  it('shows empty state when no recurring bills exist', () => {
+    mockUseQuery.list.mockReturnValue({
+      data: { items: [], total: 0, page: 1, pageSize: 20, totalPages: 0 },
+    });
+    render(<BillsPage />);
+    expect(screen.getByText(/no recurring bills/i)).toBeInTheDocument();
+  });
 });
