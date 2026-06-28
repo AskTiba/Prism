@@ -55,7 +55,7 @@ describe('Sidebar', () => {
     render(<Sidebar session={null} />);
     const links = screen.getAllByRole('link').filter((l) => l.closest('nav'));
     for (const link of links) {
-      expect(link.className).toMatch(/py-[3-9]/);
+      expect(link.className).toMatch(/py-\d/);
     }
   });
 

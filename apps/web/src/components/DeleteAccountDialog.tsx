@@ -9,6 +9,7 @@ import { signOutAction } from '@/lib/auth-actions';
 import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassButton from '@/components/ui/GlassButton';
+import { Trash2 } from 'lucide-react';
 
 const deleteSchema = z.object({
   confirm: z.literal('DELETE'),
@@ -16,7 +17,7 @@ const deleteSchema = z.object({
 
 type DeleteFormData = { confirm: string };
 
-export function DeleteAccountDialog() {
+export function DeleteAccountDialog({ collapsed }: { collapsed?: boolean }) {
   const [open, setOpen] = useState(false);
   const {
     register,
@@ -41,11 +42,20 @@ export function DeleteAccountDialog() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red transition-all duration-150 hover:bg-white/[0.03] hover:text-red/80 hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.12)] md:rounded-none md:px-8 md:py-3.5"
+        title={collapsed ? 'Delete Account' : undefined}
+        className={`group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 md:rounded-lg ${
+          collapsed ? 'md:justify-center md:px-0' : 'md:mx-1.5 md:py-2.5 md:px-3'
+        } text-red/80 hover:bg-white/[0.04] hover:text-red`}
       >
-        Delete Account
+        <Trash2 size={18} className="shrink-0 text-red/60 group-hover:text-red" />
+        <span
+          className={`transition-opacity duration-200 ${
+            collapsed ? 'md:opacity-0 md:w-0 md:overflow-hidden' : 'opacity-100'
+          }`}
+        >
+          Delete Account
+        </span>
       </button>
-
       <GlassDialog open={open} onClose={() => { setOpen(false); reset() }} title="Delete Account">
         <form onSubmit={handleSubmit(onSubmit)}>
           <p className="text-sm text-grey-500">

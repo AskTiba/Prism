@@ -6,7 +6,7 @@ import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassButton from '@/components/ui/GlassButton';
 import { LogOut } from 'lucide-react';
 
-export function SignOutDialog() {
+export function SignOutDialog({ collapsed }: { collapsed?: boolean }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -14,10 +14,19 @@ export function SignOutDialog() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-grey-400 transition-all duration-150 hover:bg-white/[0.03] hover:text-white hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.12)] md:rounded-none md:px-8 md:py-3.5"
+        title={collapsed ? 'Sign Out' : undefined}
+        className={`group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 md:rounded-lg ${
+          collapsed ? 'md:justify-center md:px-0' : 'md:mx-1.5 md:py-2.5 md:px-3'
+        } text-grey-400 hover:bg-white/[0.04] hover:text-white`}
       >
-        <LogOut size={20} />
-        Sign Out
+        <LogOut size={18} className="shrink-0 text-grey-400 group-hover:text-white" />
+        <span
+          className={`transition-opacity duration-200 ${
+            collapsed ? 'md:opacity-0 md:w-0 md:overflow-hidden' : 'opacity-100'
+          }`}
+        >
+          Sign Out
+        </span>
       </button>
 
       <GlassDialog open={open} onClose={() => setOpen(false)} title="Sign Out">
