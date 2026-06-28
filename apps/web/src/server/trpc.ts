@@ -1,13 +1,11 @@
 import { initTRPC, TRPCError } from '@trpc/server';
-import { prisma } from '@repo/db/src/client';
-import { auth } from '@/auth';
 
-export async function createContext() {
-  const session = await auth();
-  return { prisma, session };
+export interface Context {
+  prisma: typeof import('@repo/db/src/client').prisma;
+  session: import('next-auth').Session | null;
 }
 
-const t = initTRPC.context<typeof createContext>().create();
+const t = initTRPC.context<Context>().create();
 
 export const router = t.router;
 export const publicProcedure = t.procedure;

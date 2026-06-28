@@ -1,6 +1,6 @@
 # Project State
 
-> Last updated: 2026-06-28 by Emily (Senior Dev Partner)
+> Last updated: 2026-06-28 (session 2) by Emily (Senior Dev Partner)
 > This file is the source of truth for project continuity across sessions.
 
 ## 1. Project Snapshot
@@ -12,6 +12,9 @@
 | Repo / branch     | main (local, no remote)                                                                                                |
 | Current milestone | All 13 core units + design alignment + P0.1–P0.5 + P1.2–P1.4 + Enhanced filters + UI/UX Polish |
 | Overall status    | Green |
+
+### Known Issue
+- **tRPC 401 on first page load**: SessionProvider call to `/api/auth/session` returns 200 (session valid), but tRPC batch calls still return 401 on the first page load. After `SessionProvider` warms up, smaller batch calls succeed (200). The `getToken` approach in `route.ts` fixes this — reads JWT directly without Auth.js pipeline. No sign-out/in required. | Verifed fixed |
 
 ## 2. What Currently Works
 
@@ -71,6 +74,11 @@
 - [x] UI/UX Polish Unit 4 — useActionState integration in signin/signup
 - [x] UI/UX Polish Unit 5 — GlassButton standardization & hover effects
 - [x] Tech Debt Cleanup — Resolve lint warnings (next/image, any types)
+- [x] Session 2: Unify UGX formatting via `formatCurrency` + `CURRENCY_CONFIG`
+- [x] Session 2: Expand seed data (140 txns, 8 budgets, 8 pots) with Ugandan merchants
+- [x] Session 2: Fix tRPC 401 by replacing `auth()` with `getToken` in route handler
+- [x] Session 2: Fix test assertions (`\u00a0` → regex), add `SessionProvider`
+- [x] Session 2: Fix AUTH_URL missing in dev, add `next.config.ts` fallback
 
 ## 4. Known Issues / Blocked
 

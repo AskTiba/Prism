@@ -18,6 +18,7 @@
 | 2026-06-27 | Neon PostgreSQL cloud DB for P0.2 migration                                      | Staff Database Engineer | Serverless PostgreSQL fits single-user MVP scale; free tier adequate for dev; Prisma abstracts away provider differences so migration is low-risk                                                                                           | Docker local PostgreSQL (more setup, no benefit over cloud at current scale)                                      | No             |
 | 2026-06-27 | Standardize buttons with GlassButton                                             | UX Designer          | Replaces inconsistent, excessive hover effects with a unified, subtle, glassmorphism-inspired button component; enforces standard UI patterns across the app.                                                                               | Keeping individual inline styles (inconsistent, poor UX)                                                          | No             |
 | 2026-06-27 | Refactor auth forms to useActionState                                            | Full-Stack Architect | Next.js 15 app router best practice for progressive enhancement and form handling; improves UX by avoiding full page reloads and providing immediate validation feedback.                                                                       | Client-side useState (more boilerplate, worse progressive enhancement)                                            | No             |
+| 2026-06-28 | Use `getToken` from `next-auth/jwt` over `auth()` in tRPC Route Handler          | Full-Stack Architect | `auth()` breaks inside tRPC's `fetchRequestHandler` — async context lost (no-arg call) or triggers JWT rotation that invalidates old token (`{ req, res }` overload). `getToken` reads JWT directly from request cookie without firing Auth.js pipeline or rotation. | `auth()` with no args (async context loss), `auth({ req, res })` (JWT rotation on every call) | No             |
 
 ## Git Conventions for This Project
 
@@ -46,4 +47,5 @@
 8790c0e fix: truncate long transaction names in overview
 e6583dd build: add ESLint config and CI pipeline
 b01f81d feat: migrate from SQLite to PostgreSQL
+d2003ab feat: unify UGX formatting, add CURRENCY_CONFIG, expand seed data
 ```
