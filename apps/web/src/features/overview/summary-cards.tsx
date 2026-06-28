@@ -1,11 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
-
-function formatCurrency(amount: number): string {
-  const prefix = amount < 0 ? '-' : '';
-  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
+import { formatCurrency } from '@repo/shared';
 
 function SummaryCard({
   label,

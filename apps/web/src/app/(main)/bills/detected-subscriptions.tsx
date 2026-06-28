@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import { formatCurrency } from '@repo/shared';
 
 export function DetectedSubscriptions() {
   const { data } = trpc.data.detectedSubscriptions.useQuery();
@@ -20,11 +21,15 @@ export function DetectedSubscriptions() {
             <div>
               <p className="text-sm font-medium text-grey-900">{sub.name}</p>
               <p className="text-xs text-grey-500">
-                Next: {new Date(sub.nextDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                Next:{' '}
+                {new Date(sub.nextDate).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                })}
               </p>
             </div>
             <span className="text-sm font-bold text-grey-900">
-              ${sub.amount.toFixed(2)}
+              {formatCurrency(sub.amount)}
             </span>
           </li>
         ))}

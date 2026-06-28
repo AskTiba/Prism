@@ -63,7 +63,7 @@ describe('RecentTransactions', () => {
 
   it('renders amounts', () => {
     render(<RecentTransactions />);
-    expect(screen.getByText('-$75.50')).toBeInTheDocument();
+    expect(screen.getByText(/-UGX\s*76/)).toBeInTheDocument();
   });
 
   it('renders avatar images', () => {

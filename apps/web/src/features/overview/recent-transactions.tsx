@@ -2,11 +2,7 @@
 
 import { trpc } from '@/lib/trpc';
 import Image from 'next/image';
-
-function formatCurrency(amount: number): string {
-  const prefix = amount < 0 ? '-' : '+';
-  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
+import { formatCurrency } from '@repo/shared';
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
@@ -32,7 +28,13 @@ export function RecentTransactions() {
         {transactions.map((tx) => (
           <li key={tx.id} className="flex items-center gap-3 py-3">
             {tx.avatar ? (
-              <Image src={tx.avatar} alt="" width={32} height={32} className="h-8 w-8 rounded-full object-cover" />
+              <Image
+                src={tx.avatar}
+                alt=""
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-full object-cover"
+              />
             ) : (
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
                 {tx.name.charAt(0)}
@@ -43,7 +45,9 @@ export function RecentTransactions() {
               <p className="text-xs text-grey-500">
                 {tx.category}
                 {tx.subtype && (
-                  <span className="ml-1 rounded bg-beige px-1 text-[10px]">{tx.subtype}</span>
+                  <span className="ml-1 rounded bg-beige px-1 text-[10px]">
+                    {tx.subtype}
+                  </span>
                 )}
               </p>
             </div>

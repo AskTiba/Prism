@@ -46,6 +46,6 @@ describe('SummaryCards', () => {
 
   it('renders the computed total balance', () => {
     render(<SummaryCards />);
-    expect(screen.getByText('$1,150.00')).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*1,150/)).toBeInTheDocument();
   });
 });

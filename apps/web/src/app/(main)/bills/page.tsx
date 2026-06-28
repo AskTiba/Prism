@@ -2,12 +2,8 @@
 
 import { trpc } from '@/lib/trpc';
 import Image from 'next/image';
+import { formatCurrency } from '@repo/shared';
 import { DetectedSubscriptions } from './detected-subscriptions';
-
-function formatCurrency(amount: number): string {
-  const prefix = amount < 0 ? '-' : '+';
-  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
 
 export default function BillsPage() {
   const { data } = trpc.transactions.list.useQuery({ pageSize: 100, category: 'Bills' });

@@ -50,7 +50,7 @@ describe('BudgetSummary', () => {
 
   it('shows spent amounts', () => {
     render(<BudgetSummary />);
-    expect(screen.getByText('$50.00')).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*50/)).toBeInTheDocument();
   });
 
   it('renders a donut chart SVG', () => {
@@ -61,6 +61,6 @@ describe('BudgetSummary', () => {
 
   it('shows total budget in center of donut', () => {
     render(<BudgetSummary />);
-    expect(screen.getByText('$800')).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*800/)).toBeInTheDocument();
   });
 });

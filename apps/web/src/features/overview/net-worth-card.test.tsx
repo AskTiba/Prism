@@ -28,17 +28,17 @@ describe('NetWorthCard', () => {
 
   it('renders the computed net worth value', () => {
     render(<NetWorthCard />);
-    expect(screen.getByText('$7,500.00')).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*7,500/)).toBeInTheDocument();
   });
 
   it('renders income, expenses, and pots breakdown', () => {
     render(<NetWorthCard />);
     expect(screen.getByText(/total income/i)).toBeInTheDocument();
-    expect(screen.getByText(/\$10,000/)).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*10,000/)).toBeInTheDocument();
     expect(screen.getByText(/total expenses/i)).toBeInTheDocument();
-    expect(screen.getByText(/\$4,500/)).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*4,500/)).toBeInTheDocument();
     expect(screen.getByText(/savings/i)).toBeInTheDocument();
-    expect(screen.getByText(/\$2,000/)).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*2,000/)).toBeInTheDocument();
   });
 
   it('renders negative net worth in red text', () => {
@@ -46,7 +46,7 @@ describe('NetWorthCard', () => {
       data: { totalIncome: 3000, totalExpenses: 5000, totalPots: 500, netWorth: -1500 },
     });
     render(<NetWorthCard />);
-    const valueEl = screen.getByText('-$1,500.00');
+    const valueEl = screen.getByText(/-UGX\s*1,500/);
     expect(valueEl.className).toMatch(/text-red/);
   });
 });

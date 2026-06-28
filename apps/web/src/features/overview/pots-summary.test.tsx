@@ -34,7 +34,7 @@ describe('PotsSummary', () => {
 
   it('shows total of all pots', () => {
     render(<PotsSummary />);
-    expect(screen.getByText('$319.00')).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*319/)).toBeInTheDocument();
   });
 
   it('renders pot names in a 2-column grid', () => {

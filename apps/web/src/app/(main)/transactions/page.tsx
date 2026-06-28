@@ -4,17 +4,21 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
 import { trpc } from '@/lib/trpc';
-import { CATEGORIES, SUBTYPES, SORT_OPTIONS, PAGE_SIZE, type Category, type Subtype, type SortOption } from '@repo/shared';
+import {
+  CATEGORIES,
+  SUBTYPES,
+  SORT_OPTIONS,
+  PAGE_SIZE,
+  type Category,
+  type Subtype,
+  type SortOption,
+} from '@repo/shared';
 import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassSelect from '@/components/ui/GlassSelect';
 import GlassButton from '@/components/ui/GlassButton';
+import { formatCurrency } from '@repo/shared';
 import { TransactionForm } from './TransactionForm';
-
-function formatCurrency(amount: number): string {
-  const prefix = amount < 0 ? '' : '+';
-  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
 
 export default function TransactionsPage() {
   const [newOpen, setNewOpen] = useState(false);
@@ -47,11 +51,7 @@ export default function TransactionsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Transactions</h1>
-        <GlassButton
-          type="button"
-          variant="primary"
-          onClick={() => setNewOpen(true)}
-        >
+        <GlassButton type="button" variant="primary" onClick={() => setNewOpen(true)}>
           <Plus size={16} />
           New Transaction
         </GlassButton>
@@ -211,19 +211,19 @@ export default function TransactionsPage() {
                     )}
                   </div>
                 </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {transactions.length === 0 && (
-        <div className="flex flex-col items-center justify-center px-5 py-12 text-center">
-          <h3 className="text-lg font-semibold text-grey-900">No transactions found</h3>
-          <p className="mt-1 text-sm text-grey-500">
-            Add a transaction or adjust your filters to see results.
-          </p>
-        </div>
-      )}
-    </div>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {transactions.length === 0 && (
+          <div className="flex flex-col items-center justify-center px-5 py-12 text-center">
+            <h3 className="text-lg font-semibold text-grey-900">No transactions found</h3>
+            <p className="mt-1 text-sm text-grey-500">
+              Add a transaction or adjust your filters to see results.
+            </p>
+          </div>
+        )}
+      </div>
 
       <div className="flex items-center justify-between text-sm text-grey-500">
         <span>
@@ -245,9 +245,16 @@ export default function TransactionsPage() {
         </div>
       </div>
 
-      <GlassDialog open={newOpen} onClose={() => setNewOpen(false)} title="New Transaction">
+      <GlassDialog
+        open={newOpen}
+        onClose={() => setNewOpen(false)}
+        title="New Transaction"
+      >
         <TransactionForm
-          onSuccess={() => { setNewOpen(false); utils.transactions.list.invalidate() }}
+          onSuccess={() => {
+            setNewOpen(false);
+            utils.transactions.list.invalidate();
+          }}
         />
       </GlassDialog>
     </div>

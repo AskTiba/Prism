@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import { formatCurrency } from '@repo/shared';
 
 export function PotsSummary() {
   const { data: pots } = trpc.pots.list.useQuery();
@@ -28,7 +29,9 @@ export function PotsSummary() {
           </div>
           <div>
             <p className="text-sm text-grey-500">Total Saved</p>
-            <p className="text-2xl font-bold text-grey-900">${totalSaved.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-grey-900">
+              {formatCurrency(totalSaved)}
+            </p>
           </div>
         </div>
 
@@ -41,7 +44,9 @@ export function PotsSummary() {
               />
               <div>
                 <p className="text-xs text-grey-500">{pot.name}</p>
-                <p className="text-sm font-bold text-grey-900">${pot.total.toFixed(2)}</p>
+                <p className="text-sm font-bold text-grey-900">
+                  {formatCurrency(pot.total)}
+                </p>
               </div>
             </div>
           ))}

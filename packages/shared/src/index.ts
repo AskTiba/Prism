@@ -4,9 +4,10 @@ export {
   SORT_OPTIONS,
   PAGE_SIZE,
   SUBTYPES,
-} from './constants'
+  CURRENCY_CONFIG,
+} from './constants';
 
-export type { Category, SortOption, Subtype } from './constants'
+export type { Category, SortOption, Subtype } from './constants';
 
 export type {
   Transaction,
@@ -16,7 +17,7 @@ export type {
   PaginatedResponse,
   BudgetWithSpent,
   PotWithProgress,
-} from './types'
+} from './types';
 
 export {
   transactionFiltersSchema,
@@ -26,4 +27,6 @@ export {
   potUpdateSchema,
   potAddWithdrawSchema,
   transactionCreateSchema,
-} from './schemas'
+} from './schemas';
+
+export { formatCurrency } from './format';

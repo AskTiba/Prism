@@ -4,7 +4,7 @@ export const SUBTYPES = [
   'Essentials',
   'Discretionary',
   'Saving',
-] as const
+] as const;
 
 export const CATEGORIES = [
   'Entertainment',
@@ -17,7 +17,7 @@ export const CATEGORIES = [
   'Shopping',
   'Education',
   'Lifestyle',
-] as const
+] as const;
 
 export const CATEGORY_THEMES: Record<string, string> = {
   Entertainment: '#277C78',
@@ -30,7 +30,7 @@ export const CATEGORY_THEMES: Record<string, string> = {
   Shopping: '#934F6D',
   Education: '#F8B4B4',
   Lifestyle: '#597C7C',
-}
+};
 
 export const SORT_OPTIONS = [
   { label: 'Latest', value: 'latest' },
@@ -39,10 +39,18 @@ export const SORT_OPTIONS = [
   { label: 'Z to A', value: 'z-a' },
   { label: 'Highest', value: 'highest' },
   { label: 'Lowest', value: 'lowest' },
-] as const
+] as const;
 
-export const PAGE_SIZE = 10
+export const PAGE_SIZE = 10;
 
-export type Category = (typeof CATEGORIES)[number]
-export type SortOption = (typeof SORT_OPTIONS)[number]['value']
-export type Subtype = (typeof SUBTYPES)[number]
+export const CURRENCY_CONFIG = {
+  locale: 'en-UG',
+  currency: 'UGX',
+  currencyDisplay: 'code' as const,
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+};
+
+export type Category = (typeof CATEGORIES)[number];
+export type SortOption = (typeof SORT_OPTIONS)[number]['value'];
+export type Subtype = (typeof SUBTYPES)[number];

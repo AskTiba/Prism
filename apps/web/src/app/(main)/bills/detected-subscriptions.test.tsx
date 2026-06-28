@@ -28,8 +28,8 @@ describe('DetectedSubscriptions', () => {
     render(<DetectedSubscriptions />);
     expect(screen.getByText('Netflix')).toBeInTheDocument();
     expect(screen.getByText('Spotify')).toBeInTheDocument();
-    expect(screen.getByText('$15.99')).toBeInTheDocument();
-    expect(screen.getByText('$9.99')).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*16/)).toBeInTheDocument();
+    expect(screen.getByText(/UGX\s*10/)).toBeInTheDocument();
   });
 
   it('renders next dates', () => {

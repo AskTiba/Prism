@@ -2,6 +2,7 @@
 
 import { trpc } from '@/lib/trpc';
 import { PieChart, Pie, Cell } from 'recharts';
+import { formatCurrency } from '@repo/shared';
 
 export function BudgetSummary() {
   const { data: budgets } = trpc.budgets.list.useQuery();
@@ -44,8 +45,10 @@ export function BudgetSummary() {
             </Pie>
           </PieChart>
           <div className="absolute flex flex-col items-center">
-            <p className="text-2xl font-bold text-grey-900">${totalBudget}</p>
-            <p className="text-xs text-grey-500">of $ limit</p>
+            <p className="text-2xl font-bold text-grey-900">
+              {formatCurrency(totalBudget)}
+            </p>
+            <p className="text-xs text-grey-500">of budget limit</p>
           </div>
         </div>
 
@@ -59,7 +62,7 @@ export function BudgetSummary() {
               <div>
                 <p className="text-xs text-grey-500">{entry.name}</p>
                 <p className="text-sm font-bold text-grey-900">
-                  ${entry.spent.toFixed(2)}
+                  {formatCurrency(entry.spent)}
                 </p>
               </div>
             </li>

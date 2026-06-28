@@ -1,11 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
-
-function formatCurrency(amount: number): string {
-  const prefix = amount < 0 ? '-' : '';
-  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
+import { formatCurrency } from '@repo/shared';
 
 export function CashFlowCard() {
   const { data } = trpc.data.cashFlowProjection.useQuery();
@@ -16,7 +12,9 @@ export function CashFlowCard() {
   return (
     <div className="rounded-xl bg-white px-5 py-6">
       <h2 className="text-lg font-bold">Cash Flow</h2>
-      <p className="mt-1 text-sm text-grey-500">Projected recurring income and expenses.</p>
+      <p className="mt-1 text-sm text-grey-500">
+        Projected recurring income and expenses.
+      </p>
       <div className="mt-4 space-y-3">
         {entries.map((entry, i) => (
           <div
@@ -33,9 +31,7 @@ export function CashFlowCard() {
               </p>
             </div>
             <div className="text-right">
-              <p
-                className={`font-bold ${entry.amount < 0 ? 'text-red' : 'text-green'}`}
-              >
+              <p className={`font-bold ${entry.amount < 0 ? 'text-red' : 'text-green'}`}>
                 {formatCurrency(entry.amount)}
               </p>
               <p className="text-xs text-grey-500">{formatCurrency(entry.balance)}</p>

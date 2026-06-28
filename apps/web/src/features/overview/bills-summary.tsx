@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import { formatCurrency } from '@repo/shared';
 
 export function BillsSummary() {
   const { data } = trpc.transactions.list.useQuery({ pageSize: 100, category: 'Bills' });
@@ -22,12 +23,12 @@ export function BillsSummary() {
         <div className="flex justify-between">
           <dt className="text-sm text-grey-500">Paid Bills</dt>
           <dd className="text-sm font-bold text-green">
-            {paidCount} (${totalPaid.toFixed(2)})
+            {paidCount} ({formatCurrency(totalPaid)})
           </dd>
         </div>
         <div className="flex justify-between">
           <dt className="text-sm text-grey-500">Total Upcoming</dt>
-          <dd className="text-sm font-bold">$0.00</dd>
+          <dd className="text-sm font-bold">{formatCurrency(0)}</dd>
         </div>
       </dl>
     </div>

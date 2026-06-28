@@ -1,11 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
-
-function formatCurrency(amount: number): string {
-  const prefix = amount < 0 ? '-' : '';
-  return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
+import { formatCurrency } from '@repo/shared';
 
 export function NetWorthCard() {
   const { data } = trpc.data.netWorth.useQuery();
@@ -23,15 +19,21 @@ export function NetWorthCard() {
       <div className="mt-4 space-y-3">
         <div className="flex items-center justify-between text-sm">
           <span className="text-grey-500">Total Income</span>
-          <span className="font-medium text-green">{formatCurrency(data.totalIncome)}</span>
+          <span className="font-medium text-green">
+            {formatCurrency(data.totalIncome)}
+          </span>
         </div>
         <div className="flex items-center justify-between text-sm">
           <span className="text-grey-500">Total Expenses</span>
-          <span className="font-medium text-red">{formatCurrency(data.totalExpenses)}</span>
+          <span className="font-medium text-red">
+            {formatCurrency(data.totalExpenses)}
+          </span>
         </div>
         <div className="flex items-center justify-between text-sm">
           <span className="text-grey-500">Savings (Pots)</span>
-          <span className="font-medium text-grey-900">{formatCurrency(data.totalPots)}</span>
+          <span className="font-medium text-grey-900">
+            {formatCurrency(data.totalPots)}
+          </span>
         </div>
       </div>
     </div>

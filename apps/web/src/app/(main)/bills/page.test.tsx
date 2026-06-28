@@ -70,7 +70,7 @@ describe('BillsPage', () => {
 
   it('shows amounts', () => {
     render(<BillsPage />);
-    expect(screen.getByText('-$15.99')).toBeInTheDocument();
+    expect(screen.getByText(/-UGX\s*16/)).toBeInTheDocument();
   });
 
   it('shows empty state when no recurring bills exist', () => {

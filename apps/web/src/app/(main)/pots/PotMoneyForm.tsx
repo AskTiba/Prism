@@ -4,7 +4,7 @@ import { Plus, Minus } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { potAddWithdrawSchema } from '@repo/shared';
+import { potAddWithdrawSchema, formatCurrency } from '@repo/shared';
 import { trpc } from '@/lib/trpc';
 import GlassInput from '@/components/ui/GlassInput';
 
@@ -53,8 +53,8 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
     <form className="space-y-5">
       <p className="text-sm font-semibold text-grey-700">{pot.name}</p>
       <div className="flex justify-between text-sm text-grey-500">
-        <span>${pot.total.toFixed(2)}</span>
-        <span>of ${pot.target.toFixed(2)}</span>
+        <span>{formatCurrency(pot.total)}</span>
+        <span>of {formatCurrency(pot.target)}</span>
       </div>
 
       <div>
@@ -66,12 +66,14 @@ export function PotMoneyForm({ pot, onSuccess }: PotMoneyFormProps) {
           variant="form"
           type="number"
           step="0.01"
-          prefix="$"
+          prefix="UGX"
           {...register('amount', {
             setValueAs: (v) => (v === '' ? undefined : parseFloat(v as string)),
           })}
         />
-        {errors.amount && <p className="mt-1 text-xs text-red">{errors.amount.message}</p>}
+        {errors.amount && (
+          <p className="mt-1 text-xs text-red">{errors.amount.message}</p>
+        )}
       </div>
 
       <div className="flex gap-3">

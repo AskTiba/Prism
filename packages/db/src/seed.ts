@@ -7,6 +7,8 @@ type SeedTransaction = {
   avatar: string | null;
   name: string;
   category: string;
+  subtype?: string;
+  tags?: string[];
   date: string;
   amount: number;
   recurring: boolean;
@@ -63,6 +65,8 @@ async function main() {
           avatar: tx.avatar,
           name: tx.name,
           category: tx.category,
+          subtype: tx.subtype ?? null,
+          tags: tx.tags ?? [],
           date: new Date(tx.date),
           amount: tx.amount,
           recurring: tx.recurring,

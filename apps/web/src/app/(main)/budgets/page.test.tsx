@@ -49,12 +49,12 @@ describe('BudgetsPage', () => {
 
   it('shows spent amounts', () => {
     render(<BudgetsPage />)
-    expect(screen.getByText('$235.00')).toBeInTheDocument()
+    expect(screen.getByText(/UGX\s*235/)).toBeInTheDocument()
   })
 
   it('shows maximum amounts', () => {
     render(<BudgetsPage />)
-    expect(screen.getByText('of $400.00')).toBeInTheDocument()
+    expect(screen.getAllByText(/of UGX\s*400/).length).toBeGreaterThanOrEqual(1)
   })
 
   it('renders add budget button', () => {
