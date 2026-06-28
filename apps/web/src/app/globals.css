@@ -74,10 +74,9 @@
     content: '';
     position: absolute;
     left: 0;
-    top: 6px;
-    bottom: 6px;
+    top: 0;
+    bottom: 0;
     width: 3px;
-    border-radius: 0 3px 3px 0;
     background: transparent;
     transition:
       background 200ms ease,
@@ -94,4 +93,12 @@
     background: #277c78;
     opacity: 1;
   }
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

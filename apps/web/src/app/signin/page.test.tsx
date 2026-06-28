@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 
@@ -6,7 +6,16 @@ vi.mock('@/lib/auth-actions', () => ({
   signInAction: 'mocked-action' as any,
 }));
 
+vi.mock('next/navigation', () => ({
+  useSearchParams: vi.fn(),
+}));
+
 import SignInPage from './page';
+import { useSearchParams } from 'next/navigation';
+
+beforeEach(() => {
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams());
+});
 
 describe('SignInPage', () => {
   it('renders email and password inputs', () => {

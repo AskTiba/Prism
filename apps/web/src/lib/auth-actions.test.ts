@@ -3,7 +3,6 @@ import { signInAction, signUpAction } from './auth-actions';
 import { prisma } from '@repo/db/src/client';
 import bcrypt from 'bcryptjs';
 import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
 
 vi.mock('@repo/db/src/client', () => ({
   prisma: {
@@ -20,30 +19,12 @@ vi.mock('bcryptjs', () => ({
   },
 }));
 
-vi.mock('next-auth', () => {
-  return {
-    AuthError: class AuthError extends Error {
-      type: string;
-      constructor(msg: string) {
-        super(msg);
-        this.type = 'CredentialsSignin';
-      }
-    },
-    default: vi.fn(),
-  };
-});
-
 vi.mock('@/auth', () => ({
   signIn: vi.fn(),
   signOut: vi.fn(),
 }));
 
-// We need to mock next/navigation to catch redirect
-vi.mock('next/navigation', () => ({
-  redirect: vi.fn((url) => {
-    throw new Error(`REDIRECT_TO_${url}`);
-  }),
-}));
+vi.mock('next/navigation', () => ({ redirect: vi.fn() }));
 
 describe('auth-actions', () => {
   beforeEach(() => {
@@ -51,8 +32,8 @@ describe('auth-actions', () => {
   });
 
   describe('signInAction', () => {
-    it('returns error when AuthError is thrown', async () => {
-      vi.mocked(signIn).mockRejectedValueOnce(new AuthError('Invalid credentials'));
+    it('returns error when credentials are invalid', async () => {
+      vi.mocked(signIn).mockResolvedValueOnce({ error: 'CredentialsSignin' } as any);
 
       const formData = new FormData();
       formData.append('email', 'test@test.com');
@@ -62,15 +43,16 @@ describe('auth-actions', () => {
       expect(result).toEqual({ error: 'Invalid credentials.' });
     });
 
-    it('returns unexpected error when generic error is thrown', async () => {
-      vi.mocked(signIn).mockRejectedValueOnce(new Error('Some other error'));
+    it('redirects to home on successful sign-in', async () => {
+      vi.mocked(signIn).mockResolvedValueOnce({ url: '/' } as any);
 
       const formData = new FormData();
       formData.append('email', 'test@test.com');
-      formData.append('password', 'wrong');
+      formData.append('password', 'correct');
 
-      const result = await signInAction(undefined, formData);
-      expect(result).toEqual({ error: 'Something went wrong.' });
+      await signInAction(undefined, formData);
+      const { redirect } = await import('next/navigation');
+      expect(redirect).toHaveBeenCalledWith('/');
     });
   });
 

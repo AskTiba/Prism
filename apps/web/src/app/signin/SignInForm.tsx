@@ -1,13 +1,23 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import GlassInput from '@/components/ui/GlassInput';
 import SubmitButton from '@/components/ui/SubmitButton';
-import { signUpAction } from '@/lib/auth-actions';
+import { signInAction } from '@/lib/auth-actions';
 
-export default function SignUpPage() {
-  const [state, action] = useActionState(signUpAction, undefined);
+export default function SignInForm() {
+  const [state, action] = useActionState(signInAction, undefined);
+  const searchParams = useSearchParams();
+  const [justRegistered, setJustRegistered] = useState(searchParams.get('registered') === 'true');
+
+  useEffect(() => {
+    if (justRegistered) {
+      const timeout = setTimeout(() => setJustRegistered(false), 5000);
+      return () => clearTimeout(timeout);
+    }
+  }, [justRegistered]);
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
@@ -33,8 +43,13 @@ export default function SignUpPage() {
 
       <div className="flex md:w-[40%] items-center justify-center bg-white px-6 py-10 md:px-10">
         <div className="w-full max-w-sm">
-          <h2 className="mb-8 text-2xl font-bold text-grey-900 md:text-3xl">Sign Up</h2>
+          <h2 className="mb-8 text-2xl font-bold text-grey-900 md:text-3xl">Sign In</h2>
           <form action={action} className="flex flex-col gap-5">
+            {justRegistered && (
+              <div className="rounded-lg bg-green-50 p-3 text-sm text-green-600">
+                Account created! Sign in below.
+              </div>
+            )}
             {state?.error && (
               <div className="rounded-lg bg-red-50 p-3 text-sm text-red-500">
                 {state.error}
@@ -70,20 +85,19 @@ export default function SignUpPage() {
                 type="password"
                 variant="form"
                 required
-                minLength={6}
                 className="w-full"
                 error={state?.error ? true : undefined}
               />
             </div>
-            <SubmitButton>Sign Up</SubmitButton>
+            <SubmitButton>Sign In</SubmitButton>
           </form>
           <p className="mt-8 text-center text-sm text-grey-500">
-            Already have an account?{' '}
+            Don&apos;t have an account?{' '}
             <a
-              href="/signin"
+              href="/signup"
               className="font-semibold text-grey-900 underline decoration-grey-900/30 transition-colors hover:decoration-grey-900"
             >
-              Sign In
+              Sign Up
             </a>
           </p>
         </div>

@@ -2,25 +2,28 @@
 
 import { usePathname } from 'next/navigation';
 import type { Session } from 'next-auth';
-import { signOutAction } from '@/lib/auth-actions';
 import { DeleteAccountDialog } from './DeleteAccountDialog';
+import { SignOutDialog } from './SignOutDialog';
 import {
   LayoutDashboard,
   ArrowLeftRight,
-  PiggyBank,
   Banknote,
+  PiggyBank,
   Receipt,
   LogIn,
-  LogOut,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { label: 'Overview', href: '/', icon: <LayoutDashboard size={18} /> },
-  { label: 'Transactions', href: '/transactions', icon: <ArrowLeftRight size={18} /> },
-  { label: 'Budgets', href: '/budgets', icon: <Banknote size={18} /> },
-  { label: 'Pots', href: '/pots', icon: <PiggyBank size={18} /> },
-  { label: 'Recurring Bills', href: '/bills', icon: <Receipt size={18} /> },
-];
+  { label: 'Overview', href: '/', icon: LayoutDashboard },
+  { label: 'Transactions', href: '/transactions', icon: ArrowLeftRight },
+  { label: 'Budgets', href: '/budgets', icon: Banknote },
+  { label: 'Pots', href: '/pots', icon: PiggyBank },
+  { label: 'Recurring Bills', href: '/bills', icon: Receipt },
+] as const;
+
+function getInitials(email: string) {
+  return email.charAt(0).toUpperCase();
+}
 
 export function Sidebar({ session }: { session: Session | null }) {
   const pathname = usePathname();
@@ -32,46 +35,75 @@ export function Sidebar({ session }: { session: Session | null }) {
 
   function linkClass(href: string) {
     const active = isActive(href);
-    return `flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition-all duration-150 md:w-full md:rounded-none md:px-6 ${
+    return [
+      'flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition-all duration-200',
+      'md:w-full md:rounded-none md:px-8 md:py-3.5',
       active
-        ? 'bg-white/[0.08] text-white shadow-[inset_3px_0_0_0_#277c78]'
-        : 'text-grey-300 hover:bg-white/[0.06] hover:text-white hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.15)]'
-    }`;
+        ? 'bg-gradient-to-r from-green/[0.1] to-transparent text-white font-medium shadow-[inset_3px_0_0_0_#277c78]'
+        : 'text-grey-400 hover:bg-white/[0.03] hover:text-white hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.12)]',
+    ].join(' ');
   }
 
   return (
-    <nav className="flex w-full items-center justify-between bg-grey-900 px-4 py-3 text-white md:w-64 md:flex-col md:items-start md:justify-start md:rounded-r-2xl md:pt-8 md:overflow-hidden">
-      <span className="text-lg font-bold md:px-6">Prism</span>
-      <ul className="flex flex-wrap justify-end gap-x-1 gap-y-0 md:mt-8 md:w-full md:flex-col md:gap-0.5">
-        {NAV_ITEMS.map((item) => (
-          <li key={item.href} className="md:w-full">
-            <a href={item.href} className={linkClass(item.href)}>
-              {item.icon}
-              {item.label}
-            </a>
-          </li>
-        ))}
+    <nav className="flex w-full items-center justify-between bg-grey-900 px-4 py-3 text-white md:w-64 md:flex-col md:items-start md:justify-start md:rounded-r-2xl md:pt-8 md:overflow-hidden md:shadow-[inset_-1px_0_0_0_rgba(255,255,255,0.03)] md:border-r md:border-white/[0.03]">
+      <div className="hidden md:flex md:items-center md:gap-2.5 md:px-8 md:pb-6">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-green to-cyan shadow-sm">
+          <span className="text-xs font-bold text-white">P</span>
+        </div>
+        <span className="text-lg font-bold tracking-tight">Prism</span>
+      </div>
+
+      {session?.user && (
+        <div className="hidden w-full md:block md:px-6 md:pb-5">
+          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 py-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-green/20 to-cyan/20 text-xs font-semibold text-green">
+                {getInitials(session.user.email ?? '')}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-white">
+                  {session.user.name || session.user.email}
+                </p>
+                <p className="truncate text-xs text-grey-500">{session.user.email}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <ul className="flex flex-wrap justify-end gap-x-1 gap-y-0 md:mt-0 md:w-full md:flex-col md:gap-0">
+        {NAV_ITEMS.map((item) => {
+          const Icon = item.icon;
+          return (
+            <li key={item.href} className="md:w-full">
+              <a href={item.href} className={linkClass(item.href)}>
+                <Icon size={20} />
+                <span>{item.label}</span>
+              </a>
+            </li>
+          );
+        })}
         {session?.user ? (
-          <>
-            <li className="md:w-full">
-              <form action={signOutAction} className="md:w-full">
-                <button
-                  type="submit"
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-grey-300 transition-all duration-150 hover:bg-white/[0.06] hover:text-white hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.15)] md:rounded-none md:px-6"
-                >
-                  <LogOut size={18} />
-                  Sign Out
-                </button>
-              </form>
-            </li>
-            <li className="md:w-full">
+          [
+            <li key="divider" className="hidden w-full md:block">
+              <div className="mx-8 my-3 h-px bg-gradient-to-r from-green/20 via-white/10 to-transparent" />
+            </li>,
+            <li key="account-header" className="hidden w-full md:block">
+              <span className="block px-8 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-widest text-grey-500">
+                Account
+              </span>
+            </li>,
+            <li key="sign-out" className="md:w-full">
+              <SignOutDialog />
+            </li>,
+            <li key="delete-account" className="md:w-full">
               <DeleteAccountDialog />
-            </li>
-          </>
+            </li>,
+          ]
         ) : (
           <li className="md:w-full">
             <a href="/signin" className={linkClass('/signin')}>
-              <LogIn size={18} />
+              <LogIn size={20} />
               Sign In
             </a>
           </li>

@@ -27,8 +27,8 @@ const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
     return (
       <div className="w-full flex flex-col gap-1.5">
         <div
-          className={`relative rounded-xl ${bg} shadow-sm ${blur} transition-shadow duration-150 min-h-[48px] ${
-            focused ? (hasError ? 'shadow-md ring-1 ring-red-500/50' : 'shadow-md ring-1 ring-green/30') : (hasError ? 'ring-1 ring-red-500/30' : '')
+          className={`relative rounded-xl ${bg} shadow-sm ${blur} transition-shadow duration-150 min-h-[48px] ring-1 ${
+            focused ? (hasError ? 'ring-red-500/50 shadow-md' : 'ring-green/30 shadow-md') : (hasError ? 'ring-red-500/30' : 'ring-grey-300/60')
           } ${className}`}
           style={{ width: isForm ? '100%' : undefined }}
         >

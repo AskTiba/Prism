@@ -9,3 +9,4 @@ turbo/
 .vercel
 *.db
 *.db-journal
+design/*.png:Zone.Identifier

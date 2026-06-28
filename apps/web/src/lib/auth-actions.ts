@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@repo/db/src/client';
 import { signIn, signOut } from '@/auth';
-import { AuthError } from 'next-auth';
 
 export type ActionState = {
   error?: string;
@@ -14,27 +13,17 @@ export async function signInAction(
   prevState: ActionState | undefined,
   formData: FormData,
 ): Promise<ActionState> {
-  try {
-    await signIn('credentials', formData, { redirectTo: '/' });
-    return {};
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return { error: 'Invalid credentials.' };
-        default:
-          return { error: 'Something went wrong.' };
-      }
-    }
-    
-    // next/navigation redirect throws an error, so we need to rethrow it
-    // otherwise it gets caught and the redirect fails
-    if ((error as Error).message.includes('NEXT_REDIRECT') || (error as Error).message.includes('REDIRECT')) {
-      throw error;
-    }
+  const result = await signIn('credentials', {
+    email: formData.get('email'),
+    password: formData.get('password'),
+    redirect: false,
+  });
 
-    return { error: 'Something went wrong.' };
+  if (result?.error) {
+    return { error: 'Invalid credentials.' };
   }
+
+  redirect('/');
 }
 
 export async function signUpAction(
@@ -67,7 +56,13 @@ export async function signUpAction(
     return { error: 'An unexpected error occurred' };
   }
 
-  redirect('/signin');
+  await signIn('credentials', {
+    email,
+    password,
+    redirect: false,
+  });
+
+  redirect('/');
 }
 
 export async function signOutAction() {

@@ -41,7 +41,7 @@ export function DeleteAccountDialog() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red transition-all duration-150 hover:bg-white/[0.06] hover:text-red/80 hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.15)] md:rounded-none md:px-6"
+        className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red transition-all duration-150 hover:bg-white/[0.03] hover:text-red/80 hover:shadow-[inset_3px_0_0_0_rgba(255,255,255,0.12)] md:rounded-none md:px-8 md:py-3.5"
       >
         Delete Account
       </button>

@@ -1,18 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback, KeyboardEvent } from 'react';
-import { Glass, type GlassOptics } from '@samasante/liquid-glass';
-
-const PANEL_LENS: Partial<GlassOptics> = {
-  frost: 12,
-  depth: 0.5,
-  curvature: 0.2,
-  strength: 0.1,
-  dispersion: 0.15,
-  bend: 0.3,
-  specular: 0.4,
-  brightness: 0.08,
-};
 
 interface GlassSelectOption {
   value: string;
@@ -125,9 +113,9 @@ export default function GlassSelect({
         aria-haspopup="listbox"
         onClick={() => setOpen(!open)}
         onKeyDown={handleKeyDown}
-        className={`flex w-full min-h-[48px] items-center justify-between gap-2.5 rounded-xl px-4 py-3 text-sm text-grey-900 shadow-sm transition-shadow duration-150 hover:shadow-md focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${variant === 'form' ? 'bg-white/90' : 'bg-white/60 backdrop-blur-lg'}`}
+        className={`flex w-full  items-center justify-between gap-2.5 rounded-xl px-4 py-3 text-sm text-grey-900 shadow-sm transition-shadow duration-150 hover:shadow-md focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${variant === 'form' ? 'bg-white/90' : 'bg-white/60 backdrop-blur-lg'}`}
       >
-        <span className={selected ? 'text-grey-900' : 'text-grey-300'}>{label}</span>
+        <span className={selected ? 'text-grey-900' : 'text-grey-500'}>{label}</span>
         <svg
           width="10"
           height="6"
@@ -146,45 +134,41 @@ export default function GlassSelect({
       </button>
 
       {open && (
-        <div className="absolute left-0 right-0 z-50 mt-1.5">
-          <Glass optics={PANEL_LENS} style={{ borderRadius: 12, padding: 4 }}>
-            <div
-              ref={listRef}
-              role="listbox"
-              aria-label={ariaLabel}
-              className="max-h-56 overflow-y-auto glass-scrollbar"
+        <div className="absolute left-0 right-0 z-50 mt-1.5 overflow-hidden rounded-xl border border-white/10 bg-grey-900/80 shadow-2xl backdrop-blur-xl">
+          <div
+            ref={listRef}
+            role="listbox"
+            aria-label={ariaLabel}
+            className="max-h-56 overflow-y-auto scrollbar-none"
+          >
+            <button
+              role="option"
+              aria-selected={value === ''}
+              onClick={() => handleSelect('')}
+              onMouseEnter={() => (activeRef.current = -1)}
+              className={`glass-option w-full px-4 py-2 text-left text-sm transition-all duration-150 text-white hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green/30 focus-visible:outline-none
+ ${
+                value === '' ? 'bg-white/10 font-medium' : ''
+              }`}
             >
+              {placeholder}
+            </button>
+            {options.map((opt, i) => (
               <button
+                key={opt.value}
                 role="option"
-                aria-selected={value === ''}
-                onClick={() => handleSelect('')}
-                onMouseEnter={() => (activeRef.current = -1)}
-                className={`glass-option w-full min-h-[48px] rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${
-                   value === ''
-                     ? 'text-grey-900 font-medium bg-green/5'
-                     : 'text-white/70 hover:text-white hover:bg-white/15'
-                 }`}
-               >
-                 {placeholder}
-               </button>
-               {options.map((opt, i) => (
-                 <button
-                   key={opt.value}
-                   role="option"
-                   aria-selected={value === opt.value}
-                   onClick={() => handleSelect(opt.value)}
-                   onMouseEnter={() => (activeRef.current = i)}
-                   className={`glass-option w-full min-h-[48px] rounded-lg px-3.5 py-2.5 text-left text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:outline-none ${
-                     value === opt.value
-                       ? 'text-grey-900 font-medium bg-green/5'
-                       : 'text-white/70 hover:text-white hover:bg-white/15'
-                   }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </Glass>
+                aria-selected={value === opt.value}
+                onClick={() => handleSelect(opt.value)}
+                onMouseEnter={() => (activeRef.current = i)}
+                className={`glass-option w-full px-4 py-2 text-left text-sm transition-all duration-150 text-white hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green/30 focus-visible:outline-none
+ ${
+                  value === opt.value ? 'bg-white/10 font-medium' : ''
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

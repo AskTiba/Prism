@@ -11,6 +11,8 @@ const config: Config = {
           300: '#b3b3b3',
           500: '#696868',
           700: '#4a494b',
+          800: '#2d2c31',
+          850: '#262529',
           900: '#201f24',
         },
         green: '#277c78',
@@ -22,6 +24,10 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['"Public Sans"', 'system-ui', 'sans-serif'],
+      },
+      screens: {
+        tablet: '600px',
+        desktop: '1024px',
       },
     },
   },
