@@ -120,4 +120,11 @@ describe('PotsPage', () => {
     expect(mockInvalidate).toHaveBeenCalled()
     expect(screen.queryByLabelText(/amount/i)).not.toBeInTheDocument()
   })
+
+  it('renders pot cards in responsive grid layout', () => {
+    const { container } = render(<PotsPage />)
+    const grid = container.querySelector('.sm\\:grid-cols-2')
+    expect(grid).toBeInTheDocument()
+    expect(grid).toHaveClass('grid', 'gap-6')
+  })
 })

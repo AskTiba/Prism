@@ -90,4 +90,11 @@ describe('BudgetsPage', () => {
     render(<BudgetsPage />)
     expect(screen.getByText(/no budgets yet/i)).toBeInTheDocument()
   })
+
+  it('renders budget cards in responsive grid layout', () => {
+    const { container } = render(<BudgetsPage />)
+    const grid = container.querySelector('.lg\\:grid-cols-2')
+    expect(grid).toBeInTheDocument()
+    expect(grid).toHaveClass('grid', 'gap-6')
+  })
 })

@@ -80,4 +80,11 @@ describe('BillsPage', () => {
     render(<BillsPage />);
     expect(screen.getByText(/no recurring bills/i)).toBeInTheDocument();
   });
+
+  it('renders summary cards in responsive grid layout', () => {
+    const { container } = render(<BillsPage />);
+    const grid = container.querySelector('.sm\\:grid-cols-3');
+    expect(grid).toBeInTheDocument();
+    expect(grid).toHaveClass('grid', 'gap-4');
+  });
 });
