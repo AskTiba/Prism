@@ -1,7 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrencyCompact } from '@repo/shared';
 
 export function CashFlowCard() {
   const { data } = trpc.data.cashFlowProjection.useQuery();
@@ -32,9 +32,9 @@ export function CashFlowCard() {
             </div>
             <div className="text-right">
               <p className={`font-bold ${entry.amount < 0 ? 'text-red' : 'text-green'}`}>
-                {formatCurrency(entry.amount)}
+                {formatCurrencyCompact(entry.amount)}
               </p>
-              <p className="text-xs text-grey-500">{formatCurrency(entry.balance)}</p>
+              <p className="text-xs text-grey-500">{formatCurrencyCompact(entry.balance)}</p>
             </div>
           </div>
         ))}

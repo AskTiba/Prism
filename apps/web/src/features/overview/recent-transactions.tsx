@@ -2,7 +2,7 @@
 
 import { trpc } from '@/lib/trpc';
 import Image from 'next/image';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrencyCompact } from '@repo/shared';
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
@@ -55,7 +55,7 @@ export function RecentTransactions() {
               <p
                 className={`text-sm font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
               >
-                {formatCurrency(tx.amount)}
+                {formatCurrencyCompact(tx.amount)}
               </p>
               <p className="text-xs text-grey-500">{formatDate(tx.date)}</p>
             </div>

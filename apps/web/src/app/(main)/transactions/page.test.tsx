@@ -172,6 +172,20 @@ describe('TransactionsPage styling', () => {
     expect(filterContainer).toBeInTheDocument();
     expect(filterContainer).toHaveClass('flex-wrap');
   });
+
+  it('uses compact currency format for large amounts in table', () => {
+    mockUseQuery.list.mockReturnValue({
+      data: {
+        items: [
+          { id: '1', name: 'Salary', amount: 5000000, category: 'General', subtype: 'Income', tags: ['salary'], date: '2024-08-01T08:00:00Z', recurring: true, avatar: null },
+        ],
+        total: 1, page: 1, pageSize: 10, totalPages: 1,
+      },
+    });
+    render(<TransactionsPage />);
+    expect(screen.getByText(/5M/)).toBeInTheDocument();
+    expect(screen.queryByText('5,000,000')).not.toBeInTheDocument();
+  });
 });
 
 describe('TransactionsPage touch targets', () => {

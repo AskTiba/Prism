@@ -44,8 +44,16 @@ describe('SummaryCards', () => {
     expect(balanceEl?.className).toMatch(/bg-grey-900/);
   });
 
+  it('renders currency values with text-3xl font size', () => {
+    render(<SummaryCards />);
+    const balanceCard = screen.getByText('Current Balance').closest('div');
+    const valueEl = balanceCard?.querySelector('p:last-child');
+    expect(valueEl?.className).toMatch(/text-3xl/);
+  });
+
   it('renders the computed total balance', () => {
     render(<SummaryCards />);
-    expect(screen.getByText(/UGX\s*1,150/)).toBeInTheDocument();
+    const balanceCard = screen.getByText('Current Balance').closest('div');
+    expect(balanceCard).toHaveTextContent(/UGX\s*1\.1K/);
   });
 });

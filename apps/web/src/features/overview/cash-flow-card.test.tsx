@@ -34,7 +34,7 @@ describe('CashFlowCard', () => {
 
   it('renders projected running balance value', () => {
     render(<CashFlowCard />);
-    const balanceEl = screen.getAllByText(/UGX\s*1,800/);
+    const balanceEl = screen.getAllByText(/UGX\s*1\.8K/);
     expect(balanceEl.length).toBeGreaterThanOrEqual(1);
   });
 });

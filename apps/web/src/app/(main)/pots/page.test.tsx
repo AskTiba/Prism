@@ -56,8 +56,8 @@ describe('PotsPage', () => {
 
   it('shows totals and targets', () => {
     render(<PotsPage />)
-    expect(screen.getByText(/UGX\s*1,850/)).toBeInTheDocument()
-    expect(screen.getByText(/of UGX\s*5,000/)).toBeInTheDocument()
+    expect(screen.getByText(/UGX\s*1.9K/)).toBeInTheDocument()
+    expect(screen.getByText(/of UGX\s*5K/)).toBeInTheDocument()
   })
 
   it('renders new pot button', () => {

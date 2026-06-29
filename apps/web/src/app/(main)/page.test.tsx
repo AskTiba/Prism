@@ -82,4 +82,18 @@ describe('OverviewPage', () => {
     expect(screen.getByText('Budgets')).toBeInTheDocument()
     expect(screen.getByText('Recurring Bills')).toBeInTheDocument()
   })
+
+  it('uses compact currency format in summary cards', async () => {
+    mockUseQuery.transactionsList.mockReturnValue({
+      data: {
+        items: [
+          { id: '1', name: 'Salary', amount: 5000000, category: 'General', date: '2024-08-01T08:00:00Z', recurring: false, avatar: null },
+        ],
+        total: 1, page: 1, pageSize: 1000, totalPages: 1,
+      },
+    })
+    render(<OverviewPage />)
+    expect(screen.getAllByText(/UGX\s*5M/).length).toBeGreaterThan(0)
+    expect(screen.queryByText(/5,000,000/)).not.toBeInTheDocument()
+  })
 })

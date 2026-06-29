@@ -1,7 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrencyCompact } from '@repo/shared';
 
 function SummaryCard({
   label,
@@ -17,8 +17,8 @@ function SummaryCard({
       className={`rounded-xl px-5 py-6 ${dark ? 'bg-grey-900 text-white' : 'bg-white'}`}
     >
       <p className={`text-sm ${dark ? 'text-white/70' : 'text-grey-500'}`}>{label}</p>
-      <p className={`mt-2 text-2xl font-bold ${dark ? 'text-white' : 'text-grey-900'}`}>
-        {formatCurrency(amount)}
+      <p className={`mt-2 text-3xl font-bold ${dark ? 'text-white' : 'text-grey-900'}`}>
+        {formatCurrencyCompact(amount)}
       </p>
     </div>
   );

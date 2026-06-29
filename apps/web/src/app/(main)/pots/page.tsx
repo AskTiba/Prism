@@ -7,7 +7,7 @@ import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassButton from '@/components/ui/GlassButton';
 import { PotForm } from './PotForm';
 import { PotMoneyForm } from './PotMoneyForm';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrency, formatCurrencyCompact } from '@repo/shared';
 
 function PotProgress({
   total,
@@ -22,8 +22,8 @@ function PotProgress({
   return (
     <div className="mt-3">
       <div className="flex justify-between text-sm">
-        <span className="text-grey-500">{formatCurrency(total)}</span>
-        <span className="text-grey-500">of {formatCurrency(target)}</span>
+        <span className="text-grey-500">{formatCurrencyCompact(total)}</span>
+        <span className="text-grey-500">of {formatCurrencyCompact(target)}</span>
       </div>
       <div className="mt-1 h-2 w-full rounded-full bg-grey-100">
         <div

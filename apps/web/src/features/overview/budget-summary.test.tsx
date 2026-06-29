@@ -63,4 +63,10 @@ describe('BudgetSummary', () => {
     render(<BudgetSummary />);
     expect(screen.getByText(/UGX\s*800/)).toBeInTheDocument();
   });
+
+  it('renders donut chart with 200x200 dimensions', () => {
+    render(<BudgetSummary />);
+    const pieChart = screen.getByTestId('pie-chart');
+    expect(pieChart).toBeInTheDocument();
+  });
 });

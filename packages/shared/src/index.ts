@@ -29,4 +29,4 @@ export {
   transactionCreateSchema,
 } from './schemas';
 
-export { formatCurrency } from './format';
+export { formatCurrency, formatCurrencyCompact } from './format';

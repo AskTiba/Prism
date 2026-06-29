@@ -17,7 +17,7 @@ import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassSelect from '@/components/ui/GlassSelect';
 import GlassButton from '@/components/ui/GlassButton';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrency, formatCurrencyCompact } from '@repo/shared';
 import { TransactionForm } from './TransactionForm';
 
 export default function TransactionsPage() {
@@ -202,7 +202,7 @@ export default function TransactionsPage() {
                     <span
                       className={`font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
                     >
-                      {formatCurrency(tx.amount)}
+                      {formatCurrencyCompact(tx.amount)}
                     </span>
                     {tx.recurring && (
                       <span className="rounded-full bg-grey-100 px-2 py-0.5 text-xs text-grey-500">

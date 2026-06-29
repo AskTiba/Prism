@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassButton from '@/components/ui/GlassButton';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrency, formatCurrencyCompact } from '@repo/shared';
 import { BudgetForm } from './BudgetForm';
 
 function BudgetProgress({
@@ -27,8 +27,8 @@ function BudgetProgress({
         />
       </div>
       <div className="mt-1 flex justify-between text-xs text-grey-500">
-        <span className="font-bold text-grey-900">{formatCurrency(spent)}</span>
-        <span>of {formatCurrency(maximum)}</span>
+        <span className="font-bold text-grey-900">{formatCurrencyCompact(spent)}</span>
+        <span>of {formatCurrencyCompact(maximum)}</span>
       </div>
     </div>
   );

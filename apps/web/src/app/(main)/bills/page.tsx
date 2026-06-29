@@ -2,7 +2,7 @@
 
 import { trpc } from '@/lib/trpc';
 import Image from 'next/image';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrencyCompact } from '@repo/shared';
 import { DetectedSubscriptions } from './detected-subscriptions';
 
 export default function BillsPage() {
@@ -34,21 +34,21 @@ export default function BillsPage() {
           <p className="text-sm text-grey-500">Paid Bills</p>
           <p className="mt-1 text-2xl font-bold text-green">
             {paid.length} (
-            {formatCurrency(paid.reduce((s, b) => s + Math.abs(b.amount), 0))})
+            {formatCurrencyCompact(paid.reduce((s, b) => s + Math.abs(b.amount), 0))})
           </p>
         </div>
         <div className="rounded-xl bg-white px-5 py-6">
           <p className="text-sm text-grey-500">Upcoming</p>
           <p className="mt-1 text-2xl font-bold">
             {upcoming.length} (
-            {formatCurrency(upcoming.reduce((s, b) => s + Math.abs(b.amount), 0))})
+            {formatCurrencyCompact(upcoming.reduce((s, b) => s + Math.abs(b.amount), 0))})
           </p>
         </div>
         <div className="rounded-xl bg-white px-5 py-6">
           <p className="text-sm text-grey-500">Due Soon</p>
           <p className="mt-1 text-2xl font-bold text-red">
             {upcoming.length} (
-            {formatCurrency(upcoming.reduce((s, b) => s + Math.abs(b.amount), 0))})
+            {formatCurrencyCompact(upcoming.reduce((s, b) => s + Math.abs(b.amount), 0))})
           </p>
         </div>
       </div>
@@ -83,7 +83,7 @@ export default function BillsPage() {
                     <span className="font-medium">{bill.name}</span>
                   </div>
                 </td>
-                <td className="px-5 py-3 font-bold">{formatCurrency(bill.amount)}</td>
+                <td className="px-5 py-3 font-bold">{formatCurrencyCompact(bill.amount)}</td>
                 <td className="px-5 py-3">
                   <span
                     className={`rounded-full px-3 py-0.5 text-xs font-medium ${

@@ -40,10 +40,10 @@ describe('BillsSummary', () => {
     expect(screen.getByText('See Details')).toHaveAttribute('href', '/bills')
   })
 
-  it('renders Paid Bills with count and total', () => {
+  it('renders Paid Bills with total value', () => {
     render(<BillsSummary />)
     expect(screen.getByText('Paid Bills')).toBeInTheDocument()
-    expect(screen.getByText(/2/)).toBeInTheDocument()
+    expect(screen.getByText(/UGX\s*200/)).toBeInTheDocument()
   })
 
   it('renders Total Upcoming', () => {

@@ -1,16 +1,14 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
-import { formatCurrency } from '@repo/shared';
+import { formatCurrencyCompact } from '@repo/shared';
 
 export function BillsSummary() {
   const { data } = trpc.transactions.list.useQuery({ pageSize: 100, category: 'Bills' });
   const bills = data?.items ?? [];
-  const paidCount = bills.filter((b) => b.amount < 0).length;
   const totalPaid = bills
     .filter((b) => b.amount < 0)
     .reduce((s, b) => s + Math.abs(b.amount), 0);
-  const upcomingCount = bills.filter((b) => b.amount > 0).length;
   const totalUpcoming = bills
     .filter((b) => b.amount > 0)
     .reduce((s, b) => s + b.amount, 0);
@@ -27,19 +25,19 @@ export function BillsSummary() {
         <div className="flex items-center justify-between rounded-lg border-l-4 border-green bg-green/5 px-4 py-3">
           <dt className="text-sm text-grey-500">Paid Bills</dt>
           <dd className="text-sm font-bold text-green">
-            {paidCount} ({formatCurrency(totalPaid)})
+            {formatCurrencyCompact(totalPaid)}
           </dd>
         </div>
         <div className="flex items-center justify-between rounded-lg border-l-4 border-yellow bg-yellow/5 px-4 py-3">
           <dt className="text-sm text-grey-500">Total Upcoming</dt>
           <dd className="text-sm font-bold">
-            {upcomingCount} ({formatCurrency(totalUpcoming)})
+            {formatCurrencyCompact(totalUpcoming)}
           </dd>
         </div>
         <div className="flex items-center justify-between rounded-lg border-l-4 border-cyan bg-cyan/5 px-4 py-3">
           <dt className="text-sm text-grey-500">Due Soon</dt>
           <dd className="text-sm font-bold">
-            {formatCurrency(totalUpcoming > 0 ? totalUpcoming * 0.3 : 0)}
+            {formatCurrencyCompact(totalUpcoming > 0 ? totalUpcoming * 0.3 : 0)}
           </dd>
         </div>
       </dl>
