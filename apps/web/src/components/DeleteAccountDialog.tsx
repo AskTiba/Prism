@@ -43,18 +43,14 @@ export function DeleteAccountDialog({ collapsed }: { collapsed?: boolean }) {
         type="button"
         onClick={() => setOpen(true)}
         title={collapsed ? 'Delete Account' : undefined}
-        className={`group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 md:rounded-lg ${
-          collapsed ? 'md:justify-center md:px-0' : 'md:mx-1.5 md:py-2.5 md:px-3'
-        } text-red/80 hover:bg-white/[0.04] hover:text-red`}
+        className={`group relative flex items-center rounded-xl transition-all duration-200 ${
+          collapsed
+            ? 'md:justify-center md:h-10 md:w-10 md:mx-auto'
+            : 'md:mx-1.5 md:gap-3 md:px-3 md:py-2.5'
+        } text-red/80 hover:bg-white/[0.08] hover:text-red`}
       >
-        <Trash2 size={18} className="shrink-0 text-red/60 group-hover:text-red" />
-        <span
-          className={`transition-opacity duration-200 ${
-            collapsed ? 'md:opacity-0 md:w-0 md:overflow-hidden' : 'opacity-100'
-          }`}
-        >
-          Delete Account
-        </span>
+        <Trash2 size={20} strokeWidth={1.8} className="shrink-0 text-red/60 group-hover:text-red" />
+        {!collapsed && <span className="md:block">Delete Account</span>}
       </button>
       <GlassDialog open={open} onClose={() => { setOpen(false); reset() }} title="Delete Account">
         <form onSubmit={handleSubmit(onSubmit)}>

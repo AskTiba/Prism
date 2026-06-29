@@ -65,4 +65,18 @@ describe('Sidebar', () => {
     const svgs = nav.querySelectorAll('svg');
     expect(svgs.length).toBeGreaterThanOrEqual(5);
   });
+
+  it('applies strong background to active nav item', () => {
+    render(<Sidebar session={null} />);
+    const overviewLink = screen.getByText('Overview').closest('a');
+    expect(overviewLink?.className).toMatch(/bg-white\/10/);
+    expect(overviewLink?.className).toMatch(/font-bold/);
+  });
+
+  it('renders collapse trigger button', () => {
+    render(<Sidebar session={null} />);
+    const buttons = screen.getAllByRole('button');
+    const collapseBtn = buttons.find(b => b.getAttribute('title')?.includes('Minimize'));
+    expect(collapseBtn).toBeInTheDocument();
+  });
 });

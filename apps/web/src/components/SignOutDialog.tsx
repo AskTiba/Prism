@@ -15,18 +15,14 @@ export function SignOutDialog({ collapsed }: { collapsed?: boolean }) {
         type="button"
         onClick={() => setOpen(true)}
         title={collapsed ? 'Sign Out' : undefined}
-        className={`group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 md:rounded-lg ${
-          collapsed ? 'md:justify-center md:px-0' : 'md:mx-1.5 md:py-2.5 md:px-3'
-        } text-grey-400 hover:bg-white/[0.04] hover:text-white`}
+        className={`group relative flex items-center rounded-xl transition-all duration-200 ${
+          collapsed
+            ? 'md:justify-center md:h-10 md:w-10 md:mx-auto'
+            : 'md:mx-1.5 md:gap-3 md:px-3 md:py-2.5'
+        } text-grey-400 hover:bg-white/[0.08] hover:text-white`}
       >
-        <LogOut size={18} className="shrink-0 text-grey-400 group-hover:text-white" />
-        <span
-          className={`transition-opacity duration-200 ${
-            collapsed ? 'md:opacity-0 md:w-0 md:overflow-hidden' : 'opacity-100'
-          }`}
-        >
-          Sign Out
-        </span>
+        <LogOut size={20} strokeWidth={1.8} className="shrink-0 text-grey-400 group-hover:text-white" />
+        {!collapsed && <span className="md:block">Sign Out</span>}
       </button>
 
       <GlassDialog open={open} onClose={() => setOpen(false)} title="Sign Out">
