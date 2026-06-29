@@ -60,4 +60,26 @@ describe('OverviewPage', () => {
     expect(screen.getByText('Bills')).toBeInTheDocument()
     expect(screen.getByText('Emergency Fund')).toBeInTheDocument()
   })
+
+  it('does not render NetWorthCard or CashFlowCard', async () => {
+    render(<OverviewPage />)
+
+    expect(screen.queryByText('Net Worth')).not.toBeInTheDocument()
+    expect(screen.queryByText('Cash Flow')).not.toBeInTheDocument()
+  })
+
+  it('renders 2-column layout with correct sections', async () => {
+    const { container } = render(<OverviewPage />)
+
+    // Find the 2-column grid (should have lg:grid-cols-2)
+    const grid = container.querySelector('.lg\\:grid-cols-2')
+    expect(grid).toBeInTheDocument()
+
+    // Left column should contain: Pots, Transactions
+    // Right column should contain: Budgets, Bills
+    expect(screen.getByText('Pots')).toBeInTheDocument()
+    expect(screen.getByText('Recent Transactions')).toBeInTheDocument()
+    expect(screen.getByText('Budgets')).toBeInTheDocument()
+    expect(screen.getByText('Recurring Bills')).toBeInTheDocument()
+  })
 })
