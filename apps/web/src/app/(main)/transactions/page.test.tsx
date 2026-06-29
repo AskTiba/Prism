@@ -165,6 +165,13 @@ describe('TransactionsPage styling', () => {
     expect(tableContainer).not.toHaveClass('bg-white/70');
     expect(tableContainer).not.toHaveClass('backdrop-blur-md');
   });
+
+  it('renders filter container with responsive flex-wrap layout', () => {
+    const { container } = render(<TransactionsPage />);
+    const filterContainer = container.querySelector('.flex.flex-wrap.gap-3');
+    expect(filterContainer).toBeInTheDocument();
+    expect(filterContainer).toHaveClass('flex-wrap');
+  });
 });
 
 describe('TransactionsPage touch targets', () => {
