@@ -233,23 +233,8 @@ export function Sidebar({ session }: { session: Session | null }) {
         </div>
       </div>
 
-      {/* Mobile nav bar */}
+      {/* Mobile nav bar — hidden, replaced by BottomNav */}
       <span className="text-lg font-bold md:hidden">Prism</span>
-      <ul className="flex items-center gap-0.5 md:hidden">
-        {NAV_GROUPS[0].items.map((item) => (
-          <li key={item.id}>
-            <MobileNavLink item={item} />
-          </li>
-        ))}
-        <li className="ml-0.5">
-          <a
-            href="/signin"
-            className="flex items-center justify-center rounded-lg py-2 px-2 text-grey-400 hover:text-white min-h-[44px] min-w-[44px]"
-          >
-            <LogIn size={16} />
-          </a>
-        </li>
-      </ul>
 
       {/* Collapse toggle */}
       <button
