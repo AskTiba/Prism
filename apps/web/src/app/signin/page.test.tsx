@@ -14,7 +14,7 @@ import SignInPage from './page';
 import { useSearchParams } from 'next/navigation';
 
 beforeEach(() => {
-  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams());
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as ReturnType<typeof useSearchParams>);
 });
 
 describe('SignInPage', () => {
