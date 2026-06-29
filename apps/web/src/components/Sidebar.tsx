@@ -98,7 +98,7 @@ export function Sidebar({ session }: { session: Session | null }) {
 
   return (
     <nav
-      className={`flex w-full items-center justify-between bg-grey-900 px-4 py-3 text-white md:sticky md:top-0 md:h-screen md:flex-col md:items-stretch md:justify-start md:rounded-r-2xl md:overflow-hidden md:relative md:transition-all md:duration-300 md:ease-out ${
+      className={`hidden md:flex w-full items-center justify-between bg-grey-900 px-4 py-3 text-white md:sticky md:top-0 md:h-screen md:flex-col md:items-stretch md:justify-start md:rounded-r-2xl md:overflow-hidden md:relative md:transition-all md:duration-300 md:ease-out ${
         collapsed ? 'md:w-[72px]' : 'md:w-64'
       }`}
     >
@@ -233,12 +233,6 @@ export function Sidebar({ session }: { session: Session | null }) {
             )}
           </div>
         </div>
-      </div>
-
-      {/* Mobile nav bar — hidden, replaced by BottomNav */}
-      <div className="flex md:hidden items-center gap-2">
-        <Gem size={20} strokeWidth={1.8} className="text-green" />
-        <span className="text-lg font-bold">Prism</span>
       </div>
     </nav>
   );
