@@ -138,7 +138,7 @@ export default function TransactionsPage() {
         </a>
       </div>
 
-      <div className="overflow-x-auto rounded-xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm">
+      <div className="overflow-x-auto rounded-xl bg-white border border-grey-100 shadow-sm">
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-b border-grey-100 text-grey-500">

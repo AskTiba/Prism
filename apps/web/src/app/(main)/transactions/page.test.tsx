@@ -157,6 +157,16 @@ describe('TransactionsPage', () => {
   });
 });
 
+describe('TransactionsPage styling', () => {
+  it('renders table with solid white background, not glassmorphism', () => {
+    const { container } = render(<TransactionsPage />);
+    const tableContainer = container.querySelector('table')?.parentElement;
+    expect(tableContainer).toHaveClass('bg-white');
+    expect(tableContainer).not.toHaveClass('bg-white/70');
+    expect(tableContainer).not.toHaveClass('backdrop-blur-md');
+  });
+});
+
 describe('TransactionsPage touch targets', () => {
   it('has filter inputs with py-3 or greater', () => {
     render(<TransactionsPage />);

@@ -71,7 +71,7 @@ export default function BudgetsPage() {
           </div>
         ))}
         {items.length === 0 && (
-          <div className="col-span-full flex flex-col items-center justify-center rounded-xl bg-white/50 backdrop-blur-sm px-5 py-12 text-center">
+          <div className="col-span-full flex flex-col items-center justify-center rounded-xl bg-white border border-grey-100 px-5 py-12 text-center">
             <h3 className="text-lg font-semibold text-grey-900">No budgets yet</h3>
             <p className="mt-1 text-sm text-grey-500">
               Create your first budget to start tracking spending.
