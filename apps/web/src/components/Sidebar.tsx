@@ -98,7 +98,7 @@ export function Sidebar({ session }: { session: Session | null }) {
 
   return (
     <nav
-      className={`flex w-full items-center justify-between bg-grey-900 px-4 py-3 text-white md:flex-col md:items-stretch md:justify-start md:rounded-r-2xl md:overflow-hidden md:relative md:transition-all md:duration-300 md:ease-out ${
+      className={`flex w-full items-center justify-between bg-grey-900 px-4 py-3 text-white md:sticky md:top-0 md:h-screen md:flex-col md:items-stretch md:justify-start md:rounded-r-2xl md:overflow-hidden md:relative md:transition-all md:duration-300 md:ease-out ${
         collapsed ? 'md:w-[72px]' : 'md:w-64'
       }`}
     >
