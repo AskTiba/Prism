@@ -7,7 +7,8 @@ import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassButton from '@/components/ui/GlassButton';
 import { PotForm } from './PotForm';
 import { PotMoneyForm } from './PotMoneyForm';
-import { formatCurrency, formatCurrencyCompact } from '@repo/shared';
+import { formatCurrencyCompact } from '@repo/shared';
+import { PotCardSkeleton } from '@/components/WidgetSkeleton';
 
 function PotProgress({
   total,
@@ -44,7 +45,7 @@ export default function PotsPage() {
     total: number;
     theme: string;
   } | null>(null);
-  const { data: pots } = trpc.pots.list.useQuery();
+  const { data: pots, isLoading } = trpc.pots.list.useQuery();
   const utils = trpc.useUtils();
   const items = pots ?? [];
 
@@ -59,27 +60,29 @@ export default function PotsPage() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        {items.map((pot) => (
-          <div key={pot.id} className="rounded-xl bg-white px-5 py-6">
-            <div className="flex items-center gap-3">
-              <span
-                className="h-4 w-4 rounded-full"
-                style={{ backgroundColor: pot.theme }}
-              />
-              <h2 className="text-lg font-bold">{pot.name}</h2>
-            </div>
-            <PotProgress total={pot.total} target={pot.target} theme={pot.theme} />
-            <GlassButton
-              type="button"
-              variant="primary"
-              onClick={() => setSelectedPot(pot)}
-              className="mt-4 w-full"
-            >
-              Add / Withdraw
-            </GlassButton>
-          </div>
-        ))}
-        {items.length === 0 && (
+        {isLoading
+          ? Array.from({ length: 4 }).map((_, i) => <PotCardSkeleton key={i} />)
+          : items.map((pot) => (
+              <div key={pot.id} className="rounded-xl bg-white px-5 py-6">
+                <div className="flex items-center gap-3">
+                  <span
+                    className="h-4 w-4 rounded-full"
+                    style={{ backgroundColor: pot.theme }}
+                  />
+                  <h2 className="text-lg font-bold">{pot.name}</h2>
+                </div>
+                <PotProgress total={pot.total} target={pot.target} theme={pot.theme} />
+                <GlassButton
+                  type="button"
+                  variant="primary"
+                  onClick={() => setSelectedPot(pot)}
+                  className="mt-4 w-full"
+                >
+                  Add / Withdraw
+                </GlassButton>
+              </div>
+            ))}
+        {!isLoading && items.length === 0 && (
           <div className="col-span-full flex flex-col items-center justify-center rounded-xl bg-white border border-grey-100 px-5 py-12 text-center">
             <h3 className="text-lg font-semibold text-grey-900">No pots yet</h3>
             <p className="mt-1 text-sm text-grey-500">

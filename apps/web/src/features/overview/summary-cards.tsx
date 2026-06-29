@@ -2,6 +2,7 @@
 
 import { trpc } from '@/lib/trpc';
 import { formatCurrencyCompact } from '@repo/shared';
+import { SummaryCardSkeleton } from '@/components/WidgetSkeleton';
 
 function SummaryCard({
   label,
@@ -25,7 +26,17 @@ function SummaryCard({
 }
 
 export function SummaryCards() {
-  const { data: transactions } = trpc.transactions.list.useQuery({ pageSize: 1000 });
+  const { data: transactions, isLoading } = trpc.transactions.list.useQuery({ pageSize: 1000 });
+
+  if (isLoading) {
+    return (
+      <div className="grid gap-4 sm:grid-cols-3">
+        <SummaryCardSkeleton />
+        <SummaryCardSkeleton />
+        <SummaryCardSkeleton />
+      </div>
+    );
+  }
 
   const total = transactions?.items.reduce((sum, t) => sum + t.amount, 0) ?? 0;
   const income =

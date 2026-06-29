@@ -2,10 +2,13 @@
 
 import { trpc } from '@/lib/trpc';
 import { formatCurrencyCompact } from '@repo/shared';
+import { WidgetSkeleton } from '@/components/WidgetSkeleton';
 
 export function CashFlowCard() {
-  const { data } = trpc.data.cashFlowProjection.useQuery();
+  const { data, isLoading } = trpc.data.cashFlowProjection.useQuery();
   const entries = data ?? [];
+
+  if (isLoading) return <WidgetSkeleton />;
 
   if (entries.length === 0) return null;
 

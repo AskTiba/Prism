@@ -2,9 +2,14 @@
 
 import { trpc } from '@/lib/trpc';
 import { formatCurrencyCompact } from '@repo/shared';
+import { WidgetSkeleton } from '@/components/WidgetSkeleton';
 
 export function BillsSummary() {
-  const { data } = trpc.transactions.list.useQuery({ pageSize: 100, category: 'Bills' });
+  const { data, isLoading } = trpc.transactions.list.useQuery({
+    pageSize: 100,
+    category: 'Bills',
+  });
+
   const bills = data?.items ?? [];
   const totalPaid = bills
     .filter((b) => b.amount < 0)
@@ -12,6 +17,10 @@ export function BillsSummary() {
   const totalUpcoming = bills
     .filter((b) => b.amount > 0)
     .reduce((s, b) => s + b.amount, 0);
+
+  if (isLoading) {
+    return <WidgetSkeleton />;
+  }
 
   return (
     <div className="rounded-xl bg-white px-5 py-6">

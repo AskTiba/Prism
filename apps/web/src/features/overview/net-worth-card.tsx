@@ -2,9 +2,12 @@
 
 import { trpc } from '@/lib/trpc';
 import { formatCurrencyCompact } from '@repo/shared';
+import { WidgetSkeleton } from '@/components/WidgetSkeleton';
 
 export function NetWorthCard() {
-  const { data } = trpc.data.netWorth.useQuery();
+  const { data, isLoading } = trpc.data.netWorth.useQuery();
+
+  if (isLoading) return <WidgetSkeleton />;
 
   if (!data) return null;
 

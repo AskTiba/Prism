@@ -3,6 +3,7 @@
 import { trpc } from '@/lib/trpc';
 import Image from 'next/image';
 import { formatCurrencyCompact } from '@repo/shared';
+import { TransactionListSkeleton } from '@/components/WidgetSkeleton';
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
@@ -10,7 +11,7 @@ function formatDate(dateStr: string): string {
 }
 
 export function RecentTransactions() {
-  const { data } = trpc.transactions.list.useQuery({ pageSize: 5 });
+  const { data, isLoading } = trpc.transactions.list.useQuery({ pageSize: 5 });
   const transactions = data?.items ?? [];
 
   return (
@@ -24,44 +25,48 @@ export function RecentTransactions() {
           View All
         </a>
       </div>
-      <ul className="divide-y divide-grey-100">
-        {transactions.map((tx) => (
-          <li key={tx.id} className="flex items-center gap-3 py-3">
-            {tx.avatar ? (
-              <Image
-                src={tx.avatar}
-                alt=""
-                width={32}
-                height={32}
-                className="h-8 w-8 rounded-full object-cover"
-              />
-            ) : (
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
-                {tx.name.charAt(0)}
-              </span>
-            )}
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium">{tx.name}</p>
-              <p className="text-xs text-grey-500">
-                {tx.category}
-                {tx.subtype && (
-                  <span className="ml-1 rounded bg-beige px-1 text-[10px]">
-                    {tx.subtype}
-                  </span>
-                )}
-              </p>
-            </div>
-            <div className="text-right">
-              <p
-                className={`text-sm font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
-              >
-                {formatCurrencyCompact(tx.amount)}
-              </p>
-              <p className="text-xs text-grey-500">{formatDate(tx.date)}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <TransactionListSkeleton count={5} />
+      ) : (
+        <ul className="divide-y divide-grey-100">
+          {transactions.map((tx) => (
+            <li key={tx.id} className="flex items-center gap-3 py-3">
+              {tx.avatar ? (
+                <Image
+                  src={tx.avatar}
+                  alt=""
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 rounded-full object-cover"
+                />
+              ) : (
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
+                  {tx.name.charAt(0)}
+                </span>
+              )}
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium">{tx.name}</p>
+                <p className="text-xs text-grey-500">
+                  {tx.category}
+                  {tx.subtype && (
+                    <span className="ml-1 rounded bg-beige px-1 text-[10px]">
+                      {tx.subtype}
+                    </span>
+                  )}
+                </p>
+              </div>
+              <div className="text-right">
+                <p
+                  className={`text-sm font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
+                >
+                  {formatCurrencyCompact(tx.amount)}
+                </p>
+                <p className="text-xs text-grey-500">{formatDate(tx.date)}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

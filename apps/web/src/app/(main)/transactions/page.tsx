@@ -17,8 +17,9 @@ import { GlassDialog } from '@/components/ui/GlassDialog';
 import GlassInput from '@/components/ui/GlassInput';
 import GlassSelect from '@/components/ui/GlassSelect';
 import GlassButton from '@/components/ui/GlassButton';
-import { formatCurrency, formatCurrencyCompact } from '@repo/shared';
+import { formatCurrencyCompact } from '@repo/shared';
 import { TransactionForm } from './TransactionForm';
+import { TableSkeleton } from '@/components/WidgetSkeleton';
 
 export default function TransactionsPage() {
   const [newOpen, setNewOpen] = useState(false);
@@ -32,7 +33,7 @@ export default function TransactionsPage() {
   const [page, setPage] = useState(1);
   const utils = trpc.useUtils();
 
-  const { data } = trpc.transactions.list.useQuery({
+  const { data, isLoading } = trpc.transactions.list.useQuery({
     search: search || undefined,
     category: (category || undefined) as Category | undefined,
     subtype: (subtype || undefined) as Subtype | undefined,
@@ -139,83 +140,87 @@ export default function TransactionsPage() {
       </div>
 
       <div className="overflow-x-auto rounded-xl bg-white border border-grey-100 shadow-sm">
-        <table className="w-full text-left text-sm">
-          <thead>
-            <tr className="border-b border-grey-100 text-grey-500">
-              <th className="px-5 py-3 font-medium">Name</th>
-              <th className="px-5 py-3 font-medium">Category</th>
-              <th className="px-5 py-3 font-medium">Tags</th>
-              <th className="px-5 py-3 font-medium">Date</th>
-              <th className="px-5 py-3 text-right font-medium">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((tx) => (
-              <tr key={tx.id} className="border-b border-grey-100 last:border-0">
-                <td className="px-5 py-3">
-                  <div className="flex items-center gap-3">
-                    {tx.avatar ? (
-                      <Image
-                        src={tx.avatar}
-                        alt=""
-                        width={32}
-                        height={32}
-                        className="h-8 w-8 rounded-full object-cover"
-                      />
-                    ) : (
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
-                        {tx.name.charAt(0)}
-                      </span>
-                    )}
-                    <span className="font-medium">{tx.name}</span>
-                  </div>
-                </td>
-                <td className="px-5 py-3 text-grey-500">
-                  {tx.category}
-                  {tx.subtype && (
-                    <span className="ml-2 rounded bg-beige px-2 py-0.5 text-xs text-grey-500">
-                      {tx.subtype}
-                    </span>
-                  )}
-                </td>
-                <td className="px-5 py-3">
-                  <div className="flex flex-wrap gap-1">
-                    {tx.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-grey-100 px-2 py-0.5 text-xs text-grey-500"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </td>
-                <td className="px-5 py-3 text-grey-500">
-                  {new Date(tx.date).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
-                </td>
-                <td className="px-5 py-3 text-right">
-                  <div className="flex flex-col items-end gap-1">
-                    <span
-                      className={`font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
-                    >
-                      {formatCurrencyCompact(tx.amount)}
-                    </span>
-                    {tx.recurring && (
-                      <span className="rounded-full bg-grey-100 px-2 py-0.5 text-xs text-grey-500">
-                        Monthly
-                      </span>
-                    )}
-                  </div>
-                </td>
+        {isLoading ? (
+          <TableSkeleton rows={5} cols={5} />
+        ) : (
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-grey-100 text-grey-500">
+                <th className="px-5 py-3 font-medium">Name</th>
+                <th className="px-5 py-3 font-medium">Category</th>
+                <th className="px-5 py-3 font-medium">Tags</th>
+                <th className="px-5 py-3 font-medium">Date</th>
+                <th className="px-5 py-3 text-right font-medium">Amount</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {transactions.length === 0 && (
+            </thead>
+            <tbody>
+              {transactions.map((tx) => (
+                <tr key={tx.id} className="border-b border-grey-100 last:border-0">
+                  <td className="px-5 py-3">
+                    <div className="flex items-center gap-3">
+                      {tx.avatar ? (
+                        <Image
+                          src={tx.avatar}
+                          alt=""
+                          width={32}
+                          height={32}
+                          className="h-8 w-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-grey-100 text-xs font-bold text-grey-500">
+                          {tx.name.charAt(0)}
+                        </span>
+                      )}
+                      <span className="font-medium">{tx.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-5 py-3 text-grey-500">
+                    {tx.category}
+                    {tx.subtype && (
+                      <span className="ml-2 rounded bg-beige px-2 py-0.5 text-xs text-grey-500">
+                        {tx.subtype}
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-5 py-3">
+                    <div className="flex flex-wrap gap-1">
+                      {tx.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-grey-100 px-2 py-0.5 text-xs text-grey-500"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="px-5 py-3 text-grey-500">
+                    {new Date(tx.date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </td>
+                  <td className="px-5 py-3 text-right">
+                    <div className="flex flex-col items-end gap-1">
+                      <span
+                        className={`font-bold ${tx.amount < 0 ? 'text-grey-900' : 'text-green'}`}
+                      >
+                        {formatCurrencyCompact(tx.amount)}
+                      </span>
+                      {tx.recurring && (
+                        <span className="rounded-full bg-grey-100 px-2 py-0.5 text-xs text-grey-500">
+                          Monthly
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {transactions.length === 0 && !isLoading && (
           <div className="flex flex-col items-center justify-center px-5 py-12 text-center">
             <h3 className="text-lg font-semibold text-grey-900">No transactions found</h3>
             <p className="mt-1 text-sm text-grey-500">
