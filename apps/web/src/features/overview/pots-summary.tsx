@@ -22,7 +22,7 @@ export function PotsSummary() {
         <PotsCardSkeleton />
       ) : (
         <div className="flex flex-col gap-4 sm:flex-row">
-          <div className="flex shrink-0 items-center gap-3 rounded-xl bg-beige px-4 py-5">
+          <div className="flex items-center gap-3 rounded-xl bg-beige px-4 py-5">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green/10">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path
@@ -33,7 +33,7 @@ export function PotsSummary() {
             </div>
             <div className="min-w-0">
               <p className="text-xs text-grey-500">Total Saved</p>
-              <p className="text-lg font-bold text-grey-900 leading-tight whitespace-nowrap">
+              <p className="text-lg font-bold text-grey-900 leading-tight">
                 {formatCurrencyCompact(totalSaved)}
               </p>
             </div>

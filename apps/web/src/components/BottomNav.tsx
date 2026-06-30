@@ -33,7 +33,7 @@ export function BottomNav() {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-grey-900 md:hidden" role="navigation" aria-label="Main navigation">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-grey-900 border-t border-white/10 md:hidden" role="navigation" aria-label="Main navigation">
       <ul className="flex items-center justify-around px-2 py-2">
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -42,17 +42,15 @@ export function BottomNav() {
             <li key={item.id}>
               <a
                 href={item.href}
+                aria-label={item.label}
                 className={`flex flex-col items-center gap-1 rounded-lg px-3 py-2 min-h-[48px] min-w-[48px] transition-colors ${
                   active
-                    ? 'bg-green/20 text-green'
-                    : 'text-grey-400 hover:text-white'
+                    ? 'text-green'
+                    : 'text-white/70 hover:text-white'
                 }`}
                 aria-current={active ? 'page' : undefined}
               >
-                <Icon size={20} />
-                <span className="text-[10px] font-medium hidden tablet:block">
-                  {item.label}
-                </span>
+                <Icon size={22} strokeWidth={active ? 2.2 : 1.8} />
               </a>
             </li>
           );

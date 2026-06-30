@@ -8,31 +8,31 @@ vi.mock('next/navigation', () => ({
 }))
 
 describe('BottomNav', () => {
-  it('renders all 5 navigation items', () => {
+  it('renders all 5 navigation links', () => {
     render(<BottomNav />)
 
-    expect(screen.getByText('Overview')).toBeInTheDocument()
-    expect(screen.getByText('Transactions')).toBeInTheDocument()
-    expect(screen.getByText('Budgets')).toBeInTheDocument()
-    expect(screen.getByText('Pots')).toBeInTheDocument()
-    expect(screen.getByText('Recurring Bills')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /overview/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /transactions/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /budgets/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /pots/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /recurring bills/i })).toBeInTheDocument()
   })
 
   it('marks active item with aria-current', () => {
     render(<BottomNav />)
 
-    const overviewLink = screen.getByText('Overview').closest('a')
+    const overviewLink = screen.getByRole('link', { name: /overview/i })
     expect(overviewLink).toHaveAttribute('aria-current', 'page')
   })
 
   it('renders links with correct hrefs', () => {
     render(<BottomNav />)
 
-    expect(screen.getByText('Overview').closest('a')).toHaveAttribute('href', '/')
-    expect(screen.getByText('Transactions').closest('a')).toHaveAttribute('href', '/transactions')
-    expect(screen.getByText('Budgets').closest('a')).toHaveAttribute('href', '/budgets')
-    expect(screen.getByText('Pots').closest('a')).toHaveAttribute('href', '/pots')
-    expect(screen.getByText('Recurring Bills').closest('a')).toHaveAttribute('href', '/bills')
+    expect(screen.getByRole('link', { name: /overview/i })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: /transactions/i })).toHaveAttribute('href', '/transactions')
+    expect(screen.getByRole('link', { name: /budgets/i })).toHaveAttribute('href', '/budgets')
+    expect(screen.getByRole('link', { name: /pots/i })).toHaveAttribute('href', '/pots')
+    expect(screen.getByRole('link', { name: /recurring bills/i })).toHaveAttribute('href', '/bills')
   })
 
   it('is hidden on desktop (md breakpoint)', () => {

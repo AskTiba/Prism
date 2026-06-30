@@ -29,15 +29,15 @@ export function BudgetSummary() {
       {isLoading ? (
         <PieChartSkeleton />
       ) : (
-        <div className="flex flex-col items-center gap-6 sm:flex-row">
+        <div className="flex flex-col items-center gap-6">
           <div className="relative flex shrink-0 items-center justify-center">
-            <PieChart width={180} height={180}>
+            <PieChart width={220} height={220}>
               <Pie
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={50}
-                outerRadius={80}
+                innerRadius={60}
+                outerRadius={95}
                 dataKey="value"
                 startAngle={90}
                 endAngle={-270}
@@ -51,14 +51,14 @@ export function BudgetSummary() {
               </Pie>
             </PieChart>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <p className="text-base font-bold text-grey-900 leading-tight whitespace-nowrap">
+              <p className="text-base font-bold text-grey-900 leading-tight">
                 {formatCurrencyCompact(totalBudget)}
               </p>
               <p className="text-[11px] text-grey-500">of budget limit</p>
             </div>
           </div>
 
-          <ul className="grid min-w-0 grid-cols-2 gap-x-6 gap-y-3 flex-1">
+          <ul className="grid w-full grid-cols-2 gap-x-6 gap-y-3">
             {data.map((entry) => (
               <li key={entry.name} className="flex items-center gap-3">
                 <span

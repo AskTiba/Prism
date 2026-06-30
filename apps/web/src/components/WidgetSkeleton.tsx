@@ -25,9 +25,9 @@ export function SummaryCardSkeleton() {
 
 export function PieChartSkeleton() {
   return (
-    <div className="flex flex-col items-center gap-6 sm:flex-row">
-      <div className="h-[180px] w-[180px] animate-pulse rounded-full bg-grey-100" />
-      <div className="grid min-w-0 grid-cols-2 gap-x-6 gap-y-3 flex-1">
+    <div className="flex flex-col items-center gap-6">
+      <div className="h-[220px] w-[220px] animate-pulse rounded-full bg-grey-100" />
+      <div className="grid w-full grid-cols-2 gap-x-6 gap-y-3">
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="flex items-center gap-3">
             <div className="h-3 w-3 rounded-full bg-grey-100" />
